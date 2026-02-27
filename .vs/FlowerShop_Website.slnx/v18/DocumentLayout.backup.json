@@ -1,0 +1,615 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\Code_Data\\FlowerShop_Website\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{662CFECB-5622-43FC-8BD6-AD087911E269}|FlowerShop.Infrastructure\\FlowerShop.Infrastructure.csproj|e:\\code_data\\flowershop_website\\flowershop.infrastructure\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{662CFECB-5622-43FC-8BD6-AD087911E269}|FlowerShop.Infrastructure\\FlowerShop.Infrastructure.csproj|solutionrelative:flowershop.infrastructure\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{662CFECB-5622-43FC-8BD6-AD087911E269}|FlowerShop.Infrastructure\\FlowerShop.Infrastructure.csproj|e:\\code_data\\flowershop_website\\flowershop.infrastructure\\repositories\\interfaces\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{662CFECB-5622-43FC-8BD6-AD087911E269}|FlowerShop.Infrastructure\\FlowerShop.Infrastructure.csproj|solutionrelative:flowershop.infrastructure\\repositories\\interfaces\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{662CFECB-5622-43FC-8BD6-AD087911E269}|FlowerShop.Infrastructure\\FlowerShop.Infrastructure.csproj|e:\\code_data\\flowershop_website\\flowershop.infrastructure\\migrations\\20260225160208_init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{662CFECB-5622-43FC-8BD6-AD087911E269}|FlowerShop.Infrastructure\\FlowerShop.Infrastructure.csproj|solutionrelative:flowershop.infrastructure\\migrations\\20260225160208_init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{662CFECB-5622-43FC-8BD6-AD087911E269}|FlowerShop.Infrastructure\\FlowerShop.Infrastructure.csproj|e:\\code_data\\flowershop_website\\flowershop.infrastructure\\data\\flowershopdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{662CFECB-5622-43FC-8BD6-AD087911E269}|FlowerShop.Infrastructure\\FlowerShop.Infrastructure.csproj|solutionrelative:flowershop.infrastructure\\data\\flowershopdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0242937C-1FBB-40DC-887E-5054BF212284}|FlowerShop.API\\FlowerShop.API.csproj|e:\\code_data\\flowershop_website\\flowershop.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0242937C-1FBB-40DC-887E-5054BF212284}|FlowerShop.API\\FlowerShop.API.csproj|solutionrelative:flowershop.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0242937C-1FBB-40DC-887E-5054BF212284}|FlowerShop.API\\FlowerShop.API.csproj|e:\\code_data\\flowershop_website\\flowershop.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{0242937C-1FBB-40DC-887E-5054BF212284}|FlowerShop.API\\FlowerShop.API.csproj|solutionrelative:flowershop.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0242937C-1FBB-40DC-887E-5054BF212284}|FlowerShop.API\\FlowerShop.API.csproj|e:\\code_data\\flowershop_website\\flowershop.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{0242937C-1FBB-40DC-887E-5054BF212284}|FlowerShop.API\\FlowerShop.API.csproj|solutionrelative:flowershop.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\extensions\\applicationbuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\extensions\\applicationbuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\extensions\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\extensions\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\middlewares\\globalexceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\middlewares\\globalexceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\services\\implements\\cloudinaryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\services\\implements\\cloudinaryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\services\\abstractions\\icloudinaryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\services\\abstractions\\icloudinaryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\services\\implements\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\services\\implements\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\services\\abstractions\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\services\\abstractions\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\exceptions\\validationexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\exceptions\\validationexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\exceptions\\notfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\exceptions\\notfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\models\\cloudinarysettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\models\\cloudinarysettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\models\\emailsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\models\\emailsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\models\\apiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\models\\apiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\constants\\systemconstants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\constants\\systemconstants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5876E32A-E90D-4577-BFFD-27EAEF9A7750}|FlowerShop.Application\\FlowerShop.Application.csproj|e:\\code_data\\flowershop_website\\flowershop.application\\mappings\\mapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5876E32A-E90D-4577-BFFD-27EAEF9A7750}|FlowerShop.Application\\FlowerShop.Application.csproj|solutionrelative:flowershop.application\\mappings\\mapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|e:\\code_data\\flowershop_website\\flowershop.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|solutionrelative:flowershop.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|e:\\code_data\\flowershop_website\\flowershop.domain\\entities\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|solutionrelative:flowershop.domain\\entities\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|e:\\code_data\\flowershop_website\\flowershop.domain\\entities\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|solutionrelative:flowershop.domain\\entities\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|e:\\code_data\\flowershop_website\\flowershop.domain\\entities\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|solutionrelative:flowershop.domain\\entities\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|e:\\code_data\\flowershop_website\\flowershop.domain\\entities\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|solutionrelative:flowershop.domain\\entities\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|e:\\code_data\\flowershop_website\\flowershop.utility\\exceptions\\badrequestexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F41F0A20-6D22-4406-AA6F-90087DEBFE0B}|FlowerShop.Utility\\FlowerShop.Utility.csproj|solutionrelative:flowershop.utility\\exceptions\\badrequestexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5876E32A-E90D-4577-BFFD-27EAEF9A7750}|FlowerShop.Application\\FlowerShop.Application.csproj|e:\\code_data\\flowershop_website\\flowershop.application\\flowershop.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{5876E32A-E90D-4577-BFFD-27EAEF9A7750}|FlowerShop.Application\\FlowerShop.Application.csproj|solutionrelative:flowershop.application\\flowershop.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|e:\\code_data\\flowershop_website\\flowershop.domain\\enums\\orderstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|solutionrelative:flowershop.domain\\enums\\orderstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|e:\\code_data\\flowershop_website\\flowershop.domain\\enums\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|solutionrelative:flowershop.domain\\enums\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|e:\\code_data\\flowershop_website\\flowershop.domain\\enums\\paymentstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|solutionrelative:flowershop.domain\\enums\\paymentstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|e:\\code_data\\flowershop_website\\flowershop.domain\\enums\\paymentmethod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|solutionrelative:flowershop.domain\\enums\\paymentmethod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|e:\\code_data\\flowershop_website\\flowershop.domain\\entities\\orderitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|solutionrelative:flowershop.domain\\entities\\orderitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|e:\\code_data\\flowershop_website\\flowershop.domain\\entities\\flowerimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|solutionrelative:flowershop.domain\\entities\\flowerimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|e:\\code_data\\flowershop_website\\flowershop.domain\\entities\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|solutionrelative:flowershop.domain\\entities\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|e:\\code_data\\flowershop_website\\flowershop.domain\\entities\\address.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFAA5DB6-42B9-4360-A6A2-9DFEF853405D}|FlowerShop.Domain\\FlowerShop.Domain.csproj|solutionrelative:flowershop.domain\\entities\\address.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Infrastructure\\Repositories\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Infrastructure\\Repositories\\GenericRepository.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Infrastructure\\Repositories\\GenericRepository.cs",
+              "RelativeToolTip": "FlowerShop.Infrastructure\\Repositories\\GenericRepository.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAIwEQAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T16:20:01.324Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Infrastructure\\Repositories\\Interfaces\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Infrastructure\\Repositories\\Interfaces\\IGenericRepository.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Infrastructure\\Repositories\\Interfaces\\IGenericRepository.cs",
+              "RelativeToolTip": "FlowerShop.Infrastructure\\Repositories\\Interfaces\\IGenericRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T16:16:15.3Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.API\\appsettings.json",
+              "RelativeDocumentMoniker": "FlowerShop.API\\appsettings.json",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.API\\appsettings.json",
+              "RelativeToolTip": "FlowerShop.API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-26T16:00:48.174Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ApplicationBuilderExtensions.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Extensions\\ApplicationBuilderExtensions.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Extensions\\ApplicationBuilderExtensions.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Extensions\\ApplicationBuilderExtensions.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Extensions\\ApplicationBuilderExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T15:52:50.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.API\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "FlowerShop.API\\appsettings.Development.json",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.API\\appsettings.Development.json",
+              "RelativeToolTip": "FlowerShop.API\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-25T15:44:58.371Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.API\\Program.cs",
+              "RelativeDocumentMoniker": "FlowerShop.API\\Program.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.API\\Program.cs",
+              "RelativeToolTip": "FlowerShop.API\\Program.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA1wBgAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T16:18:12.273Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FlowerShopDbContext.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Infrastructure\\Data\\FlowerShopDbContext.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Infrastructure\\Data\\FlowerShopDbContext.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Infrastructure\\Data\\FlowerShopDbContext.cs",
+              "RelativeToolTip": "FlowerShop.Infrastructure\\Data\\FlowerShopDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T15:42:07.038Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "20260225160208_Init.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Infrastructure\\Migrations\\20260225160208_Init.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Infrastructure\\Migrations\\20260225160208_Init.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Infrastructure\\Migrations\\20260225160208_Init.cs",
+              "RelativeToolTip": "FlowerShop.Infrastructure\\Migrations\\20260225160208_Init.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T16:02:08.636Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GlobalExceptionMiddleware.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Middlewares\\GlobalExceptionMiddleware.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Middlewares\\GlobalExceptionMiddleware.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Middlewares\\GlobalExceptionMiddleware.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Middlewares\\GlobalExceptionMiddleware.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEkAAABfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T16:28:23.748Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CloudinaryService.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Services\\Implements\\CloudinaryService.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Services\\Implements\\CloudinaryService.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Services\\Implements\\CloudinaryService.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Services\\Implements\\CloudinaryService.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAowCAAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T15:53:59.505Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ICloudinaryService.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Services\\Abstractions\\ICloudinaryService.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Services\\Abstractions\\ICloudinaryService.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Services\\Abstractions\\ICloudinaryService.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Services\\Abstractions\\ICloudinaryService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T15:53:46.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Services\\Implements\\EmailService.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Services\\Implements\\EmailService.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Services\\Implements\\EmailService.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Services\\Implements\\EmailService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAABuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T15:54:03.264Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ServiceCollectionExtensions.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Extensions\\ServiceCollectionExtensions.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Extensions\\ServiceCollectionExtensions.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Extensions\\ServiceCollectionExtensions.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Extensions\\ServiceCollectionExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T15:52:44.605Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "IEmailService.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Services\\Abstractions\\IEmailService.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Services\\Abstractions\\IEmailService.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Services\\Abstractions\\IEmailService.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Services\\Abstractions\\IEmailService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T15:53:50.266Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ValidationException.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Exceptions\\ValidationException.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Exceptions\\ValidationException.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Exceptions\\ValidationException.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Exceptions\\ValidationException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T15:52:27.773Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "NotFoundException.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Exceptions\\NotFoundException.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Exceptions\\NotFoundException.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Exceptions\\NotFoundException.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Exceptions\\NotFoundException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T16:28:12.856Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CloudinarySettings.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Models\\CloudinarySettings.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Models\\CloudinarySettings.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Models\\CloudinarySettings.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Models\\CloudinarySettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T15:53:20.945Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "EmailSettings.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Models\\EmailSettings.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Models\\EmailSettings.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Models\\EmailSettings.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Models\\EmailSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T15:53:26.306Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ApiResponse.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Models\\ApiResponse.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Models\\ApiResponse.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Models\\ApiResponse.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Models\\ApiResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T16:28:28.36Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Mapper.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Application\\Mappings\\Mapper.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Application\\Mappings\\Mapper.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Application\\Mappings\\Mapper.cs",
+              "RelativeToolTip": "FlowerShop.Application\\Mappings\\Mapper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T01:40:46.526Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "SystemConstants.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Constants\\SystemConstants.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Constants\\SystemConstants.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Constants\\SystemConstants.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Constants\\SystemConstants.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T16:27:58.859Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Payment.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\Payment.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Domain\\Entities\\Payment.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\Payment.cs",
+              "RelativeToolTip": "FlowerShop.Domain\\Entities\\Payment.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAqwAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T15:07:42.042Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "User.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Domain\\Entities\\User.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\User.cs",
+              "RelativeToolTip": "FlowerShop.Domain\\Entities\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T15:07:03.599Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Order.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\Order.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Domain\\Entities\\Order.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\Order.cs",
+              "RelativeToolTip": "FlowerShop.Domain\\Entities\\Order.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAiwA8AAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T15:07:07.462Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Category.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\Category.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Domain\\Entities\\Category.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\Category.cs",
+              "RelativeToolTip": "FlowerShop.Domain\\Entities\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T15:07:25.388Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Cart.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\Cart.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Domain\\Entities\\Cart.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\Cart.cs",
+              "RelativeToolTip": "FlowerShop.Domain\\Entities\\Cart.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T15:07:31.012Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "BadRequestException.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Exceptions\\BadRequestException.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Utility\\Exceptions\\BadRequestException.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Utility\\Exceptions\\BadRequestException.cs",
+              "RelativeToolTip": "FlowerShop.Utility\\Exceptions\\BadRequestException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T16:28:08.298Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "FlowerShop.Application.csproj",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Application\\FlowerShop.Application.csproj",
+              "RelativeDocumentMoniker": "FlowerShop.Application\\FlowerShop.Application.csproj",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Application\\FlowerShop.Application.csproj",
+              "RelativeToolTip": "FlowerShop.Application\\FlowerShop.Application.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-02-25T16:06:55.255Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "FlowerImage.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\FlowerImage.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Domain\\Entities\\FlowerImage.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\FlowerImage.cs",
+              "RelativeToolTip": "FlowerShop.Domain\\Entities\\FlowerImage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T15:07:20.863Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "OrderItem.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\OrderItem.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Domain\\Entities\\OrderItem.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\OrderItem.cs",
+              "RelativeToolTip": "FlowerShop.Domain\\Entities\\OrderItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwA4AAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T15:07:10.995Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "OrderStatus.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Enums\\OrderStatus.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Domain\\Enums\\OrderStatus.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Enums\\OrderStatus.cs",
+              "RelativeToolTip": "FlowerShop.Domain\\Enums\\OrderStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T15:06:49.602Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "PaymentMethod.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Enums\\PaymentMethod.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Domain\\Enums\\PaymentMethod.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Enums\\PaymentMethod.cs",
+              "RelativeToolTip": "FlowerShop.Domain\\Enums\\PaymentMethod.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T15:06:54.21Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "PaymentStatus.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Enums\\PaymentStatus.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Domain\\Enums\\PaymentStatus.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Enums\\PaymentStatus.cs",
+              "RelativeToolTip": "FlowerShop.Domain\\Enums\\PaymentStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T15:06:59.297Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "UserRole.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Enums\\UserRole.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Domain\\Enums\\UserRole.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Enums\\UserRole.cs",
+              "RelativeToolTip": "FlowerShop.Domain\\Enums\\UserRole.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T15:06:31.013Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "CartItem.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\CartItem.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Domain\\Entities\\CartItem.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\CartItem.cs",
+              "RelativeToolTip": "FlowerShop.Domain\\Entities\\CartItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T15:07:34.611Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Address.cs",
+              "DocumentMoniker": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\Address.cs",
+              "RelativeDocumentMoniker": "FlowerShop.Domain\\Entities\\Address.cs",
+              "ToolTip": "E:\\Code_Data\\FlowerShop_Website\\FlowerShop.Domain\\Entities\\Address.cs",
+              "RelativeToolTip": "FlowerShop.Domain\\Entities\\Address.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwBMAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T15:07:38.435Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

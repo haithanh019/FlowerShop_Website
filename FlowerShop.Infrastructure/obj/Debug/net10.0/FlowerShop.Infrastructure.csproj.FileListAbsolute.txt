@@ -1,0 +1,15 @@
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\bin\Debug\net10.0\FlowerShop.Infrastructure.deps.json
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\bin\Debug\net10.0\FlowerShop.Infrastructure.dll
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\bin\Debug\net10.0\FlowerShop.Infrastructure.pdb
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\bin\Debug\net10.0\FlowerShop.Domain.dll
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\bin\Debug\net10.0\FlowerShop.Domain.pdb
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\obj\Debug\net10.0\FlowerShop.Infrastructure.csproj.AssemblyReference.cache
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\obj\Debug\net10.0\FlowerShop.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\obj\Debug\net10.0\FlowerShop.Infrastructure.AssemblyInfoInputs.cache
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\obj\Debug\net10.0\FlowerShop.Infrastructure.AssemblyInfo.cs
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\obj\Debug\net10.0\FlowerShop.Infrastructure.csproj.CoreCompileInputs.cache
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\obj\Debug\net10.0\FlowerSh.CC6F5838.Up2Date
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\obj\Debug\net10.0\FlowerShop.Infrastructure.dll
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\obj\Debug\net10.0\refint\FlowerShop.Infrastructure.dll
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\obj\Debug\net10.0\FlowerShop.Infrastructure.pdb
+E:\Code_Data\FlowerShop_Website\FlowerShop.Infrastructure\obj\Debug\net10.0\ref\FlowerShop.Infrastructure.dll
