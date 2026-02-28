@@ -1,5 +1,6 @@
 
 using FlowerShop.Infrastructure.Data;
+using FlowerShop.Infrastructure.UnitOfWork;
 using FlowerShop.Utility.Constants;
 using FlowerShop.Utility.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,10 @@ namespace FlowerShop.API
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+            //Unit of Work
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
             var app = builder.Build();
 

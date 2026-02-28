@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FlowerShop.Infrastructure\FlowerShop.Infrastructure.csproj" />
+    <ProjectReference Include="..\FlowerShop.Domain\FlowerShop.Domain.csproj" />
   </ItemGroup>
 
 </Project>

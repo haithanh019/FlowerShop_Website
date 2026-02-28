@@ -30,6 +30,9 @@ namespace FlowerShop.Infrastructure.Data
                 .HasForeignKey<Cart>(c => c.UserID)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<User>()
+                .HasIndex(x => x.Email)
+                .IsUnique();
             // 2. User - Address (1-n)
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Addresses)
