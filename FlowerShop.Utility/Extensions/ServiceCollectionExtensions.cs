@@ -1,10 +1,7 @@
-﻿using FlowerShop.Utility.Models;
-using FlowerShop.Utility.Services.Abstractions;
-using FlowerShop.Utility.Services.Implements;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FlowerShop.Utility.Extensions
+namespace FlowerShop.Utility
 {
     public static class ServiceCollectionExtensions
     {

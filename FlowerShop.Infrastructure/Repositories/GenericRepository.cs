@@ -1,9 +1,7 @@
-﻿using FlowerShop.Infrastructure.Data;
-using FlowerShop.Infrastructure.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace FlowerShop.Infrastructure.Repositories
+namespace FlowerShop.Infrastructure
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
@@ -38,7 +36,10 @@ namespace FlowerShop.Infrastructure.Repositories
             var query = trackChanges ? _dbSet : _dbSet.AsNoTracking();
             return await query.Where(predicate).ToListAsync();
         }
-
+        public IQueryable<T> GetQuery()
+        {
+            return _dbSet.AsNoTracking().AsQueryable();
+        }
         public async Task AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);

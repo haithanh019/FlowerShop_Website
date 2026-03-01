@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FlowerShop.Application.Mappings
+namespace FlowerShop.Application.DTOs.Cart
 {
-    internal class Mapper
+    internal class CartDTO
     {
     }
 }

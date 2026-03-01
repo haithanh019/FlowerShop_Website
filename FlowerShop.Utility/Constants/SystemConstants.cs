@@ -1,4 +1,4 @@
-﻿namespace FlowerShop.Utility.Constants
+﻿namespace FlowerShop.Utility
 {
     public static class SystemConstants
     {

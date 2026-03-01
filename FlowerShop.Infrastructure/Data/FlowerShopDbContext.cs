@@ -1,7 +1,7 @@
-﻿using FlowerShop.Domain.Entities;
+﻿using FlowerShop.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace FlowerShop.Infrastructure.Data
+namespace FlowerShop.Infrastructure
 {
     public class FlowerShopDbContext : DbContext
     {

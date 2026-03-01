@@ -1,11 +1,9 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
-using FlowerShop.Utility.Models;
-using FlowerShop.Utility.Services.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
-namespace FlowerShop.Utility.Services.Implements
+namespace FlowerShop.Utility
 {
     public class CloudinaryService : ICloudinaryService
     {

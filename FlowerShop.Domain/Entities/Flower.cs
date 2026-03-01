@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace FlowerShop.Domain.Entities
+namespace FlowerShop.Domain
 {
     public class Flower
     {

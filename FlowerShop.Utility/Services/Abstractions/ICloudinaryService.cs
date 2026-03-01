@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace FlowerShop.Utility.Services.Abstractions
+namespace FlowerShop.Utility
 {
     public interface ICloudinaryService
     {

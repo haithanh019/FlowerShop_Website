@@ -1,11 +1,9 @@
-﻿using FlowerShop.Utility.Models;
-using FlowerShop.Utility.Services.Abstractions;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
 
-namespace FlowerShop.Utility.Services.Implements;
+namespace FlowerShop.Utility;
 
 public class EmailService : IEmailService
 {

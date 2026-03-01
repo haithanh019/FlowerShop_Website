@@ -1,4 +1,4 @@
-﻿namespace FlowerShop.Utility.Services.Abstractions;
+﻿namespace FlowerShop.Utility;
 
 /// <summary>
 /// Interface for sending emails.

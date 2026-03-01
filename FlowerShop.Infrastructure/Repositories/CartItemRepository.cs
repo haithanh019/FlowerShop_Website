@@ -1,8 +1,6 @@
-﻿using FlowerShop.Domain.Entities;
-using FlowerShop.Infrastructure.Data;
-using FlowerShop.Infrastructure.Repositories.Interfaces;
+﻿using FlowerShop.Domain;
 
-namespace FlowerShop.Infrastructure.Repositories
+namespace FlowerShop.Infrastructure
 {
     public class CartItemRepository : GenericRepository<CartItem>, ICartItemRepository
     {

@@ -1,7 +1,6 @@
-﻿using FlowerShop.Utility.Middlewares;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 
-namespace FlowerShop.Utility.Extensions
+namespace FlowerShop.Utility
 {
     public static class ApplicationBuilderExtensions
     {

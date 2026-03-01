@@ -1,4 +1,4 @@
-﻿namespace FlowerShop.Utility.Exceptions;
+﻿namespace FlowerShop.Utility;
 
 public class NotFoundException : Exception
 {

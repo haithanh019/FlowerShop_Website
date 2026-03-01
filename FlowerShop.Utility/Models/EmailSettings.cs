@@ -1,4 +1,4 @@
-﻿namespace FlowerShop.Utility.Models;
+﻿namespace FlowerShop.Utility;
 
 public class EmailSettings
 {

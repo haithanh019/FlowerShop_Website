@@ -1,7 +1,7 @@
-﻿using FlowerShop.Domain.Entities;
+﻿using FlowerShop.Domain;
 using Microsoft.AspNetCore.Http;
 
-namespace FlowerShop.Infrastructure.Repositories.Interfaces
+namespace FlowerShop.Infrastructure
 {
     public interface IFlowerImageRepository : IGenericRepository<FlowerImage>
     {

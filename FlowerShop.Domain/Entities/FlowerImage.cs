@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FlowerShop.Domain.Entities
+namespace FlowerShop.Domain
 {
     public class FlowerImage
     {

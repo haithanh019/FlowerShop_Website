@@ -7,14 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\AdressDTO\" />
-    <Folder Include="DTOs\CartDTO\" />
-    <Folder Include="DTOs\CategoryDTO\" />
-    <Folder Include="DTOs\FlowerDTO\" />
-    <Folder Include="DTOs\UserDTO\" />
-    <Folder Include="DTOs\PaymentDTO\" />
-    <Folder Include="DTOs\OrderDTO\" />
-    <Folder Include="Services\Interfaces\" />
+    <Folder Include="DTOs\Adress\" />
+    <Folder Include="DTOs\Flower\" />
+    <Folder Include="DTOs\Payment\" />
+    <Folder Include="DTOs\Order\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.16.0" />
   </ItemGroup>
 
   <ItemGroup>

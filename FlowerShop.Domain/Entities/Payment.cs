@@ -1,8 +1,7 @@
-﻿using FlowerShop.Domain.Enums;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace FlowerShop.Domain.Entities
+namespace FlowerShop.Domain
 {
     public class Payment
     {

@@ -1,6 +1,6 @@
-﻿using FlowerShop.Domain.Entities;
+﻿using FlowerShop.Domain;
 
-namespace FlowerShop.Infrastructure.Repositories.Interfaces
+namespace FlowerShop.Infrastructure
 {
     public interface ICategoryRepository : IGenericRepository<Category>
     {

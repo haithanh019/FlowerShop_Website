@@ -1,11 +1,10 @@
-﻿using FlowerShop.Utility.Exceptions;
-using FlowerShop.Utility.Models;
+﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text.Json;
 
-namespace FlowerShop.Utility.Middlewares
+namespace FlowerShop.Utility
 {
     public class GlobalExceptionMiddleware
     {

@@ -1,0 +1,11 @@
+﻿using FlowerShop.Utility;
+
+namespace FlowerShop.Application
+{
+    public interface IUserService
+    {
+        IQueryable<UserDTO> GetUsersOData();
+        Task<ApiResponse<UserDTO>> RegisterAsync(UserRegisterDTO dto);
+        Task<ApiResponse<UserDTO>> LoginAsync(UserLoginDTO dto);
+    }
+}

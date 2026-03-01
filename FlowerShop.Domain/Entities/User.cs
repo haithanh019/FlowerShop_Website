@@ -1,7 +1,6 @@
-﻿using FlowerShop.Domain.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace FlowerShop.Domain.Entities
+namespace FlowerShop.Domain
 {
     public class User
     {

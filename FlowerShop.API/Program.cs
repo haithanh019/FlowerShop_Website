@@ -1,9 +1,14 @@
 
-using FlowerShop.Infrastructure.Data;
-using FlowerShop.Infrastructure.UnitOfWork;
-using FlowerShop.Utility.Constants;
-using FlowerShop.Utility.Extensions;
+using FlowerShop.Application;
+using FlowerShop.Infrastructure;
+using FlowerShop.Utility;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
+using System.Text;
 
 namespace FlowerShop.API
 {
@@ -14,15 +19,65 @@ namespace FlowerShop.API
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<FlowerShopDbContext>(options =>
                options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.ConnectionStringKey)));
-            // Add services to the container.
+            builder.Services.AddAutoMapper(typeof(MapperProfile));
 
-            builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
 
             //Unit of Work
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //Facade Service
+            builder.Services.AddScoped<IFacadeService, FacadeService>();
+            //Utility Services
+            builder.Services.AddFlowerShopUtility(builder.Configuration);
 
+            //Orthers
+            builder.Services.AddScoped<CoreDependencies>();
+            builder.Services.AddScoped<InfraDependencies>();
+            //OData
+            static IEdmModel GetEdmModel()
+            {
+                var odataBuilder = new ODataConventionModelBuilder();
+                odataBuilder.EntitySet<UserDTO>("Users");
+                odataBuilder.EntitySet<CategoryDTO>("Categories");
+
+                return odataBuilder.GetEdmModel();
+            }
+
+            builder.Services.AddControllers()
+            .AddOData(options => options
+                .Select()
+                .Filter()
+                .OrderBy()
+                .Expand()
+                .Count()
+                .SetMaxTop(100)
+                .AddRouteComponents("Odata", GetEdmModel()));
+
+            //JWT
+            var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+            var secretKey = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!);
+
+            //Authentication
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(secretKey)
+                };
+            });
+
+            builder.Services.AddControllers();
+            builder.Services.AddOpenApi();
 
             var app = builder.Build();
 

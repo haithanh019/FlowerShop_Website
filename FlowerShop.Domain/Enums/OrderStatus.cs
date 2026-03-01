@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FlowerShop.Domain.Enums
-{      
+namespace FlowerShop.Domain
+{
     public enum OrderStatus
     {
         [Display(Name = "Processing")]

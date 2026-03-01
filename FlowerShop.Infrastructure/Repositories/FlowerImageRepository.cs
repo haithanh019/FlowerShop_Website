@@ -1,14 +1,12 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
-using FlowerShop.Domain.Entities;
-using FlowerShop.Infrastructure.Data;
-using FlowerShop.Infrastructure.Repositories.Interfaces;
-using FlowerShop.Utility.Models;
+using FlowerShop.Domain;
+using FlowerShop.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace FlowerShop.Infrastructure.Repositories
+namespace FlowerShop.Infrastructure
 {
     public class FlowerImageRepository : GenericRepository<FlowerImage>, IFlowerImageRepository
     {
