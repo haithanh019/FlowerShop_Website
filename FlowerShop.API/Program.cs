@@ -19,9 +19,8 @@ namespace FlowerShop.API
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<FlowerShopDbContext>(options =>
                options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.ConnectionStringKey)));
+            //Auto Mapper
             builder.Services.AddAutoMapper(typeof(MapperProfile));
-
-
             //Unit of Work
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             //Facade Service
@@ -38,7 +37,7 @@ namespace FlowerShop.API
                 var odataBuilder = new ODataConventionModelBuilder();
                 odataBuilder.EntitySet<UserDTO>("Users");
                 odataBuilder.EntitySet<CategoryDTO>("Categories");
-
+                odataBuilder.EntitySet<FlowerDTO>("Flowers");
                 return odataBuilder.GetEdmModel();
             }
 

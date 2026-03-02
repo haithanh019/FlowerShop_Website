@@ -19,6 +19,16 @@ namespace FlowerShop.Application
             CreateMap<Category, CategoryDTO>();
             CreateMap<CategoryCreateDTO, Category>();
             CreateMap<CategoryUpdateDTO, Category>();
+
+            // Flower mappings
+            CreateMap<FlowerCreateDTO, Flower>();
+            CreateMap<FlowerUpdateDTO, Flower>();
+            CreateMap<Flower, FlowerDTO>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : "N/A"))
+                .ForMember(dest => dest.FlowerImages, opt => opt.MapFrom(src => src.FlowerImages));
+
+            // FlowerImage mappings
+            CreateMap<FlowerImage, FlowerImageDTO>();
         }
     }
 }

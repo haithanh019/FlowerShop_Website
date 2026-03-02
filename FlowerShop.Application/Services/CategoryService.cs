@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using FlowerShop.Domain;
 using FlowerShop.Infrastructure;
 using FlowerShop.Utility;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace FlowerShop.Application
 {
@@ -15,7 +16,7 @@ namespace FlowerShop.Application
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
+        [EnableQuery]
         public IQueryable<CategoryDTO> GetCategoriesOData()
         {
             return _unitOfWork.CategoryRepository.GetQuery().ProjectTo<CategoryDTO>(_mapper.ConfigurationProvider);
