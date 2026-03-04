@@ -1,6 +1,7 @@
 <Solution>
   <Project Path="FlowerShop.API/FlowerShop.API.csproj" Id="0242937c-1fbb-40dc-887e-5054bf212284" />
   <Project Path="FlowerShop.Application/FlowerShop.Application.csproj" Id="5876e32a-e90d-4577-bffd-27eaef9a7750" />
+  <Project Path="FlowerShop.Client/FlowerShop.Client.csproj" Id="a2b3903c-3f2a-4bc8-9061-cf21c839ab89" />
   <Project Path="FlowerShop.Domain/FlowerShop.Domain.csproj" Id="cfaa5db6-42b9-4360-a6a2-9dfef853405d" />
   <Project Path="FlowerShop.Infrastructure/FlowerShop.Infrastructure.csproj" Id="662cfecb-5622-43fc-8bd6-ad087911e269" />
   <Project Path="FlowerShop.Utility/FlowerShop.Utility.csproj" Id="f41f0a20-6d22-4406-aa6f-90087debfe0b" />
