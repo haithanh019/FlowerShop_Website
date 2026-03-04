@@ -7,5 +7,6 @@ namespace FlowerShop.Application
         IQueryable<UserDTO> GetUsersOData();
         Task<ApiResponse<UserDTO>> RegisterAsync(UserRegisterDTO dto);
         Task<ApiResponse<UserDTO>> LoginAsync(UserLoginDTO dto);
+        Task<ApiResponse<bool>> LogoutAsync();
     }
 }

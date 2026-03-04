@@ -18,16 +18,22 @@ namespace FlowerShop.API
         {
             return _facadeService.UserService.GetUsersOData();
         }
-
+        [HttpPost("api/Users/Register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterDTO dto)
         {
             var result = await _facadeService.UserService.RegisterAsync(dto);
             return Ok(result);
         }
-
+        [HttpPost("api/Users/Login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDTO dto)
         {
             var result = await _facadeService.UserService.LoginAsync(dto);
+            return Ok(result);
+        }
+        [HttpPost("api/Users/Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var result = await _facadeService.UserService.LogoutAsync();
             return Ok(result);
         }
     }

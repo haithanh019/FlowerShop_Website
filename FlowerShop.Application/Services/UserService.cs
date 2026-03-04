@@ -65,6 +65,10 @@ namespace FlowerShop.Application
             return new ApiResponse<UserDTO>(response, "Login successful.");
         }
 
+        public Task<ApiResponse<bool>> LogoutAsync()
+        {
+            return Task.FromResult(new ApiResponse<bool>(true, "Logout successful."));
+        }
         private string GenerateJwtToken(User user)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");

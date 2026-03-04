@@ -1,0 +1,31 @@
+﻿@model FlowerShop.Application.UserLoginDTO
+@{
+    ViewData["Title"] = "Đăng Nhập";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <h3 class="text-center mb-4">Đăng Nhập</h3>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            </div>
+        }
+
+        <form asp-action="Login" method="post">
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Mật khẩu</label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Đăng Nhập</button>
+        </form>
+    </div>
+</div>
