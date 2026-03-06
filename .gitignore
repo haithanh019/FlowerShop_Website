@@ -119,5 +119,6 @@ logs/
 .vs/
 /appsettings.json
 
-
+.postman
+postman
  

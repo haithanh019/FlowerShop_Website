@@ -1,0 +1,446 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<div class="header-top-bar" role="marquee" aria-label="Thông báo khuyến mãi">
+    <div class="top-bar-track" aria-hidden="true">
+        @for (int i = 0; i < 2; i++)
+        {
+            <span class="top-bar-item">
+                <span class="dot"></span>
+                Miễn phí giao hàng cho đơn từ <span class="highlight">299.000đ</span>
+            </span>
+            <span class="top-bar-item">
+                <span class="dot"></span>
+                Hoa tươi nhập khẩu mỗi ngày &nbsp;🌸
+            </span>
+            <span class="top-bar-item">
+                <span class="dot"></span>
+                Đặt trước 14:00 — giao trong ngày <span class="highlight">nội thành HCM</span>
+            </span>
+            <span class="top-bar-item">
+                <span class="dot"></span>
+                Ưu đãi thành viên mới: <span class="highlight">giảm 15%</span> đơn đầu tiên
+            </span>
+            <span class="top-bar-item">
+                <span class="dot"></span>
+                Hotline: <span class="highlight">090 123 4567</span> — mở cửa 7:00 – 21:00
+            </span>
+        }
+    </div>
+</div>
+
+@* ── Main Navbar ── *@
+<header>
+    <nav class="navbar-floral" role="navigation" aria-label="Điều hướng chính">
+        <div class="container-fluid">
+
+            @* ── Brand Logo ── *@
+            <a asp-area="" asp-controller="Home" asp-action="Index"
+               class="navbar-brand-floral" aria-label="Bloom & Petal - Trang chủ">
+                <div class="brand-icon-wrap" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 36 36" fill="none">
+                        <ellipse cx="18" cy="9" rx="5" ry="9" fill="white" opacity=".95" />
+                        <ellipse cx="18" cy="9" rx="5" ry="9" fill="white" opacity=".9" transform="rotate(60 18 18)" />
+                        <ellipse cx="18" cy="9" rx="5" ry="9" fill="white" opacity=".9" transform="rotate(120 18 18)" />
+                        <ellipse cx="18" cy="9" rx="5" ry="9" fill="white" opacity=".85" transform="rotate(180 18 18)" />
+                        <ellipse cx="18" cy="9" rx="5" ry="9" fill="white" opacity=".85" transform="rotate(240 18 18)" />
+                        <ellipse cx="18" cy="9" rx="5" ry="9" fill="white" opacity=".85" transform="rotate(300 18 18)" />
+                        <circle cx="18" cy="18" r="5.5" fill="#f9d58a" />
+                    </svg>
+                </div>
+                <div class="brand-text-wrap">
+                    <span class="brand-text-name">Bloom &amp; Petal</span>
+                    <span class="brand-text-sub">Flower Shop</span>
+                </div>
+            </a>
+
+            @* ── Center Navigation ── *@
+            <ul class="navbar-nav-floral" role="menubar">
+
+                <li class="nav-item-floral" role="none">
+                    <a asp-area="" asp-controller="Home" asp-action="Index"
+                       class="nav-link-floral" role="menuitem">Trang Chủ</a>
+                </li>
+
+                @* Dropdown: Sản Phẩm *@
+                <li class="nav-item-floral" role="none">
+                    <a asp-area="" asp-controller="Product" asp-action="Index"
+                       class="nav-link-floral" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                        Sản Phẩm
+                        <svg class="chevron" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </a>
+                    <ul class="nav-dropdown" role="menu">
+                        <li role="none">
+                            <a asp-area="" asp-controller="Product" asp-action="Bouquet" role="menuitem">
+                                <span class="dd-icon">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22V12M12 12C12 12 7 9 7 5a5 5 0 0 1 10 0c0 4-5 7-5 7z" /></svg>
+                                </span>
+                                Bó Hoa
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a asp-area="" asp-controller="Product" asp-action="Vase" role="menuitem">
+                                <span class="dd-icon">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2h8l1 7H7L8 2z" /><path d="M7 9c0 5 2 9 5 9s5-4 5-9" /></svg>
+                                </span>
+                                Hoa Cắm Bình
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a asp-area="" asp-controller="Product" asp-action="Basket" role="menuitem">
+                                <span class="dd-icon">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /></svg>
+                                </span>
+                                Giỏ Hoa Quà Tặng
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a asp-area="" asp-controller="Product" asp-action="Seasonal" role="menuitem">
+                                <span class="dd-icon">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z" /><path d="M12 6v6l4 2" /></svg>
+                                </span>
+                                Hoa Theo Mùa
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item-floral" role="none">
+                    <a asp-area="" asp-controller="Blog" asp-action="Index"
+                       class="nav-link-floral" role="menuitem">Blog</a>
+                </li>
+
+                <li class="nav-item-floral" role="none">
+                    <a asp-area="" asp-controller="Home" asp-action="About"
+                       class="nav-link-floral" role="menuitem">Về Chúng Tôi</a>
+                </li>
+
+                <li class="nav-item-floral" role="none">
+                    <a asp-area="" asp-controller="Home" asp-action="Contact"
+                       class="nav-link-floral" role="menuitem">Liên Hệ</a>
+                </li>
+
+            </ul>
+
+            @* ── Right Actions ── *@
+            <div class="navbar-actions">
+
+                @* Search *@
+                <button type="button" class="action-btn" id="searchToggle"
+                        aria-label="Tìm kiếm" aria-expanded="false" aria-controls="searchOverlay">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                </button>
+
+                @* Wishlist *@
+                <a asp-area="" asp-controller="Wishlist" asp-action="Index"
+                   class="action-btn" aria-label="Danh sách yêu thích">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round" aria-hidden="true">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                    </svg>
+                </a>
+
+                @* Cart *@
+                <a asp-area="" asp-controller="Cart" asp-action="Index"
+                   class="action-btn" aria-label="Giỏ hàng">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round" aria-hidden="true">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 0 1-8 0" />
+                    </svg>
+                    @* Badge: thay ViewBag.CartCount bằng số thực từ controller *@
+                    @if (ViewBag.CartCount != null && ViewBag.CartCount > 0)
+                    {
+                        <span class="action-badge" aria-label="@ViewBag.CartCount sản phẩm">
+                            @ViewBag.CartCount
+                        </span>
+                    }
+                </a>
+
+                <div class="action-divider" aria-hidden="true"></div>
+
+                @* Auth buttons *@
+                @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext?.Session.GetString("JWToken")))
+                {
+                    @* Account dropdown *@
+                    <a asp-area="" asp-controller="Auth" asp-action="Profile"
+                       class="action-btn" aria-label="Tài khoản của tôi">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </a>
+                    <a asp-area="" asp-controller="Auth" asp-action="Logout"
+                       class="btn-drawer-outline">Đăng Xuất</a>
+                }
+                else
+                {
+                    <a asp-area="" asp-controller="Auth" asp-action="Login"
+                       class="btn-nav-cta">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                            <polyline points="10 17 15 12 10 7" />
+                            <line x1="15" y1="12" x2="3" y2="12" />
+                        </svg>
+                        Đăng Nhập
+                    </a>
+                }
+
+                @* Mobile toggle *@
+                <button class="navbar-toggler-floral" id="drawerToggle"
+                        type="button" aria-label="Mở menu" aria-expanded="false"
+                        aria-controls="mobileDrawer">
+                    <span class="toggler-bar"></span>
+                    <span class="toggler-bar"></span>
+                    <span class="toggler-bar"></span>
+                </button>
+
+            </div>
+        </div>
+    </nav>
+</header>
+
+@* ── Search Overlay ── *@
+<div class="search-overlay" id="searchOverlay" role="dialog"
+     aria-modal="true" aria-label="Tìm kiếm sản phẩm">
+    <div class="search-box">
+        <div class="search-input-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input type="search" class="search-input" id="searchInput"
+                   placeholder="Tìm kiếm hoa, bó hoa, quà tặng..."
+                   autocomplete="off" />
+            <button type="button" class="search-close" id="searchClose" aria-label="Đóng tìm kiếm">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+        <div class="search-hints">
+            <a asp-area="" asp-controller="Product" asp-action="Index"
+               asp-route-q="hồng" class="search-hint-tag">🌹 Hoa hồng</a>
+            <a asp-area="" asp-controller="Product" asp-action="Index"
+               asp-route-q="hướng dương" class="search-hint-tag">🌻 Hướng dương</a>
+            <a asp-area="" asp-controller="Product" asp-action="Index"
+               asp-route-q="sinh nhật" class="search-hint-tag">🎂 Sinh nhật</a>
+            <a asp-area="" asp-controller="Product" asp-action="Index"
+               asp-route-q="cưới" class="search-hint-tag">💒 Đám cưới</a>
+            <a asp-area="" asp-controller="Product" asp-action="Index"
+               asp-route-q="8/3" class="search-hint-tag">🎀 Quà 8/3</a>
+        </div>
+    </div>
+</div>
+
+@* ── Mobile Drawer Backdrop ── *@
+<div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true"></div>
+
+@* ── Mobile Drawer ── *@
+<nav class="mobile-drawer" id="mobileDrawer" role="dialog"
+     aria-modal="true" aria-label="Menu điều hướng">
+
+    <div class="drawer-header">
+        <span class="drawer-brand">Bloom &amp; Petal</span>
+        <button class="drawer-close" id="drawerClose" aria-label="Đóng menu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+        </button>
+    </div>
+
+    <ul class="drawer-nav">
+        <li>
+            <a asp-area="" asp-controller="Home" asp-action="Index">
+                <span class="d-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+                </span>
+                Trang Chủ
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Product" asp-action="Index">
+                <span class="d-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22V12M12 12C12 12 7 9 7 5a5 5 0 0 1 10 0c0 4-5 7-5 7z" /></svg>
+                </span>
+                Sản Phẩm
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Product" asp-action="Seasonal">
+                <span class="d-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg>
+                </span>
+                Hoa Theo Mùa
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Blog" asp-action="Index">
+                <span class="d-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
+                </span>
+                Blog
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Home" asp-action="About">
+                <span class="d-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
+                </span>
+                Về Chúng Tôi
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Home" asp-action="Contact">
+                <span class="d-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.61 19a19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.34 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                </span>
+                Liên Hệ
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                <span class="d-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+                </span>
+                Chính Sách
+            </a>
+        </li>
+    </ul>
+
+    <div class="drawer-cta">
+        @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext?.Session.GetString("JWToken")))
+        {
+            <a asp-area="" asp-controller="Account" asp-action="Profile"
+               class="btn-drawer-primary">Tài Khoản Của Tôi</a>
+            <a asp-area="" asp-controller="Account" asp-action="Logout"
+               class="btn-drawer-outline">Đăng Xuất</a>
+        }
+        else
+        {
+            <a asp-area="" asp-controller="Account" asp-action="Login"
+               class="btn-drawer-primary">Đăng Nhập</a>
+            <a asp-area="" asp-controller="Account" asp-action="Register"
+               class="btn-drawer-outline">Đăng Ký Tài Khoản</a>
+        }
+    </div>
+
+</nav>
+
+@* ══════════════════════════════════════════════════════════════
+   SCRIPTS
+══════════════════════════════════════════════════════════════ *@
+@section Scripts {
+    <script>
+        (function () {
+            /* ── Scroll: shrink navbar ──────────────────────────── */
+            const navbar = document.querySelector('.navbar-floral');
+            if (navbar) {
+                const onScroll = () => {
+                    navbar.classList.toggle('is-scrolled', window.scrollY > 40);
+                };
+                window.addEventListener('scroll', onScroll, { passive: true });
+            }
+
+            /* ── Search overlay ─────────────────────────────────── */
+            const searchToggle  = document.getElementById('searchToggle');
+            const searchClose   = document.getElementById('searchClose');
+            const searchOverlay = document.getElementById('searchOverlay');
+            const searchInput   = document.getElementById('searchInput');
+
+            function openSearch() {
+                searchOverlay.classList.add('is-open');
+                searchToggle?.setAttribute('aria-expanded', 'true');
+                setTimeout(() => searchInput?.focus(), 80);
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeSearch() {
+                searchOverlay.classList.remove('is-open');
+                searchToggle?.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+
+            searchToggle?.addEventListener('click', openSearch);
+            searchClose?.addEventListener('click', closeSearch);
+
+            searchOverlay?.addEventListener('click', function (e) {
+                if (e.target === searchOverlay) closeSearch();
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    closeSearch();
+                    closeMobileDrawer();
+                }
+                // Ctrl+K / Cmd+K shortcut
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    openSearch();
+                }
+            });
+
+            /* ── Mobile Drawer ──────────────────────────────────── */
+            const drawerToggle   = document.getElementById('drawerToggle');
+            const drawerClose    = document.getElementById('drawerClose');
+            const mobileDrawer   = document.getElementById('mobileDrawer');
+            const drawerBackdrop = document.getElementById('drawerBackdrop');
+
+            function openMobileDrawer() {
+                mobileDrawer.classList.add('is-open');
+                drawerBackdrop.classList.add('is-open');
+                drawerToggle.classList.add('is-open');
+                drawerToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMobileDrawer() {
+                mobileDrawer.classList.remove('is-open');
+                drawerBackdrop.classList.remove('is-open');
+                drawerToggle?.classList.remove('is-open');
+                drawerToggle?.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+
+            drawerToggle?.addEventListener('click', openMobileDrawer);
+            drawerClose?.addEventListener('click', closeMobileDrawer);
+            drawerBackdrop?.addEventListener('click', closeMobileDrawer);
+
+            /* ── Active nav link highlight ──────────────────────── */
+            const currentPath = window.location.pathname.toLowerCase();
+            document.querySelectorAll('.nav-link-floral, .drawer-nav a').forEach(link => {
+                try {
+                    const linkPath = new URL(link.href).pathname.toLowerCase();
+                    if (linkPath !== '/' && currentPath.startsWith(linkPath)) {
+                        link.classList.add('active');
+                    } else if (linkPath === '/' && currentPath === '/') {
+                        link.classList.add('active');
+                    }
+                } catch (_) {}
+            });
+        })();
+    </script>
+}

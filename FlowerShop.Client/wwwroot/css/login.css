@@ -1,0 +1,446 @@
+/* ============================================================
+   FlowerShop — Login Page Styles
+   Font: Cormorant Garamond (display) + DM Sans (body)
+   Palette: Blush pink, sage mint, ivory, soft gold
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ── CSS Variables ─────────────────────────────────────────── */
+:root {
+    --blush:       #f7b8c4;
+    --blush-deep:  #f093a7;
+    --rose:        #e8748a;
+    --mint:        #b8e0d4;
+    --mint-deep:   #8ecfbe;
+    --sage:        #6bbfaa;
+    --ivory:       #fdf6f0;
+    --gold:        #d4a96a;
+    --text-dark:   #3d2b35;
+    --text-mid:    #7a5c68;
+    --text-light:  #b59aa8;
+    --white:       #ffffff;
+    --shadow-soft: 0 8px 32px rgba(232, 116, 138, 0.18);
+    --shadow-card: 0 20px 60px rgba(61, 43, 53, 0.15);
+    --radius-card: 24px;
+    --radius-input: 14px;
+}
+
+/* ── Reset & Base ──────────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* ── Full-page Layout ──────────────────────────────────────── */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+        135deg,
+        #fce4ec 0%,
+        #fdf6f0 30%,
+        #e8f5f0 65%,
+        #e0f2ef 100%
+    );
+}
+
+/* ── Animated gradient blob background ────────────────────── */
+.login-page::before,
+.login-page::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.45;
+    animation: blob-drift 12s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.login-page::before {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, #f7b8c4 0%, #f7c5d0 60%, transparent 100%);
+    top: -180px;
+    left: -180px;
+    animation-delay: 0s;
+}
+
+.login-page::after {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #b8e0d4 0%, #c5e8e0 60%, transparent 100%);
+    bottom: -150px;
+    right: -150px;
+    animation-delay: -6s;
+}
+
+@keyframes blob-drift {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(40px, 30px) scale(1.08); }
+}
+
+/* ── Floating petal decorations ────────────────────────────── */
+.petal {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    animation: petal-fall linear infinite;
+}
+
+@keyframes petal-fall {
+    0%   { transform: translateY(-60px) rotate(0deg);   opacity: 0; }
+    10%  { opacity: 0.7; }
+    90%  { opacity: 0.5; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* ── Corner SVG flowers ─────────────────────────────────────── */
+.deco-flower {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.22;
+    transition: opacity 0.3s;
+}
+
+.deco-flower--tl { top: -30px; left: -30px; transform: rotate(-15deg); }
+.deco-flower--tr { top: -30px; right: -30px; transform: rotate(20deg) scaleX(-1); }
+.deco-flower--bl { bottom: -30px; left: -30px; transform: rotate(10deg); }
+.deco-flower--br { bottom: -30px; right: -30px; transform: rotate(-10deg) scaleX(-1); }
+
+/* ── Card Container ─────────────────────────────────────────── */
+.login-card-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 460px;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-radius: var(--radius-card);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: var(--shadow-card),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+    padding: 3rem 2.75rem 2.5rem;
+    animation: card-enter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes card-enter {
+    from { opacity: 0; transform: translateY(28px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Brand Header ───────────────────────────────────────────── */
+.brand-header {
+    text-align: center;
+    margin-bottom: 2.2rem;
+    animation: fade-up 0.6s 0.1s ease both;
+}
+
+.brand-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, var(--blush) 0%, var(--blush-deep) 100%);
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    box-shadow: 0 6px 20px rgba(240, 147, 167, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brand-logo:hover {
+    transform: scale(1.07) rotate(5deg);
+    box-shadow: 0 10px 28px rgba(240, 147, 167, 0.5);
+}
+
+.brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.85rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+}
+
+.brand-slogan {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--text-light);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.divider-floral {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 1.2rem 0 0;
+    justify-content: center;
+}
+
+.divider-floral::before,
+.divider-floral::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--blush));
+}
+
+.divider-floral::after {
+    background: linear-gradient(to left, transparent, var(--blush));
+}
+
+/* ── Section Title ──────────────────────────────────────────── */
+.login-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text-mid);
+    text-align: center;
+    margin-bottom: 1.8rem;
+    animation: fade-up 0.6s 0.2s ease both;
+}
+
+/* ── Validation Alert ───────────────────────────────────────── */
+.alert-floral {
+    background: rgba(247, 184, 196, 0.2);
+    border: 1px solid rgba(232, 116, 138, 0.3);
+    border-left: 4px solid var(--rose);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.4rem;
+    font-size: 0.84rem;
+    color: #c0404f;
+    animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    40%       { transform: translateX(6px); }
+    60%       { transform: translateX(-4px); }
+    80%       { transform: translateX(4px); }
+}
+
+/* ── Form Fields ────────────────────────────────────────────── */
+.form-group {
+    margin-bottom: 1.25rem;
+    animation: fade-up 0.5s ease both;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.25s; }
+.form-group:nth-child(2) { animation-delay: 0.32s; }
+
+.form-label-custom {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    margin-bottom: 0.5rem;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-light);
+    transition: color 0.25s ease;
+    pointer-events: none;
+    z-index: 2;
+    display: flex;
+}
+
+.input-wrapper:focus-within .input-icon {
+    color: var(--rose);
+}
+
+.form-control-custom {
+    width: 100%;
+    padding: 0.82rem 1rem 0.82rem 2.9rem;
+    background: rgba(253, 246, 240, 0.7);
+    border: 1.5px solid rgba(247, 184, 196, 0.5);
+    border-radius: var(--radius-input);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+}
+
+.form-control-custom::placeholder {
+    color: var(--text-light);
+}
+
+.form-control-custom:focus {
+    border-color: var(--blush-deep);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 0 4px rgba(240, 147, 167, 0.15),
+                0 2px 8px rgba(240, 147, 167, 0.1);
+}
+
+.form-control-custom.input-error {
+    border-color: #e87474;
+    background: rgba(255, 235, 235, 0.5);
+}
+
+.validation-msg {
+    display: block;
+    font-size: 0.77rem;
+    color: #c0404f;
+    margin-top: 0.3rem;
+    padding-left: 0.3rem;
+}
+
+/* ── Password toggle ────────────────────────────────────────── */
+.toggle-password {
+    position: absolute;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-light);
+    padding: 0;
+    display: flex;
+    transition: color 0.2s;
+    z-index: 2;
+}
+
+.toggle-password:hover {
+    color: var(--rose);
+}
+
+/* ── Extras row ─────────────────────────────────────────────── */
+.form-extras {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+    animation: fade-up 0.5s 0.38s ease both;
+}
+
+.link-floral {
+    font-size: 0.8rem;
+    color: var(--sage);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.link-floral:hover {
+    color: var(--rose);
+}
+
+/* ── Submit Button ──────────────────────────────────────────── */
+.btn-login {
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    background: linear-gradient(135deg, var(--blush-deep) 0%, var(--rose) 50%, #d45f78 100%);
+    background-size: 200% auto;
+    border: none;
+    border-radius: var(--radius-input);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    cursor: pointer;
+    transition: background-position 0.4s ease,
+                box-shadow 0.3s ease,
+                transform 0.2s ease;
+    box-shadow: 0 6px 20px rgba(232, 116, 138, 0.4);
+    animation: fade-up 0.5s 0.44s ease both;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-login::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 60%);
+    border-radius: inherit;
+}
+
+.btn-login:hover {
+    background-position: right center;
+    box-shadow: 0 10px 28px rgba(232, 116, 138, 0.55);
+    transform: translateY(-2px);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 14px rgba(232, 116, 138, 0.4);
+}
+
+/* ── Footer links ───────────────────────────────────────────── */
+.card-footer-links {
+    text-align: center;
+    margin-top: 1.6rem;
+    font-size: 0.82rem;
+    color: var(--text-light);
+    animation: fade-up 0.5s 0.5s ease both;
+}
+
+.card-footer-links a {
+    color: var(--sage);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.card-footer-links a:hover {
+    color: var(--rose);
+}
+
+/* ── Entrance animation ─────────────────────────────────────── */
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 2.2rem 1.6rem 2rem;
+        border-radius: 20px;
+    }
+
+    .brand-name { font-size: 1.55rem; }
+
+    .deco-flower--tr,
+    .deco-flower--bl { display: none; }
+}
+
+@media (min-width: 992px) {
+    .deco-flower { opacity: 0.28; }
+}

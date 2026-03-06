@@ -1,0 +1,239 @@
+/* ============================================================
+   FlowerShop — Register Page (extends login.css)
+   Thêm: 2-col layout, step indicator, password strength
+   ============================================================ */
+
+/* ── Card rộng hơn cho nhiều trường ────────────────────────── */
+.register-card-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 560px;          /* rộng hơn login (460px) */
+}
+
+/* ── Step / Progress indicator ─────────────────────────────── */
+.register-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 1.8rem;
+    animation: fade-up 0.5s 0.15s ease both;
+}
+
+.step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    flex: 1;
+    position: relative;
+}
+
+/* Connector line */
+.step-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: calc(50% + 14px);
+    right: calc(-50% + 14px);
+    height: 2px;
+    background: rgba(247, 184, 196, 0.3);
+    z-index: 0;
+    transition: background 0.4s ease;
+}
+
+.step-item.done:not(:last-child)::after {
+    background: linear-gradient(to right, var(--blush-deep), var(--blush));
+}
+
+.step-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid rgba(247, 184, 196, 0.35);
+    background: rgba(253, 246, 240, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-light);
+    position: relative;
+    z-index: 1;
+    transition: border-color 0.3s, background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.step-item.active .step-circle {
+    border-color: var(--blush-deep);
+    background: linear-gradient(135deg, var(--blush), var(--blush-deep));
+    color: white;
+    box-shadow: 0 0 0 4px rgba(240, 147, 167, 0.2);
+}
+
+.step-item.done .step-circle {
+    border-color: var(--sage);
+    background: linear-gradient(135deg, var(--mint), var(--sage));
+    color: white;
+}
+
+.step-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-align: center;
+    transition: color 0.3s;
+    white-space: nowrap;
+}
+
+.step-item.active .step-label { color: var(--rose); }
+.step-item.done  .step-label  { color: var(--sage); }
+
+/* ── 2-column grid cho các trường ──────────────────────────── */
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 1.1rem;
+}
+
+.form-grid-2 .form-group--full {
+    grid-column: 1 / -1;
+}
+
+/* ── Password strength meter ────────────────────────────────── */
+.strength-wrap {
+    margin-top: 0.5rem;
+}
+
+.strength-bars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 0.3rem;
+}
+
+.strength-bar {
+    flex: 1;
+    height: 4px;
+    border-radius: 4px;
+    background: rgba(247, 184, 196, 0.2);
+    transition: background 0.35s ease;
+}
+
+.strength-bar.active-weak   { background: #e87474; }
+.strength-bar.active-fair   { background: #f0c96a; }
+.strength-bar.active-good   { background: var(--mint-deep); }
+.strength-bar.active-strong { background: var(--sage); }
+
+.strength-label {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    transition: color 0.3s;
+}
+
+.strength-label.weak   { color: #e87474; }
+.strength-label.fair   { color: #d4a96a; }
+.strength-label.good   { color: var(--mint-deep); }
+.strength-label.strong { color: var(--sage); }
+
+/* ── Confirm password match indicator ──────────────────────── */
+.match-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.72rem;
+    margin-top: 0.3rem;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.25s, transform 0.25s;
+}
+
+.match-indicator.show { opacity: 1; transform: translateY(0); }
+.match-indicator.match    { color: var(--sage); }
+.match-indicator.no-match { color: #e87474; }
+
+/* ── Terms checkbox ─────────────────────────────────────────── */
+.terms-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    margin-bottom: 1.4rem;
+    animation: fade-up 0.5s 0.46s ease both;
+}
+
+.checkbox-custom {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.checkbox-custom input[type="checkbox"] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.checkbox-custom .checkmark {
+    position: absolute;
+    inset: 0;
+    border-radius: 6px;
+    border: 1.5px solid rgba(247, 184, 196, 0.5);
+    background: rgba(253, 246, 240, 0.7);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox-custom input:checked + .checkmark {
+    border-color: var(--blush-deep);
+    background: linear-gradient(135deg, var(--blush), var(--blush-deep));
+}
+
+.checkbox-custom .checkmark::after {
+    content: '';
+    width: 5px;
+    height: 8px;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(45deg) translateY(-1px);
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.checkbox-custom input:checked + .checkmark::after { opacity: 1; }
+
+.terms-text {
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    line-height: 1.55;
+}
+
+.terms-text a {
+    color: var(--sage);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.terms-text a:hover { color: var(--rose); }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 520px) {
+    .register-card-wrapper { max-width: 100%; }
+
+    .form-grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid-2 .form-group--full {
+        grid-column: 1;
+    }
+
+    .register-steps { gap: 0; }
+    .step-label      { display: none; }
+}

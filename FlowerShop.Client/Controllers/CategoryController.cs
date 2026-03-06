@@ -28,7 +28,7 @@ namespace FlowerShop.Client.Controllers
 
             var token = HttpContext.Session.GetString("JWToken");
 
-            var response = await _baseService.PostAsync<CategoryDTO>("Categories", model, token);
+            var response = await _baseService.PostAsync<CategoryDTO>("Odata/Categories", model, token);
 
             if (response.Success)
             {
