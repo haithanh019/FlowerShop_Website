@@ -1,10 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace FlowerShop.Application.DTOs.Cart
+namespace FlowerShop.Application
 {
-    internal class CartDTO
+    public class CartDTO
+
     {
+        [Key]
+        public Guid CartID { get; set; } = Guid.NewGuid();
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        [Required]
+        public Guid UserID { get; set; }
+        public ICollection<CartItemDTO> CartItems { get; set; } = new List<CartItemDTO>();
     }
 }

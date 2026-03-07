@@ -29,6 +29,26 @@ namespace FlowerShop.Application
 
             // FlowerImage mappings
             CreateMap<FlowerImage, FlowerImageDTO>();
+
+            // Cart mappings
+            CreateMap<CartCreateDTO, Cart>();
+            CreateMap<Cart, CartDTO>();
+
+            // CartItem mappings
+            CreateMap<CartItemCreateDTO, CartItem>()
+                .ForMember(dest => dest.UnitPrice, opt => opt.Ignore());
+            CreateMap<CartItemUpdateDTO, CartItem>();
+            CreateMap<CartItem, CartItemDTO>()
+                 .ForMember(dest => dest.FlowerName,
+                     opt => opt.MapFrom(src => src.Flower != null ? src.Flower.FlowerName : string.Empty))
+                 .ForMember(dest => dest.ImageUrl,
+                     opt => opt.MapFrom(src =>
+                         src.Flower != null && src.Flower.FlowerImages != null
+                             ? src.Flower.FlowerImages
+                                 .Select(img => img.Url)
+                                 .FirstOrDefault()
+                             : null));
+
         }
     }
 }
