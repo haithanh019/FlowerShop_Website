@@ -17,23 +17,57 @@ namespace FlowerShop.Infrastructure
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<T?> GetByAsync(Expression<Func<T, bool>> predicate, bool trackChanges = false)
+        public async Task<T?> GetByAsync(Expression<Func<T, bool>> predicate, bool trackChanges = false, string? includeProperties = null)
         {
-            return trackChanges
-                ? await _dbSet.FirstOrDefaultAsync(predicate)
-                : await _dbSet.AsNoTracking().FirstOrDefaultAsync(predicate);
+            IQueryable<T> query = _dbSet;
+
+            if (!trackChanges)
+                query = query.AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split([','], StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp.Trim());
+                }
+            }
+
+            return await query.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(bool trackChanges = false)
+        public async Task<IEnumerable<T>> GetAllAsync(bool trackChanges = false, string? includeProperties = null)
         {
-            return trackChanges
-                ? await _dbSet.ToListAsync()
-                : await _dbSet.AsNoTracking().ToListAsync();
+            IQueryable<T> query = _dbSet;
+
+            if (!trackChanges)
+                query = query.AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split([','], StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp.Trim());
+                }
+            }
+
+            return await query.ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, bool trackChanges = false)
+        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, bool trackChanges = false, string? includeProperties = null)
         {
-            var query = trackChanges ? _dbSet : _dbSet.AsNoTracking();
+            IQueryable<T> query = _dbSet;
+
+            if (!trackChanges)
+                query = query.AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split([','], StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp.Trim());
+                }
+            }
+
             return await query.Where(predicate).ToListAsync();
         }
         public IQueryable<T> GetQuery()
@@ -64,5 +98,6 @@ namespace FlowerShop.Infrastructure
         {
             _dbSet.RemoveRange(entities);
         }
+
     }
 }

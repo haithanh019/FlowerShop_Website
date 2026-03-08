@@ -9,7 +9,7 @@
 
         public FacadeService(CoreDependencies coreDependencies, InfraDependencies infraDependencies)
         {
-            UserService = new UserService(coreDependencies.UnitOfWork, coreDependencies.Mapper, infraDependencies.Configuration);
+            UserService = new UserService(coreDependencies.UnitOfWork, coreDependencies.FacadeService, coreDependencies.Mapper, infraDependencies.Configuration);
             CategoryService = new CategoryService(coreDependencies.UnitOfWork, coreDependencies.Mapper);
             FlowerService = new FlowerService(coreDependencies.UnitOfWork, coreDependencies.Mapper);
 

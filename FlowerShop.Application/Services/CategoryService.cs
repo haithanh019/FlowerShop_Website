@@ -21,7 +21,7 @@ namespace FlowerShop.Application
         {
             return _unitOfWork.CategoryRepository.GetQuery().ProjectTo<CategoryDTO>(_mapper.ConfigurationProvider);
         }
-        public async Task<ApiResponse<CategoryDTO>> GetCategoryByIdAsync(Guid id)
+        public async Task<ApiResponse<CategoryDTO>> GetCategoryByIDAsync(Guid id)
         {
             var categories = await _unitOfWork.CategoryRepository.GetByIDAsync(id);
             if (categories == null)
@@ -32,15 +32,15 @@ namespace FlowerShop.Application
             return new ApiResponse<CategoryDTO>(respone);
         }
 
-        public async Task<ApiResponse<CategoryDTO>> CreateCategoryAsync(CategoryCreateDTO dto)
+        public async Task<ApiResponse<CategoryDTO>> CreateCategoryAsync(Guid id)
         {
-            var existingCategory = await _unitOfWork.CategoryRepository.GetByAsync(c => c.Name == dto.Name);
+            var existingCategory = await _unitOfWork.CategoryRepository.GetByIDAsync(id);
             if (existingCategory != null)
             {
-                throw new BadRequestException($"Category with name '{dto.Name}' already exists.");
+                throw new BadRequestException($"Category already exists.");
             }
 
-            var category = _mapper.Map<Category>(dto);
+            var category = _mapper.Map<Category>(id);
 
             await _unitOfWork.CategoryRepository.AddAsync(category);
             await _unitOfWork.SaveAsync();

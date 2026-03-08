@@ -22,7 +22,7 @@ namespace FlowerShop.Application
         {
             return _unitOfWork.FlowerRepository.GetQuery().ProjectTo<FlowerDTO>(_mapper.ConfigurationProvider);
         }
-        public async Task<ApiResponse<FlowerDTO>> GetFlowerByIdAsync(Guid id)
+        public async Task<ApiResponse<FlowerDTO>> GetFlowerByIDAsync(Guid id)
         {
             var flower = await _unitOfWork.FlowerRepository.GetQuery()
                     .Include(f => f.Category)

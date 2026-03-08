@@ -18,7 +18,7 @@ namespace FlowerShop.API
         [EnableQuery]
         public async Task<IActionResult> Get([FromRoute] Guid key)
         {
-            var result = await _facadeService.FlowerService.GetFlowerByIdAsync(key);
+            var result = await _facadeService.FlowerService.GetFlowerByIDAsync(key);
             return Ok(result);
         }
 

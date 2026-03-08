@@ -18,13 +18,13 @@ namespace FlowerShop.API
         [EnableQuery]
         public async Task<IActionResult> Get([FromRoute] Guid key)
         {
-            var result = await _facadeService.CategoryService.GetCategoryByIdAsync(key);
+            var result = await _facadeService.CategoryService.GetCategoryByIDAsync(key);
             return Ok(result);
         }
 
-        public async Task<IActionResult> Post([FromBody] CategoryCreateDTO dto)
+        public async Task<IActionResult> Post([FromBody] Guid key)
         {
-            var result = await _facadeService.CategoryService.CreateCategoryAsync(dto);
+            var result = await _facadeService.CategoryService.CreateCategoryAsync(key);
             return Ok(result);
         }
 
