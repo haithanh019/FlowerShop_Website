@@ -30,7 +30,7 @@ namespace FlowerShop.Application
                     .FirstOrDefaultAsync(f => f.FlowerID == id);
             if (flower == null)
             {
-                throw new NotFoundException("Flower not found");
+                throw new NotFoundException("Không tìm thấy Hoa");
             }
             var respone = _mapper.Map<FlowerDTO>(flower);
             return new ApiResponse<FlowerDTO>(respone);
@@ -41,12 +41,12 @@ namespace FlowerShop.Application
             var flower = await _unitOfWork.FlowerRepository.GetByAsync(c => c.FlowerName == dto.FlowerName);
             if (flower != null)
             {
-                throw new BadRequestException($"Flower with name '{dto.FlowerName}' already exists.");
+                throw new BadRequestException($"Hoa với tên '{dto.FlowerName}' đã tồn tại.");
             }
             var category = await _unitOfWork.CategoryRepository.GetByIDAsync(dto.CategoryID);
             if (category == null)
             {
-                throw new NotFoundException($"Category with ID {dto.CategoryID} not found.");
+                throw new NotFoundException($"Danh mục với ID {dto.CategoryID} không thấy.");
             }
             var Flower = _mapper.Map<Flower>(dto);
             Flower.Category = category;
@@ -56,7 +56,7 @@ namespace FlowerShop.Application
             await _unitOfWork.SaveAsync();
 
             var response = _mapper.Map<FlowerDTO>(Flower);
-            return new ApiResponse<FlowerDTO>(response, "Create flower successfully");
+            return new ApiResponse<FlowerDTO>(response, "Thêm hoa thành công");
         }
 
         public async Task<ApiResponse<FlowerDTO>> UpdateFlowerAsync(Guid id, FlowerUpdateDTO dto)
@@ -64,13 +64,13 @@ namespace FlowerShop.Application
             var Flower = await _unitOfWork.FlowerRepository.GetByIDAsync(id);
             if (Flower == null)
             {
-                throw new NotFoundException("Flower not found");
+                throw new NotFoundException("không tìm thấy hoa");
             }
 
             var duplicateFlower = await _unitOfWork.FlowerRepository.GetByAsync(c => c.FlowerName == dto.FlowerName && c.FlowerID != id);
             if (duplicateFlower != null)
             {
-                throw new BadRequestException($"Flower name '{dto.FlowerName}' is already taken.");
+                throw new BadRequestException($"Hoa với tên '{dto.FlowerName}' đã được đặt.");
             }
 
             _mapper.Map(dto, Flower);
@@ -78,7 +78,7 @@ namespace FlowerShop.Application
             await _unitOfWork.SaveAsync();
 
             var respone = _mapper.Map<FlowerDTO>(Flower);
-            return new ApiResponse<FlowerDTO>(respone, "Update Flower Successfully");
+            return new ApiResponse<FlowerDTO>(respone, "Cập nhật hoa thành công");
         }
 
         public async Task<ApiResponse<bool>> DeleteFlowerAsync(Guid id)
@@ -87,12 +87,12 @@ namespace FlowerShop.Application
 
             if (Flower == null)
             {
-                throw new NotFoundException("Flower not found");
+                throw new NotFoundException("Không tìm thấy hoa");
             }
 
             _unitOfWork.FlowerRepository.Delete(Flower);
             await _unitOfWork.SaveAsync();
-            return new ApiResponse<bool>(true, "Delete Flower Successfully");
+            return new ApiResponse<bool>(true, "Xá hoa thành công");
         }
     }
 }

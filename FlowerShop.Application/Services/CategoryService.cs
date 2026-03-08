@@ -26,7 +26,7 @@ namespace FlowerShop.Application
             var categories = await _unitOfWork.CategoryRepository.GetByIDAsync(id);
             if (categories == null)
             {
-                throw new NotFoundException("Category not found");
+                throw new NotFoundException("Không tìm thấy danh mục.");
             }
             var respone = _mapper.Map<CategoryDTO>(categories);
             return new ApiResponse<CategoryDTO>(respone);
@@ -37,7 +37,7 @@ namespace FlowerShop.Application
             var existingCategory = await _unitOfWork.CategoryRepository.GetByIDAsync(id);
             if (existingCategory != null)
             {
-                throw new BadRequestException($"Category already exists.");
+                throw new BadRequestException($"Danh mục đã tồn tại.");
             }
 
             var category = _mapper.Map<Category>(id);
@@ -54,13 +54,13 @@ namespace FlowerShop.Application
             var category = await _unitOfWork.CategoryRepository.GetByIDAsync(id);
             if (category == null)
             {
-                throw new NotFoundException("Category not found");
+                throw new NotFoundException("Không tìm thấy danh mục");
             }
 
             var duplicateCategory = await _unitOfWork.CategoryRepository.GetByAsync(c => c.Name == dto.Name && c.CategoryID != id);
             if (duplicateCategory != null)
             {
-                throw new BadRequestException($"Category name '{dto.Name}' is already taken.");
+                throw new BadRequestException($"Danh mục với tên '{dto.Name}' đã được đặt.");
             }
 
             _mapper.Map(dto, category);
@@ -68,7 +68,7 @@ namespace FlowerShop.Application
             await _unitOfWork.SaveAsync();
 
             var respone = _mapper.Map<CategoryDTO>(category);
-            return new ApiResponse<CategoryDTO>(respone, "Update Category Successfully");
+            return new ApiResponse<CategoryDTO>(respone, "Cập nhật danh mục thành công");
         }
 
         public async Task<ApiResponse<bool>> DeleteCategoryAsync(Guid id)
@@ -77,12 +77,12 @@ namespace FlowerShop.Application
 
             if (category == null)
             {
-                throw new NotFoundException("Category not found");
+                throw new NotFoundException("Không tìm thấy danh mục");
             }
 
             _unitOfWork.CategoryRepository.Delete(category);
             await _unitOfWork.SaveAsync();
-            return new ApiResponse<bool>(true, "Delete Category Successfully");
+            return new ApiResponse<bool>(true, "Xóa danh mục thành công");
         }
     }
 }

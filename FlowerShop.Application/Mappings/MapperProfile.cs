@@ -31,7 +31,6 @@ namespace FlowerShop.Application
             CreateMap<FlowerImage, FlowerImageDTO>();
 
             // Cart mappings
-            CreateMap<CartCreateDTO, Cart>();
             CreateMap<Cart, CartDTO>();
 
             // CartItem mappings

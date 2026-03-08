@@ -14,14 +14,12 @@ namespace FlowerShop.Application
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IFacadeService _facadeService;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
-        public UserService(IUnitOfWork unitOfWork, IFacadeService facadeService, IMapper mapper, IConfiguration configuration)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
-            _facadeService = facadeService;
             _mapper = mapper;
             _configuration = configuration;
         }
@@ -43,7 +41,7 @@ namespace FlowerShop.Application
             var user = _mapper.Map<User>(dto);
             user.Password = PasswordHelper.HashPassword(dto.Password);
             await _unitOfWork.UserRepository.AddAsync(user);
-            await _facadeService.CategoryService.CreateCategoryAsync(user.UserID);
+            var cart = new Cart { UserID = user.UserID };
             await _unitOfWork.SaveAsync();
 
             var response = _mapper.Map<UserDTO>(user);

@@ -5,6 +5,6 @@
         IUserService UserService { get; }
         ICategoryService CategoryService { get; }
         IFlowerService FlowerService { get; }
-
+        ICartService CartService { get; }
     }
 }
