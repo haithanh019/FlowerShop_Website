@@ -32,15 +32,15 @@ namespace FlowerShop.Application
             return new ApiResponse<CategoryDTO>(respone);
         }
 
-        public async Task<ApiResponse<CategoryDTO>> CreateCategoryAsync(Guid id)
+        public async Task<ApiResponse<CategoryDTO>> CreateCategoryAsync(CategoryCreateDTO dto)
         {
-            var existingCategory = await _unitOfWork.CategoryRepository.GetByIDAsync(id);
+            var existingCategory = await _unitOfWork.CategoryRepository.GetByAsync(c => c.Name == dto.Name);
             if (existingCategory != null)
             {
                 throw new BadRequestException($"Danh mục đã tồn tại.");
             }
 
-            var category = _mapper.Map<Category>(id);
+            var category = _mapper.Map<Category>(dto);
 
             await _unitOfWork.CategoryRepository.AddAsync(category);
             await _unitOfWork.SaveAsync();

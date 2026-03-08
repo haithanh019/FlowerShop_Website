@@ -6,7 +6,7 @@ namespace FlowerShop.Application
     {
         IQueryable<CategoryDTO> GetCategoriesOData();
         Task<ApiResponse<CategoryDTO>> GetCategoryByIDAsync(Guid id);
-        Task<ApiResponse<CategoryDTO>> CreateCategoryAsync(Guid id);
+        Task<ApiResponse<CategoryDTO>> CreateCategoryAsync(CategoryCreateDTO dto);
         Task<ApiResponse<CategoryDTO>> UpdateCategoryAsync(Guid id, CategoryUpdateDTO model);
         Task<ApiResponse<bool>> DeleteCategoryAsync(Guid id);
     }

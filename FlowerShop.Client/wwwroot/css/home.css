@@ -1,0 +1,51 @@
+﻿/* Phông nền chung của trang chủ */
+.home-wrapper {
+    background-color: #f5f5f5;
+    padding-bottom: 50px;
+}
+
+/* --- Style cho Danh mục --- */
+.category-item {
+    width: 10%;
+    min-width: 90px;
+    padding: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+    .category-item:hover {
+        transform: translateY(-3px);
+    }
+
+.category-img-box {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+}
+
+/* --- Style cho Card Sản phẩm (Shopee Style) --- */
+.product-card {
+    transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+    cursor: pointer;
+    border: 1px solid transparent !important;
+}
+
+    .product-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+        border: 1px solid #ee4d2d !important; /* Viền đỏ cam khi hover */
+    }
+
+.product-title {
+    font-size: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Giới hạn hiển thị 2 dòng chữ */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #222;
+    line-height: 1.4;
+    height: 40px;
+}

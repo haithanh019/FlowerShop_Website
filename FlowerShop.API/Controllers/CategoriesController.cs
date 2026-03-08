@@ -22,9 +22,9 @@ namespace FlowerShop.API
             return Ok(result);
         }
 
-        public async Task<IActionResult> Post([FromBody] Guid key)
+        public async Task<IActionResult> Post([FromBody] CategoryCreateDTO dto)
         {
-            var result = await _facadeService.CategoryService.CreateCategoryAsync(key);
+            var result = await _facadeService.CategoryService.CreateCategoryAsync(dto);
             return Ok(result);
         }
 

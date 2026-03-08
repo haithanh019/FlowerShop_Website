@@ -13,6 +13,19 @@ namespace FlowerShop.Client.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var categories = await _baseService.GetODataAsync<IEnumerable<CategoryDTO>>("/Odata/Categories");
+
+            if (categories == null )
+            {
+                ViewBag.ErrorMessage = "Không thể lấy danh sách danh mục.";
+                return View(new List<CategoryDTO>());
+            }         
+            return View(categories);
+        }
+
+        [HttpGet]
         public IActionResult Create()
         {
             var token = HttpContext.Session.GetString("JWToken");
