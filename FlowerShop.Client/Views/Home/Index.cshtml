@@ -1,96 +1,398 @@
-﻿@using FlowerShop.Client.Models.Home
+@using FlowerShop.Client.Models.Home
 @model HomeViewModel
 
 @{
-    ViewData["Title"] = "Trang chủ - Flower Shop";
+    ViewData["Title"] = "Trang Chủ — Bloom & Petal";
 }
 
 @section Styles {
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
 }
 
-<div class="home-wrapper pt-4">
+<div class="home-wrapper pt-3">
     <div class="container">
+        <div class="hero-wrap mb-3">
+            <div id="homeBanner" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4500">
 
-        <div id="homeBanner" class="carousel slide mb-4 shadow-sm rounded" data-bs-ride="carousel">
-            <div class="carousel-inner rounded">
-                <div class="carousel-item active">
-                    <img src="https://via.placeholder.com/1200x350/ffdde1/ee4d2d?text=Chao+Mung+Den+Voi+Flower+Shop" class="d-block w-100" style="object-fit: cover; height: 350px;" alt="Banner 1">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#homeBanner" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
+                    <button type="button" data-bs-target="#homeBanner" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#homeBanner" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+
+                <div class="carousel-inner">
+                    @* Slide 1 *@
+                    <div class="carousel-item active">
+                        <div class="hero-slide hero-slide--1">
+                            <div class="hero-content">
+                                <span class="hero-eyebrow">🌸 Hoa Tươi Mỗi Ngày</span>
+                                <h1 class="hero-title">Gửi Trao<br>Yêu Thương</h1>
+                                <p class="hero-subtitle">Hoa nhập khẩu chọn lọc — giao trong ngày tại Quảng Trị</p>
+                                <a asp-controller="Flower" asp-action="Index" class="hero-cta">
+                                    Khám phá ngay
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                                </a>
+                            </div>
+                            @* Decorative SVG flower *@
+                            <div class="hero-illustration" aria-hidden="true">
+                                <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g transform="translate(140,140)">
+                                        <ellipse cx="0" cy="-55" rx="28" ry="50" fill="#f093a7" opacity=".55" />
+                                        <ellipse cx="0" cy="-55" rx="28" ry="50" fill="#f7b8c4" opacity=".6" transform="rotate(45)" />
+                                        <ellipse cx="0" cy="-55" rx="28" ry="50" fill="#f093a7" opacity=".55" transform="rotate(90)" />
+                                        <ellipse cx="0" cy="-55" rx="28" ry="50" fill="#f7b8c4" opacity=".6" transform="rotate(135)" />
+                                        <ellipse cx="0" cy="-55" rx="28" ry="50" fill="#f093a7" opacity=".55" transform="rotate(180)" />
+                                        <ellipse cx="0" cy="-55" rx="28" ry="50" fill="#f7b8c4" opacity=".6" transform="rotate(225)" />
+                                        <ellipse cx="0" cy="-55" rx="28" ry="50" fill="#f093a7" opacity=".55" transform="rotate(270)" />
+                                        <ellipse cx="0" cy="-55" rx="28" ry="50" fill="#f7b8c4" opacity=".6" transform="rotate(315)" />
+                                        <circle cx="0" cy="0" r="28" fill="#d4a96a" opacity=".75" />
+                                    </g>
+                                    <g transform="translate(60,80) scale(.55)">
+                                        <ellipse cx="0" cy="-48" rx="22" ry="40" fill="#b8e0d4" opacity=".6" transform="rotate(0)" />
+                                        <ellipse cx="0" cy="-48" rx="22" ry="40" fill="#8ecfbe" opacity=".5" transform="rotate(60)" />
+                                        <ellipse cx="0" cy="-48" rx="22" ry="40" fill="#b8e0d4" opacity=".6" transform="rotate(120)" />
+                                        <ellipse cx="0" cy="-48" rx="22" ry="40" fill="#8ecfbe" opacity=".5" transform="rotate(180)" />
+                                        <ellipse cx="0" cy="-48" rx="22" ry="40" fill="#b8e0d4" opacity=".6" transform="rotate(240)" />
+                                        <ellipse cx="0" cy="-48" rx="22" ry="40" fill="#8ecfbe" opacity=".5" transform="rotate(300)" />
+                                        <circle cx="0" cy="0" r="22" fill="#f9d58a" opacity=".7" />
+                                    </g>
+                                    <g transform="translate(215,195) scale(.4)">
+                                        <ellipse cx="0" cy="-48" rx="22" ry="40" fill="#f7c5d0" opacity=".65" transform="rotate(0)" />
+                                        <ellipse cx="0" cy="-48" rx="22" ry="40" fill="#f093a7" opacity=".55" transform="rotate(72)" />
+                                        <ellipse cx="0" cy="-48" rx="22" ry="40" fill="#f7c5d0" opacity=".65" transform="rotate(144)" />
+                                        <ellipse cx="0" cy="-48" rx="22" ry="40" fill="#f093a7" opacity=".55" transform="rotate(216)" />
+                                        <ellipse cx="0" cy="-48" rx="22" ry="40" fill="#f7c5d0" opacity=".65" transform="rotate(288)" />
+                                        <circle cx="0" cy="0" r="20" fill="#d4a96a" opacity=".7" />
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Slide 2 *@
+                    <div class="carousel-item">
+                        <div class="hero-slide hero-slide--2">
+                            <div class="hero-content">
+                                <span class="hero-eyebrow">💐 Bó Hoa Đặc Biệt</span>
+                                <h1 class="hero-title">Hoa Nhập Khẩu<br>Cao Cấp</h1>
+                                <p class="hero-subtitle">Được chọn lọc kỹ lưỡng — tươi từ vườn đến tay bạn</p>
+                                <a asp-controller="Product" asp-action="Index" class="hero-cta">
+                                    Xem bộ sưu tập
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                                </a>
+                            </div>
+                            <div class="hero-illustration" aria-hidden="true">
+                                <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g transform="translate(140,130)">
+                                        <ellipse cx="0" cy="-60" rx="26" ry="52" fill="#b8e0d4" opacity=".6" transform="rotate(0)" />
+                                        <ellipse cx="0" cy="-60" rx="26" ry="52" fill="#8ecfbe" opacity=".55" transform="rotate(60)" />
+                                        <ellipse cx="0" cy="-60" rx="26" ry="52" fill="#b8e0d4" opacity=".6" transform="rotate(120)" />
+                                        <ellipse cx="0" cy="-60" rx="26" ry="52" fill="#8ecfbe" opacity=".55" transform="rotate(180)" />
+                                        <ellipse cx="0" cy="-60" rx="26" ry="52" fill="#b8e0d4" opacity=".6" transform="rotate(240)" />
+                                        <ellipse cx="0" cy="-60" rx="26" ry="52" fill="#8ecfbe" opacity=".55" transform="rotate(300)" />
+                                        <circle cx="0" cy="0" r="26" fill="#f9d58a" opacity=".75" />
+                                    </g>
+                                    <g transform="translate(220,75) scale(.45)">
+                                        <ellipse cx="0" cy="-50" rx="22" ry="42" fill="#f7b8c4" opacity=".6" transform="rotate(0)" />
+                                        <ellipse cx="0" cy="-50" rx="22" ry="42" fill="#f093a7" opacity=".5" transform="rotate(45)" />
+                                        <ellipse cx="0" cy="-50" rx="22" ry="42" fill="#f7b8c4" opacity=".6" transform="rotate(90)" />
+                                        <ellipse cx="0" cy="-50" rx="22" ry="42" fill="#f093a7" opacity=".5" transform="rotate(135)" />
+                                        <ellipse cx="0" cy="-50" rx="22" ry="42" fill="#f7b8c4" opacity=".6" transform="rotate(180)" />
+                                        <ellipse cx="0" cy="-50" rx="22" ry="42" fill="#f093a7" opacity=".5" transform="rotate(225)" />
+                                        <ellipse cx="0" cy="-50" rx="22" ry="42" fill="#f7b8c4" opacity=".6" transform="rotate(270)" />
+                                        <ellipse cx="0" cy="-50" rx="22" ry="42" fill="#f093a7" opacity=".5" transform="rotate(315)" />
+                                        <circle cx="0" cy="0" r="22" fill="#d4a96a" opacity=".7" />
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Slide 3 *@
+                    <div class="carousel-item">
+                        <div class="hero-slide hero-slide--3">
+                            <div class="hero-content">
+                                <span class="hero-eyebrow">🎀 Thành Viên Mới</span>
+                                <h1 class="hero-title">Giảm 15%<br>Đơn Đầu Tiên</h1>
+                                <p class="hero-subtitle">Đăng ký ngay hôm nay — nhận ưu đãi độc quyền dành cho bạn</p>
+                                <a asp-controller="Account" asp-action="Register" class="hero-cta">
+                                    Đăng ký miễn phí
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                                </a>
+                            </div>
+                            <div class="hero-illustration" aria-hidden="true">
+                                <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g transform="translate(140,140)">
+                                        <ellipse cx="0" cy="-52" rx="24" ry="46" fill="#f7b8c4" opacity=".6" transform="rotate(0)" />
+                                        <ellipse cx="0" cy="-52" rx="24" ry="46" fill="#f093a7" opacity=".5" transform="rotate(60)" />
+                                        <ellipse cx="0" cy="-52" rx="24" ry="46" fill="#b8e0d4" opacity=".55" transform="rotate(120)" />
+                                        <ellipse cx="0" cy="-52" rx="24" ry="46" fill="#f7b8c4" opacity=".6" transform="rotate(180)" />
+                                        <ellipse cx="0" cy="-52" rx="24" ry="46" fill="#f093a7" opacity=".5" transform="rotate(240)" />
+                                        <ellipse cx="0" cy="-52" rx="24" ry="46" fill="#b8e0d4" opacity=".55" transform="rotate(300)" />
+                                        <circle cx="0" cy="0" r="26" fill="#d4a96a" opacity=".72" />
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#homeBanner" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Trước</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#homeBanner" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Sau</span>
+                </button>
+            </div>
+        </div>
+
+
+        <div class="promo-strip">
+            <div class="promo-card">
+                <div class="promo-icon pi-mint">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2" /><path d="M16 8h4l3 5v3h-7V8z" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></svg>
+                </div>
+                <div>
+                    <span class="promo-title">Miễn Phí Giao Hàng</span>
+                    <span class="promo-sub">Đơn từ 299.000₫</span>
+                </div>
+            </div>
+
+            <div class="promo-card">
+                <div class="promo-icon pi-pink">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12M12 12C12 12 7 9 7 5a5 5 0 0 1 10 0c0 4-5 7-5 7z" /></svg>
+                </div>
+                <div>
+                    <span class="promo-title">Hoa Tươi Mỗi Ngày</span>
+                    <span class="promo-sub">Nhập khẩu trực tiếp</span>
+                </div>
+            </div>
+
+            <div class="promo-card">
+                <div class="promo-icon pi-gold">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
+                </div>
+                <div>
+                    <span class="promo-title">Giao Trong Ngày</span>
+                    <span class="promo-sub">Đặt trước 14:00</span>
+                </div>
+            </div>
+
+            <div class="promo-card">
+                <div class="promo-icon pi-plum">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+                </div>
+                <div>
+                    <span class="promo-title">Đảm Bảo Chất Lượng</span>
+                    <span class="promo-sub">Hoàn tiền 100%</span>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white p-3 mb-4 shadow-sm rounded">
-            <h5 class="text-uppercase text-secondary mb-3" style="font-size: 16px; font-weight: 500;">Danh Mục</h5>
-            <div class="d-flex flex-wrap text-center category-list">
-                @if (Model.Categories != null && Model.Categories.Any())
-                {
-                    foreach (var cat in Model.Categories)
+
+        <div class="sec">
+            <div class="sec-head">
+                <h2 class="sec-title">
+                    <span class="sec-bar" aria-hidden="true"></span>
+                    Danh Mục
+                </h2>
+                <a asp-controller="Category" asp-action="Index" class="sec-all">
+                    Tất cả
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                </a>
+            </div>
+
+            <div class="cat-scroll">
+                <nav class="cat-row" aria-label="Danh mục sản phẩm">
+
+                    <a href="/Flower" class="cat-chip active" data-cat="" aria-label="Tất cả">
+                        <div class="cat-avatar">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e8748a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>
+                        </div>
+                        <span class="cat-label">Tất Cả</span>
+                    </a>
+
+                    @if (Model.Categories != null && Model.Categories.Any())
                     {
-                        <a href="/Category/Details/@cat.CategoryID" class="text-decoration-none text-dark category-item">
-                            <div class="category-img-box mx-auto mb-2 rounded-circle">
-                                <img src="https://via.placeholder.com/40x40/f0f0f0/999?text=@cat.Name.Substring(0, 1)" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;" alt="@cat.Name">
-                            </div>
-                            <span style="font-size: 14px; display: block;">@cat.Name</span>
-                        </a>
+                        @foreach (var cat in Model.Categories)
+                        {
+                            <a href="/Category/Details/@cat.CategoryID"
+                               class="cat-chip"
+                               data-cat="@cat.CategoryID"
+                               aria-label="@cat.Name">
+                                <div class="cat-avatar">
+                                    <span class="cat-letter" aria-hidden="true">
+                                        @cat.Name.Substring(0, 1).ToUpper()
+                                    </span>
+                                </div>
+                                <span class="cat-label">@cat.Name</span>
+                            </a>
+                        }
                     }
-                }
-                else
-                {
-                    <p class="text-muted w-100 text-start ms-2">Đang cập nhật danh mục...</p>
-                }
+
+                </nav>
             </div>
         </div>
 
-        <div class="shopee-recommendation">
-            <div class="bg-white p-3 mb-2 shadow-sm sticky-top" style="top: 0; z-index: 10; border-bottom: 2px solid #ee4d2d;">
-                <h4 class="text-uppercase m-0" style="font-weight: 500; color: #ee4d2d;">Gợi ý hôm nay</h4>
+
+        <div class="flash-bar" role="region" aria-label="Flash Sale">
+            <div class="flash-info">
+                <span class="flash-bolt" aria-hidden="true">⚡</span>
+                <div>
+                    <div class="flash-name">Flash Sale</div>
+                    <div class="flash-note">Ưu đãi kết thúc sau</div>
+                </div>
+            </div>
+            <div class="flash-clock" aria-live="polite">
+                <div class="cd-box" id="cd-hh">00</div>
+                <span class="cd-dot" aria-hidden="true">:</span>
+                <div class="cd-box" id="cd-mm">00</div>
+                <span class="cd-dot" aria-hidden="true">:</span>
+                <div class="cd-box" id="cd-ss">00</div>
+            </div>
+            <a asp-controller="Flower" asp-action="Index" class="flash-btn">Xem ngay →</a>
+        </div>
+
+
+        <div class="sec">
+            <div class="sec-head">
+                <h2 class="sec-title">
+                    <span class="sec-bar" aria-hidden="true"></span>
+                    Gợi Ý Hôm Nay
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f093a7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:3px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
+                </h2>
+                <a asp-controller="Flower" asp-action="Index" class="sec-all">
+                    Xem tất cả
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                </a>
             </div>
 
-            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 g-2 mt-2">
+            <div class="p-grid" id="productGrid" role="list">
+
                 @if (Model.Flowers != null && Model.Flowers.Any())
                 {
-                    foreach (var flower in Model.Flowers)
+                    @foreach (var flower in Model.Flowers)
                     {
-                        var mainImageUrl = flower.FlowerImages != null && flower.FlowerImages.Any()
+                        var imgSrc = (flower.FlowerImages != null && flower.FlowerImages.Any())
                         ? flower.FlowerImages.First().Url
-                        : "https://via.placeholder.com/200x200?text=No+Image";
+                        : "";
 
-                        <div class="col">
-                            <a href="/Flower/Details/@flower.FlowerID" class="text-decoration-none">
-                                <div class="card h-100 border-0 shadow-sm product-card">
-                                    <img src="@mainImageUrl" class="card-img-top rounded-top" style="height: 190px; object-fit: cover;" alt="@flower.FlowerName">
-                                    <div class="card-body p-2 d-flex flex-column bg-white">
-                                        <p class="card-text product-title mb-2">@flower.FlowerName</p>
+                        var isOut = flower.StockQuantity == 0;
+                        var isLow = !isOut && flower.StockQuantity < 10;
+                        var isNew = !isOut && (DateTime.UtcNow - flower.CreatedAt).TotalDays < 7;
 
-                                        <div class="mt-auto d-flex justify-content-between align-items-center">
-                                            <span style="color: #ee4d2d; font-size: 16px;" class="fw-bold">₫@flower.Price.ToString("N0")</span>
-                                            <span class="text-muted" style="font-size: 12px;">Kho: @flower.StockQuantity</span>
+                        var sdotCls = isOut ? "zero" : isLow ? "low" : "";
+                        var stockTxt = isOut ? "Hết hàng" : $"Còn {flower.StockQuantity}";
+
+                        <div class="p-grid-item" role="listitem" data-cat="@flower.CategoryID">
+                            <a href="/Flower/Details/@flower.FlowerID"
+                               class="p-card-link"
+                               aria-label="@flower.FlowerName — ₫@flower.Price.ToString("N0")">
+                                <article class="p-card">
+
+                                    @* ── Image ── *@
+                                    <div class="p-img @(isOut ? "sold-out" : "")">
+
+                                        @if (!string.IsNullOrEmpty(imgSrc))
+                                        {
+                                            <img src="@imgSrc" alt="@flower.FlowerName" loading="lazy" />
+                                        }
+                                        else
+                                        {
+                                            <div style="position:absolute;inset:0;display:flex;align-items:center;
+                                                            justify-content:center;flex-direction:column;gap:.4rem;">
+                                                <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+                                                    <ellipse cx="18" cy="9" rx="5" ry="9" fill="#f093a7" opacity=".5" />
+                                                    <ellipse cx="18" cy="9" rx="5" ry="9" fill="#f093a7" opacity=".5" transform="rotate(60 18 18)" />
+                                                    <ellipse cx="18" cy="9" rx="5" ry="9" fill="#f093a7" opacity=".5" transform="rotate(120 18 18)" />
+                                                    <ellipse cx="18" cy="9" rx="5" ry="9" fill="#f093a7" opacity=".5" transform="rotate(180 18 18)" />
+                                                    <ellipse cx="18" cy="9" rx="5" ry="9" fill="#f093a7" opacity=".5" transform="rotate(240 18 18)" />
+                                                    <ellipse cx="18" cy="9" rx="5" ry="9" fill="#f093a7" opacity=".5" transform="rotate(300 18 18)" />
+                                                    <circle cx="18" cy="18" r="5.5" fill="#d4a96a" opacity=".6" />
+                                                </svg>
+                                                <span style="font-size:.68rem;color:#b59aa8;">@flower.CategoryName</span>
+                                            </div>
+                                        }
+
+                                        @* Badge *@
+                                        @if (isOut)
+                                        {
+                                            <span class="p-badge b-sale">Hết hàng</span>
+                                        }
+                                        else if (isNew)
+                                        {
+                                            <span class="p-badge b-new">Mới</span>
+                                        }
+                                        else if (isLow)
+                                        {
+                                            <span class="p-badge b-hot">Sắp hết</span>
+                                        }
+
+                                        @* Wishlist *@
+                                        <div class="p-wish" type="button"
+                                                aria-label="Yêu thích @flower.FlowerName"
+                                                data-id="@flower.FlowerID">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
+                                        </div>
+
+                                        @* Add to cart *@
+                                        @if (!isOut)
+                                        {
+                                            <div class="p-add" type="button"
+                                                    aria-label="Thêm @flower.FlowerName vào giỏ"
+                                                    data-id="@flower.FlowerID">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>
+                                                Thêm vào giỏ
+                                            </div>
+                                        }
+                                    </div>
+
+                                    @* ── Body ── *@
+                                    <div class="p-body">
+                                        <span class="p-cat">@flower.CategoryName</span>
+                                        <p class="p-name">@flower.FlowerName</p>
+                                        <div class="p-foot">
+                                            <div class="p-price"><sup>₫</sup>@flower.Price.ToString("N0")</div>
+                                            <div class="p-stock">
+                                                <span class="sdot @sdotCls" aria-hidden="true"></span>
+                                                @stockTxt
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+
+                                </article>
                             </a>
                         </div>
                     }
                 }
                 else
                 {
-                    <div class="col-12 text-center py-5">
-                        <p class="text-muted">Chưa có sản phẩm nào được hiển thị.</p>
+                    <div class="empty-st">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#b59aa8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12M12 12C12 12 7 9 7 5a5 5 0 0 1 10 0c0 4-5 7-5 7z" /></svg>
+                        <p>Chưa có sản phẩm nào được hiển thị.</p>
                     </div>
                 }
-            </div>
 
+            </div>@* /#productGrid *@
+
+            @* Load more *@
             @if (Model.Flowers != null && Model.Flowers.Count() >= 10)
             {
-                <div class="text-center mt-4">
-                    <button id="btnLoadMore" class="btn btn-outline-secondary px-5 py-2 bg-white text-dark" style="width: 350px; font-weight: 500;">Xem Thêm</button>
+                <div class="load-wrap">
+                    <button id="btnLoadMore" class="btn-more" type="button">
+                        <div class="spin" aria-hidden="true"></div>
+                        <span class="lbl">Xem thêm sản phẩm</span>
+                        <svg class="lbl" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                    </button>
                 </div>
             }
-        </div>
 
-    </div>
-</div>
+        </div>@* /.sec *@
+
+    </div>@* /.container *@
+</div>@* /.home-wrapper *@
 
 @section Scripts {
     <script src="~/js/home.js" asp-append-version="true"></script>

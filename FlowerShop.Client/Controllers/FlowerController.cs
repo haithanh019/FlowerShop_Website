@@ -32,15 +32,15 @@ namespace FlowerShop.Client.Controllers
             var token = HttpContext.Session.GetString("JWToken");
             if (string.IsNullOrEmpty(token)) return RedirectToAction("Login", "Auth");
 
-            var categoryResponse = await _baseService.GetODataAsync<IEnumerable<CategoryDTO>>("/Odata/Categories", token);
+            var flowerResponse = await _baseService.GetODataAsync<IEnumerable<FlowerDTO>>("/Odata/Flowers", token);
 
-            if (categoryResponse != null)
+            if (flowerResponse != null)
             {
-                ViewBag.Categories = new SelectList(categoryResponse, "CategoryID", "Name");
+                ViewBag.Flowers = new SelectList(flowerResponse, "FlowerID", "FlowerName");
             }
             else
             {
-                ViewBag.Categories = new SelectList(new List<CategoryDTO>(), "CategoryID", "Name");
+                ViewBag.Flowers = new SelectList(new List<FlowerDTO>(), "FlowerID", "FlowerName");
             }
 
             return View();
