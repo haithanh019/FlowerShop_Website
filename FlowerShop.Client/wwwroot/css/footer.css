@@ -399,13 +399,35 @@
     color: var(--fp-blush);
     animation: heartbeat 1.8s ease-in-out infinite;
 }
-
+.footer-brand {
+    margin-left: 1.5rem;
+}
+.footer-bottom {
+    margin-left: 1.5rem;
+}
+.footer-made{
+    margin-right:1.5rem;
+}
 @keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    14%       { transform: scale(1.25); }
-    28%       { transform: scale(1); }
-    42%       { transform: scale(1.18); }
-    56%       { transform: scale(1); }
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    14% {
+        transform: scale(1.25);
+    }
+
+    28% {
+        transform: scale(1);
+    }
+
+    42% {
+        transform: scale(1.18);
+    }
+
+    56% {
+        transform: scale(1);
+    }
 }
 
 /* ── Responsive ─────────────────────────────────────────────── */
@@ -434,4 +456,5 @@
     .footer-wave { height: 40px; }
 
     .footer-made { display: none; }
+
 }
