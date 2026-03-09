@@ -6,7 +6,7 @@ namespace FlowerShop.Application
     {
         [Key]
         public Guid CategoryID { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string CategoryName { get; set; } = string.Empty;
         public string? Description { get; set; }
         public DateTime CreatedAt { get; set; }
     }

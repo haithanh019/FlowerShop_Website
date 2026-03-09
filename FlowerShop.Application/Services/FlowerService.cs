@@ -3,7 +3,6 @@ using AutoMapper.QueryableExtensions;
 using FlowerShop.Domain;
 using FlowerShop.Infrastructure;
 using FlowerShop.Utility;
-using Microsoft.AspNetCore.OData.Query;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlowerShop.Application
@@ -17,7 +16,6 @@ namespace FlowerShop.Application
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        [EnableQuery]
         public IQueryable<FlowerDTO> GetFlowersOData()
         {
             return _unitOfWork.FlowerRepository.GetQuery().ProjectTo<FlowerDTO>(_mapper.ConfigurationProvider);
@@ -61,8 +59,13 @@ namespace FlowerShop.Application
 
         public async Task<ApiResponse<FlowerDTO>> UpdateFlowerAsync(Guid id, FlowerUpdateDTO dto)
         {
-            var Flower = await _unitOfWork.FlowerRepository.GetByIDAsync(id);
-            if (Flower == null)
+            var flower = await _unitOfWork.FlowerRepository.GetByAsync(
+                    f => f.FlowerID == id,
+                    trackChanges: true,
+                    includeProperties: "Category,FlowerImages"
+                );
+
+            if (flower == null)
             {
                 throw new NotFoundException("không tìm thấy hoa");
             }
@@ -73,11 +76,21 @@ namespace FlowerShop.Application
                 throw new BadRequestException($"Hoa với tên '{dto.FlowerName}' đã được đặt.");
             }
 
-            _mapper.Map(dto, Flower);
-            _unitOfWork.FlowerRepository.Update(Flower);
+
+            if (flower.CategoryID != dto.CategoryID)
+            {
+                var newCategory = await _unitOfWork.CategoryRepository.GetByIDAsync(dto.CategoryID);
+                if (newCategory == null)
+                    throw new NotFoundException($"Không tìm thấy danh mục {dto.CategoryID}");
+
+                flower.Category = newCategory;
+            }
+
+            _mapper.Map(dto, flower);
+            _unitOfWork.FlowerRepository.Update(flower);
             await _unitOfWork.SaveAsync();
 
-            var respone = _mapper.Map<FlowerDTO>(Flower);
+            var respone = _mapper.Map<FlowerDTO>(flower);
             return new ApiResponse<FlowerDTO>(respone, "Cập nhật hoa thành công");
         }
 

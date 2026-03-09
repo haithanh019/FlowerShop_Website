@@ -19,6 +19,7 @@ namespace FlowerShop.Application
 
         public bool IsActive { get; set; }
 
+        [Required]
         public Guid CategoryID { get; set; }
     }
 }

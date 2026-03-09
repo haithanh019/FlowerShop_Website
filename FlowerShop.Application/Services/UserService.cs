@@ -41,7 +41,10 @@ namespace FlowerShop.Application
             var user = _mapper.Map<User>(dto);
             user.Password = PasswordHelper.HashPassword(dto.Password);
             await _unitOfWork.UserRepository.AddAsync(user);
+
             var cart = new Cart { UserID = user.UserID };
+            await _unitOfWork.CartRepository.AddAsync(cart);
+
             await _unitOfWork.SaveAsync();
 
             var response = _mapper.Map<UserDTO>(user);

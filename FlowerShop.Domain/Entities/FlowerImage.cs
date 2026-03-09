@@ -15,6 +15,6 @@ namespace FlowerShop.Domain
         public string? PublicID { get; set; }
 
         public Guid FlowerID { get; set; }
-        public Flower? Flower { get; set; }
+        public required Flower Flower { get; set; }
     }
 }

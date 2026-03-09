@@ -1,11 +1,16 @@
-﻿namespace FlowerShop.Application
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+
+namespace FlowerShop.Application
 {
     public class CartItemDTO
     {
+        [Key]
         public Guid CartItemID { get; set; }
         public Guid CartID { get; set; }
         public Guid FlowerID { get; set; }
         public int Quantity { get; set; }
+        [Precision(18, 2)]
         public decimal UnitPrice { get; set; }
         public DateTime CreatedAt { get; set; }
 

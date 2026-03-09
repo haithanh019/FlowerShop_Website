@@ -9,7 +9,7 @@ namespace FlowerShop.Domain
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [Required, MaxLength(100)]
-        public string Name { get; set; } = "";
+        public string CategoryName { get; set; } = "";
 
         [MaxLength(300)]
         public string? Description { get; set; }

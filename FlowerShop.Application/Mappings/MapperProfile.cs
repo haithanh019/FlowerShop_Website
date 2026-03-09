@@ -24,7 +24,8 @@ namespace FlowerShop.Application
             CreateMap<FlowerCreateDTO, Flower>();
             CreateMap<FlowerUpdateDTO, Flower>();
             CreateMap<Flower, FlowerDTO>()
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : "N/A"))
+                .ForMember(dest => dest.CategoryName,
+        opt => opt.MapFrom(src => src.Category.CategoryName))
                 .ForMember(dest => dest.FlowerImages, opt => opt.MapFrom(src => src.FlowerImages));
 
             // FlowerImage mappings
@@ -48,6 +49,10 @@ namespace FlowerShop.Application
                                  .FirstOrDefault()
                              : null));
 
+            // Address mappings
+            CreateMap<Address, AddressDTO>();
+            CreateMap<AddressCreateDTO, Address>();
+            CreateMap<AddressUpdateDTO, Address>();
         }
     }
 }

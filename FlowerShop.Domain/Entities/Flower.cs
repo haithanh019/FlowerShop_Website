@@ -16,13 +16,15 @@ namespace FlowerShop.Domain
         public string? Description { get; set; }
 
         [Precision(18, 2)]
+        [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
 
+        [Range(0, int.MaxValue)]
         public int StockQuantity { get; set; } = 0;
         public bool IsActive { get; set; } = true;
 
         public Guid CategoryID { get; set; }
-        public Category? Category { get; set; }
+        public required Category Category { get; set; }
 
         public ICollection<FlowerImage> FlowerImages { get; set; } = new List<FlowerImage>();
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();

@@ -4,7 +4,6 @@ namespace FlowerShop.Application
 {
     public class FlowerCreateDTO
     {
-        [Key]
         [Required(ErrorMessage = "Flower Name is required")]
         [MaxLength(150)]
         public string FlowerName { get; set; } = string.Empty;

@@ -1,10 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace FlowerShop.Application.DTOs.Adress
+namespace FlowerShop.Application
 {
-    internal class AdressCreateDTO
+    public class AddressCreateDTO
     {
+        [Required]
+        public Guid UserID { get; set; }
+
+        [Required, MaxLength(100)]
+        public string City { get; set; } = string.Empty;
+
+        [Required, MaxLength(100)]
+        public string District { get; set; } = string.Empty;
+
+        [Required, MaxLength(100)]
+        public string Ward { get; set; } = string.Empty;
+
+        [Required, MaxLength(255)]
+        public string Detail { get; set; } = string.Empty;
     }
 }
