@@ -53,6 +53,23 @@ namespace FlowerShop.Application
             CreateMap<Address, AddressDTO>();
             CreateMap<AddressCreateDTO, Address>();
             CreateMap<AddressUpdateDTO, Address>();
+
+            // Order mappings
+            CreateMap<Order, OrderDTO>()
+                .ForMember(dest => dest.OrderStatus,
+                    opt => opt.MapFrom(src => src.OrderStatus.ToString()))
+                .ForMember(dest => dest.OrderItems,
+                    opt => opt.MapFrom(src => src.OrderItems));
+
+            // OrderItem mappings
+            CreateMap<OrderItem, OrderItemDTO>()
+                .ForMember(dest => dest.FlowerName,
+                    opt => opt.MapFrom(src => src.Flower != null ? src.Flower.FlowerName : string.Empty))
+                .ForMember(dest => dest.ImageUrl,
+                    opt => opt.MapFrom(src =>
+                        src.Flower != null && src.Flower.FlowerImages != null
+                            ? src.Flower.FlowerImages.Select(img => img.Url).FirstOrDefault()
+                            : null));
         }
     }
 }

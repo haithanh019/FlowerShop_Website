@@ -38,6 +38,10 @@ namespace FlowerShop.API
                 odataBuilder.EntitySet<UserDTO>("Users");
                 odataBuilder.EntitySet<CategoryDTO>("Categories");
                 odataBuilder.EntitySet<FlowerDTO>("Flowers");
+                odataBuilder.EntitySet<FlowerDTO>("Carts");
+                odataBuilder.EntitySet<FlowerDTO>("CartItems");
+                odataBuilder.EntitySet<FlowerDTO>("Addresses");
+                odataBuilder.EntitySet<FlowerDTO>("Orders");
                 return odataBuilder.GetEdmModel();
             }
 
