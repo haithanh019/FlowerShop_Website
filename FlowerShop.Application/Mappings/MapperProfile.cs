@@ -32,8 +32,8 @@ namespace FlowerShop.Application
             CreateMap<FlowerImage, FlowerImageDTO>();
 
             // Cart mappings
-            CreateMap<Cart, CartDTO>();
-
+            CreateMap<Cart, CartDTO>()
+    .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.CartItems));
             // CartItem mappings
             CreateMap<CartItemCreateDTO, CartItem>()
                 .ForMember(dest => dest.UnitPrice, opt => opt.Ignore());

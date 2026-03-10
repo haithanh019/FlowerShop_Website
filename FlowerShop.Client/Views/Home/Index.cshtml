@@ -221,13 +221,13 @@
                             <a href="/Category/Details/@cat.CategoryID"
                                class="cat-chip"
                                data-cat="@cat.CategoryID"
-                               aria-label="@cat.Name">
+                               aria-label="@cat.CategoryName">
                                 <div class="cat-avatar">
                                     <span class="cat-letter" aria-hidden="true">
-                                        @cat.Name.Substring(0, 1).ToUpper()
+                                        @cat.CategoryName.Substring(0, 1).ToUpper()
                                     </span>
                                 </div>
-                                <span class="cat-label">@cat.Name</span>
+                                <span class="cat-label">@cat.CategoryName</span>
                             </a>
                         }
                     }

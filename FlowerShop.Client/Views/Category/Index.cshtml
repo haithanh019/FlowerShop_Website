@@ -44,7 +44,7 @@
                     {
                         <tr>
                             <td>@(index++)</td>
-                            <td class="fw-bold">@item.Name</td>
+                            <td class="fw-bold">@item.CategoryName</td>
                             <td>@(string.IsNullOrEmpty(item.Description) ? "Không có mô tả" : item.Description)</td>
                             <td>@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
                             <td class="text-center">
