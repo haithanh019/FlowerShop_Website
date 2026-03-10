@@ -6,5 +6,9 @@
         ICategoryService CategoryService { get; }
         IFlowerService FlowerService { get; }
         ICartService CartService { get; }
+        IAddressService AddressService { get; }
+        IOrderService OrderService { get; }
+        ICartItemService CartItemService { get; }
+
     }
 }
