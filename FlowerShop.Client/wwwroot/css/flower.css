@@ -1,0 +1,395 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --flower-pink: #f8c1c1;
+    --flower-pink-soft: #f9d6d6;
+    --flower-pink-dark: #d66b6b;
+    --flower-blue: #b3e0f5;
+    --flower-blue-soft: #d4f0f0;
+    --flower-bg: #fff9f9;
+    --flower-text: #4a4a4a;
+    --flower-border: rgba(214, 107, 107, 0.18);
+    --flower-shadow: 0 10px 25px rgba(214, 107, 107, 0.08);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top left, rgba(248, 193, 193, 0.22), transparent 24%), radial-gradient(circle at bottom right, rgba(179, 224, 245, 0.22), transparent 24%), var(--flower-bg);
+    color: var(--flower-text);
+}
+
+.flower-page {
+    position: relative;
+}
+
+.flower-page-title,
+.flower-detail-title {
+    color: var(--flower-pink-dark);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.flower-page-subtitle,
+.flower-product-desc,
+.flower-detail-desc p {
+    color: #666;
+    line-height: 1.8;
+}
+
+.flower-badge,
+.flower-mini-badge {
+    background: linear-gradient(135deg, rgba(248, 193, 193, 0.55), rgba(179, 224, 245, 0.55));
+    color: var(--flower-pink-dark);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.flower-hero,
+.flower-filter-card,
+.flower-product-card,
+.flower-detail-card,
+.flower-empty-card {
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: var(--flower-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.flower-hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.flower-hero-deco {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.flower-hero-deco-1 {
+    width: 220px;
+    height: 220px;
+    top: -80px;
+    right: -60px;
+    background: rgba(248, 193, 193, 0.28);
+}
+
+.flower-hero-deco-2 {
+    width: 180px;
+    height: 180px;
+    left: -50px;
+    bottom: -70px;
+    background: rgba(179, 224, 245, 0.28);
+}
+
+.hero-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.summary-item {
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(248, 193, 193, 0.18));
+    border: 1px solid var(--flower-border);
+    border-radius: 20px;
+    padding: 20px 12px;
+    text-align: center;
+}
+
+.summary-number {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--flower-pink-dark);
+}
+
+.summary-label {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.flower-label {
+    color: var(--flower-pink-dark);
+    font-weight: 600;
+}
+
+.flower-input {
+    border-radius: 16px;
+    border: 1px solid #f0c1c1;
+    min-height: 48px;
+    box-shadow: none;
+}
+
+    .flower-input:focus {
+        border-color: #f8a5a5;
+        box-shadow: 0 0 0 0.2rem rgba(248, 165, 165, 0.18);
+    }
+
+.flower-product-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .flower-product-card:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 18px 32px rgba(214, 107, 107, 0.12);
+    }
+
+.flower-product-image-wrap {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(248, 193, 193, 0.18), rgba(179, 224, 245, 0.18));
+    border-radius: 22px 22px 0 0;
+}
+
+.flower-product-image,
+.flower-detail-main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.flower-product-placeholder,
+.detail-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 250px;
+    color: var(--flower-pink-dark);
+    background: linear-gradient(135deg, rgba(248, 193, 193, 0.25), rgba(179, 224, 245, 0.25));
+    font-weight: 600;
+}
+
+.flower-stock-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+    .flower-stock-badge.in-stock {
+        background: #e7faf0;
+        color: #2f8f5b;
+        position: absolute;
+    }
+
+    .flower-stock-badge.out-stock {
+        background: #fff0f0;
+        color: #d9534f;
+        position: absolute;
+    }
+
+.flower-category {
+    color: var(--flower-pink-dark);
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+.flower-product-name {
+    font-weight: 700;
+    color: var(--flower-text);
+}
+
+.flower-price,
+.flower-detail-price {
+    color: var(--flower-pink-dark);
+    font-weight: 700;
+}
+
+.flower-price {
+    font-size: 1.15rem;
+}
+
+.flower-detail-price {
+    font-size: 2rem;
+}
+
+.flower-stock-text {
+    color: #666;
+    font-size: 0.92rem;
+}
+
+.btn-flower-primary {
+    background: linear-gradient(135deg, #f8c1c1, #b3e0f5);
+    color: #fff;
+    border: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 8px 18px rgba(214, 107, 107, 0.18);
+}
+
+    .btn-flower-primary:hover {
+        color: #fff;
+        transform: scale(1.02);
+        filter: brightness(1.03);
+    }
+
+.btn-flower-outline {
+    background: #fff;
+    color: var(--flower-pink-dark);
+    border: 1px solid #f0c1c1;
+    transition: all 0.2s ease;
+}
+
+    .btn-flower-outline:hover {
+        color: var(--flower-pink-dark);
+        background: #fff6f6;
+        transform: scale(1.02);
+    }
+
+.btn-flower-soft {
+    background: rgba(179, 224, 245, 0.25);
+    color: #5e7d88;
+    border: 1px solid rgba(179, 224, 245, 0.4);
+}
+
+.flower-alert-success {
+    background: #eefcf4;
+    border: 1px solid #cceedd;
+    color: #2f8f5b;
+    border-radius: 18px;
+}
+
+.flower-alert-danger {
+    background: #fff1f1;
+    border: 1px solid #ffcbcb;
+    color: #d9534f;
+    border-radius: 18px;
+}
+
+.flower-back-link {
+    color: var(--flower-pink-dark);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+    .flower-back-link:hover {
+        color: #c85858;
+    }
+
+.flower-detail-image-box {
+    height: 480px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(248, 193, 193, 0.18), rgba(179, 224, 245, 0.18));
+    border: 1px solid var(--flower-border);
+}
+
+.flower-thumb-btn {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    padding: 0;
+    box-shadow: var(--flower-shadow);
+    transition: transform 0.2s ease;
+}
+
+    .flower-thumb-btn:hover {
+        transform: scale(1.03);
+    }
+
+.flower-thumb-image {
+    width: 100%;
+    height: 86px;
+    object-fit: cover;
+    display: block;
+}
+
+.flower-info-box {
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(212, 240, 240, 0.2));
+    border: 1px solid var(--flower-border);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 12px 0;
+    border-bottom: 1px dashed rgba(214, 107, 107, 0.18);
+}
+
+    .info-row:last-child {
+        border-bottom: none;
+    }
+
+.info-label {
+    color: #777;
+    font-weight: 500;
+}
+
+.info-value {
+    color: var(--flower-text);
+    font-weight: 600;
+    text-align: right;
+}
+
+.flower-detail-deco {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.flower-detail-deco-left {
+    width: 160px;
+    height: 160px;
+    left: -60px;
+    bottom: -70px;
+    background: rgba(248, 193, 193, 0.18);
+}
+
+.flower-detail-deco-right {
+    width: 180px;
+    height: 180px;
+    top: -70px;
+    right: -70px;
+    background: rgba(179, 224, 245, 0.2);
+}
+
+@media (max-width: 991.98px) {
+    .hero-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .flower-detail-image-box {
+        height: 380px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .flower-page-title,
+    .flower-detail-title {
+        font-size: 1.6rem;
+    }
+
+    .flower-page-subtitle,
+    .flower-product-desc,
+    .flower-detail-desc p {
+        font-size: 0.95rem;
+    }
+
+    .flower-product-image-wrap {
+        height: 220px;
+    }
+
+    .flower-detail-image-box {
+        height: 280px;
+    }
+
+    .info-row {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .info-value {
+        text-align: left;
+    }
+}

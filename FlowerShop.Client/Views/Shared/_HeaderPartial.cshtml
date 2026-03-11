@@ -65,7 +65,7 @@
 
                 @* Dropdown: Sản Phẩm *@
                 <li class="nav-item-floral" role="none">
-                    <a asp-area="" asp-controller="Product" asp-action="Index"
+                    <a asp-area="" asp-controller="Flower" asp-action="Index"
                        class="nav-link-floral" role="menuitem" aria-haspopup="true" aria-expanded="false">
                         Sản Phẩm
                         <svg class="chevron" width="13" height="13" viewBox="0 0 24 24" fill="none"
@@ -176,7 +176,7 @@
                 @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext?.Session.GetString("JWToken")))
                 {
                     @* Account dropdown *@
-                    <a asp-area="" asp-controller="Auth" asp-action="Profile"
+                    <a asp-area="" asp-controller="Profile" asp-action="Index"
                        class="action-btn" aria-label="Tài khoản của tôi">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" stroke-width="2" stroke-linecap="round"

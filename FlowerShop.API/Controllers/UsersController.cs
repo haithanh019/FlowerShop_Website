@@ -18,6 +18,12 @@ namespace FlowerShop.API
         {
             return _facadeService.UserService.GetUsersOData();
         }
+        [EnableQuery]
+        public async Task<IActionResult> Get([FromRoute] Guid key)
+        {
+            var result = await _facadeService.UserService.GetUserByIDAsync(key);
+            return Ok(result);
+        }
         [HttpPost("api/Users/Register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterDTO dto)
         {

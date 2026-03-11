@@ -1,0 +1,221 @@
+﻿@model FlowerShop.Client.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Hồ sơ cá nhân";
+    var initials = string.IsNullOrWhiteSpace(Model.FullName)
+        ? "U"
+        : Model.FullName.Substring(0, 1).ToUpper();
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+}
+
+<div class="profile-page py-4 py-lg-5">
+    <div class="profile-shell">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card profile-card border-0 shadow-sm h-100">
+                    <div class="card-body p-4 text-center">
+                        <div class="profile-avatar mx-auto mb-3">@initials</div>
+                        <h2 class="profile-name mb-1">@Model.FullName</h2>
+                        <p class="profile-role mb-3">@(string.IsNullOrWhiteSpace(Model.Role) ? "Khách hàng" : Model.Role)</p>
+
+                        <div class="profile-badge mb-4">
+                            Tài khoản đang hoạt động
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="button"
+                                    class="btn btn-profile-primary rounded-pill"
+                                    id="btnOpenEdit"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editProfileModal"
+                                    data-userid="@Model.UserID"
+                                    data-email="@Model.Email"
+                                    data-fullname="@Model.FullName"
+                                    data-phone="@Model.PhoneNumber">
+                                Chỉnh sửa thông tin
+                            </button>
+
+                            <button type="button"
+                                    class="btn btn-profile-danger rounded-pill"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteAccountModal">
+                                Xóa tài khoản
+                            </button>
+
+                            <a asp-controller="Auth" asp-action="Logout" class="btn btn-profile-outline rounded-pill">
+                                Đăng xuất
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="card profile-card border-0 shadow-sm">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                            <div>
+                                <h3 class="section-title mb-1">Thông tin cá nhân</h3>
+                                <p class="section-subtitle mb-0">Tất cả thao tác thêm, sửa, xóa được thực hiện ngay trong trang này.</p>
+                            </div>
+                            <button type="button"
+                                    class="btn btn-profile-soft rounded-pill px-4"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editProfileModal"
+                                    data-userid="@Model.UserID"
+                                    data-email="@Model.Email"
+                                    data-fullname="@Model.FullName"
+                                    data-phone="@Model.PhoneNumber">
+                                Cập nhật ngay
+                            </button>
+                        </div>
+
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert profile-alert-success alert-dismissible fade show" role="alert">
+                                @TempData["SuccessMessage"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <div class="alert profile-alert-danger alert-dismissible fade show" role="alert">
+                                @TempData["ErrorMessage"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        <div class="profile-info-list">
+                            <div class="info-item">
+                                <span class="info-label">Email</span>
+                                <span class="info-value">@Model.Email</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Họ và tên</span>
+                                <span class="info-value">
+                                    @(string.IsNullOrWhiteSpace(Model.FullName) ? "Chưa cập nhật" : Model.FullName)
+                                </span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Số điện thoại</span>
+                                <span class="info-value">
+                                    @(string.IsNullOrWhiteSpace(Model.PhoneNumber) ? "Chưa cập nhật" : Model.PhoneNumber)
+                                </span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Vai trò</span>
+                                <span class="info-value">@Model.Role</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card profile-card border-0 shadow-sm mt-4">
+                    <div class="card-body p-4">
+                        <h4 class="section-title mb-3">Ghi chú bảo mật</h4>
+                        <ul class="profile-tips mb-0">
+                            <li>Cập nhật thông tin chính xác để phục vụ giao hàng và thanh toán.</li>
+                            <li>Hành động xóa tài khoản là không thể hoàn tác.</li>
+                            <li>Sau khi cập nhật hồ sơ, bạn có thể tiếp tục dùng Cart và Order với thông tin mới.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content profile-modal">
+            <div class="modal-header border-0 pb-0">
+                <div>
+                    <h5 class="modal-title">Chỉnh sửa hồ sơ</h5>
+                    <p class="modal-subtitle mb-0">Cập nhật thông tin cá nhân ngay tại đây.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body pt-3">
+                <form asp-controller="Profile" asp-action="UpdateProfile" method="post" id="profileForm">
+                    @Html.AntiForgeryToken()
+                    <input asp-for="UserID" type="hidden" id="editUserId" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label profile-label"></label>
+                        <input asp-for="Email" class="form-control profile-input" id="editEmail" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label profile-label"></label>
+                        <input asp-for="FullName" class="form-control profile-input" id="editFullName" />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="PhoneNumber" class="form-label profile-label"></label>
+                        <input asp-for="PhoneNumber" class="form-control profile-input" id="editPhoneNumber" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end">
+                        <button type="button" class="btn btn-profile-outline rounded-pill px-4" data-bs-dismiss="modal">
+                            Hủy
+                        </button>
+                        <button type="submit" class="btn btn-profile-primary rounded-pill px-4">
+                            Lưu thay đổi
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content profile-modal">
+            <div class="modal-header border-0 pb-0">
+                <div>
+                    <h5 class="modal-title text-danger">Xóa tài khoản</h5>
+                    <p class="modal-subtitle mb-0">Hành động này không thể hoàn tác.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body pt-3">
+                <p class="delete-warning">
+                    Nhập <strong>XOA TAI KHOAN</strong> để xác nhận.
+                </p>
+
+                <input type="text" id="deleteConfirmText" class="form-control profile-input mb-4" placeholder="XOA TAI KHOAN" />
+
+                <form asp-controller="Profile" asp-action="DeleteAccount" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="d-flex gap-2 justify-content-end">
+                        <button type="button" class="btn btn-profile-outline rounded-pill px-4" data-bs-dismiss="modal">
+                            Hủy
+                        </button>
+                        <button type="submit" id="btnConfirmDelete" class="btn btn-profile-danger rounded-pill px-4" disabled>
+                            Xóa tài khoản
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/profile.js" asp-append-version="true"></script>
+}

@@ -1,7 +1,7 @@
 ﻿using FlowerShop.Application;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FlowerShop.Client.Controllers
+namespace FlowerShop.Client
 {
     public class CategoryController : Controller
     {
@@ -17,11 +17,11 @@ namespace FlowerShop.Client.Controllers
         {
             var categories = await _baseService.GetODataAsync<IEnumerable<CategoryDTO>>("/Odata/Categories");
 
-            if (categories == null )
+            if (categories == null)
             {
                 ViewBag.ErrorMessage = "Không thể lấy danh sách danh mục.";
                 return View(new List<CategoryDTO>());
-            }         
+            }
             return View(categories);
         }
 

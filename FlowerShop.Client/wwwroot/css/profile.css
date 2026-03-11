@@ -1,0 +1,202 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --profile-pink: #f8c1c1;
+    --profile-pink-soft: #f9d6d6;
+    --profile-pink-dark: #d66b6b;
+    --profile-blue: #b3e0f5;
+    --profile-blue-soft: #d4f0f0;
+    --profile-bg: #fff9f9;
+    --profile-text: #4a4a4a;
+    --profile-danger: #d9534f;
+    --profile-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top left, rgba(248, 193, 193, 0.24), transparent 20%), radial-gradient(circle at bottom right, rgba(179, 224, 245, 0.24), transparent 20%), var(--profile-bg);
+    color: var(--profile-text);
+}
+
+.profile-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.profile-card,
+.profile-modal {
+    border-radius: 24px;
+    background: rgba(255,255,255,0.96);
+    box-shadow: var(--profile-shadow);
+    border: 1px solid rgba(248, 193, 193, 0.35);
+}
+
+.profile-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--profile-pink), var(--profile-blue));
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    box-shadow: 0 10px 20px rgba(214, 107, 107, 0.18);
+}
+
+.profile-name,
+.section-title {
+    color: var(--profile-pink-dark);
+    font-weight: 700;
+}
+
+.profile-role,
+.section-subtitle,
+.modal-subtitle {
+    color: #6b6b6b;
+}
+
+.profile-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(248,193,193,.3), rgba(179,224,245,.3));
+    color: var(--profile-pink-dark);
+    font-weight: 600;
+    font-size: .9rem;
+}
+
+.profile-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(255,255,255,.95), rgba(212,240,240,.24));
+    border: 1px solid rgba(248, 193, 193, 0.28);
+}
+
+.info-label {
+    color: #777;
+    font-weight: 500;
+}
+
+.info-value {
+    color: var(--profile-text);
+    font-weight: 600;
+    text-align: right;
+    word-break: break-word;
+}
+
+.profile-label {
+    color: var(--profile-pink-dark);
+    font-weight: 600;
+}
+
+.profile-input {
+    border-radius: 16px;
+    border: 1px solid #f0c1c1;
+    min-height: 48px;
+    padding: 12px 16px;
+}
+
+    .profile-input:focus {
+        border-color: #f8a5a5;
+        box-shadow: 0 0 0 0.2rem rgba(248, 165, 165, 0.18);
+    }
+
+.btn-profile-primary,
+.btn-profile-outline,
+.btn-profile-danger,
+.btn-profile-soft {
+    transition: all .2s ease;
+}
+
+.btn-profile-primary {
+    background: linear-gradient(135deg, var(--profile-pink), var(--profile-blue));
+    color: white;
+    border: none;
+    box-shadow: 0 8px 16px rgba(214, 107, 107, 0.18);
+}
+
+    .btn-profile-primary:hover {
+        color: white;
+        transform: scale(1.02);
+    }
+
+.btn-profile-outline {
+    background: white;
+    color: var(--profile-pink-dark);
+    border: 1px solid #f0c1c1;
+}
+
+    .btn-profile-outline:hover {
+        background: #fff4f4;
+        color: var(--profile-pink-dark);
+        transform: scale(1.02);
+    }
+
+.btn-profile-soft {
+    background: rgba(179, 224, 245, 0.25);
+    color: #5f7f8b;
+    border: 1px solid rgba(179, 224, 245, 0.5);
+}
+
+    .btn-profile-soft:hover {
+        transform: scale(1.02);
+    }
+
+.btn-profile-danger {
+    background: #fff1f1;
+    color: var(--profile-danger);
+    border: 1px solid #ffcbcb;
+}
+
+    .btn-profile-danger:hover {
+        background: #ffe8e8;
+        color: var(--profile-danger);
+        transform: scale(1.02);
+    }
+
+.profile-alert-success {
+    background: #eefcf4;
+    border: 1px solid #cceedd;
+    color: #2f8f5b;
+    border-radius: 18px;
+}
+
+.profile-alert-danger {
+    background: #fff1f1;
+    border: 1px solid #ffcbcb;
+    color: var(--profile-danger);
+    border-radius: 18px;
+}
+
+.profile-tips {
+    padding-left: 1.2rem;
+    color: #666;
+    line-height: 1.8;
+}
+
+.delete-warning {
+    color: #666;
+    line-height: 1.7;
+}
+
+@media (max-width: 575.98px) {
+    .info-item {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .info-value {
+        text-align: left;
+    }
+}

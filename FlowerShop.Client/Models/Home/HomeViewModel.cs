@@ -1,6 +1,6 @@
 ﻿using FlowerShop.Application;
 
-namespace FlowerShop.Client.Models.Home
+namespace FlowerShop.Client
 {
     public class HomeViewModel
     {

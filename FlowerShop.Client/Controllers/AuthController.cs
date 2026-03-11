@@ -26,6 +26,10 @@ namespace FlowerShop.Client.Controllers
             {
                 // Save Session
                 HttpContext.Session.SetString("JWToken", response.Data.Token);
+                HttpContext.Session.SetString("UserID", response.Data.UserID.ToString());
+                HttpContext.Session.SetString("UserName", response.Data.FullName);
+                HttpContext.Session.SetString("Email", response.Data.Email);
+                HttpContext.Session.SetString("Role", response.Data.Role);
                 TempData["SuccessMessage"] = "Đăng nhập thành công!";
                 return RedirectToAction("Index", "Home");
             }
@@ -56,7 +60,7 @@ namespace FlowerShop.Client.Controllers
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("JWToken");
+            HttpContext.Session.Clear();
             return RedirectToAction("Login");
         }
     }

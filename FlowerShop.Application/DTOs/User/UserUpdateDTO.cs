@@ -1,15 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace FlowerShop.Application
+﻿namespace FlowerShop.Application
 {
-    public class UserDTO
+    public class UserUpdateDTO
     {
-        [Key]
-        public Guid UserID { get; set; }
         public string FullName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
         public string Role { get; set; } = string.Empty;
-        public string Token { get; set; } = string.Empty; // JWT Token
     }
 }

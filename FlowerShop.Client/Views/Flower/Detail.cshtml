@@ -1,0 +1,136 @@
+﻿@model FlowerShop.Application.FlowerDTO
+
+@{
+    ViewData["Title"] = "Chi tiết hoa";
+    var images = Model.FlowerImages?.ToList() ?? new List<FlowerShop.Application.FlowerImageDTO>();
+    var mainImage = images.FirstOrDefault()?.Url;
+    var isInStock = Model.StockQuantity > 0;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/flower.css" asp-append-version="true" />
+}
+
+<div class="flower-page py-4 py-lg-5">
+    <div class="mb-4">
+        <a asp-controller="Flower" asp-action="Index" class="flower-back-link">
+            ← Quay lại danh sách sản phẩm
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm flower-detail-card overflow-hidden">
+        <div class="card-body p-4 p-lg-5">
+            <div class="row g-4 g-lg-5">
+                <div class="col-lg-6">
+                    <div class="flower-detail-image-box mb-3">
+                        @if (!string.IsNullOrWhiteSpace(mainImage))
+                        {
+                            <img id="mainFlowerImage" src="@mainImage" alt="@Model.FlowerName" class="flower-detail-main-image" />
+                        }
+                        else
+                        {
+                            <div class="flower-product-placeholder detail-placeholder">
+                                <span>Không có ảnh</span>
+                            </div>
+                        }
+                    </div>
+
+                    @if (images.Any())
+                    {
+                        <div class="row g-3">
+                            @foreach (var img in images)
+                            {
+                                <div class="col-3">
+                                    <button type="button"
+                                            class="flower-thumb-btn w-100"
+                                            onclick="changeMainImage('@img.Url')">
+                                        <img src="@img.Url" alt="@Model.FlowerName" class="flower-thumb-image" />
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="flower-category mb-2">
+                        @(string.IsNullOrWhiteSpace(Model.CategoryName) ? "Danh mục hoa" : Model.CategoryName)
+                    </div>
+
+                    <h1 class="flower-detail-title mb-3">@Model.FlowerName</h1>
+
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <span class="flower-stock-badge @(isInStock ? "in-stock" : "out-stock")">
+                            @(isInStock ? "Còn hàng" : "Tạm hết hàng")
+                        </span>
+                        <span class="flower-mini-badge">Kho: @Model.StockQuantity</span>
+                    </div>
+
+                    <div class="flower-detail-price mb-4">
+                        @Model.Price.ToString("N0") đ
+                    </div>
+
+                    <div class="flower-detail-desc mb-4">
+                        @if (!string.IsNullOrWhiteSpace(Model.Description))
+                        {
+                            <p>@Model.Description</p>
+                        }
+                        else
+                        {
+                            <p>Sản phẩm hoa tươi mang phong cách tinh tế, phù hợp cho những dịp đặc biệt và lời chúc dịu dàng.</p>
+                        }
+                    </div>
+
+                    <div class="flower-detail-actions d-flex flex-wrap gap-3 mb-4">
+                        <button type="button" class="btn btn-flower-primary px-4 py-2 rounded-pill" disabled>
+                            Thêm vào giỏ hàng
+                        </button>
+
+                        <a asp-controller="Flower" asp-action="Index" class="btn btn-flower-outline px-4 py-2 rounded-pill">
+                            Xem thêm sản phẩm
+                        </a>
+                    </div>
+
+                    <div class="flower-info-box">
+                        <div class="info-row">
+                            <span class="info-label">Tên sản phẩm</span>
+                            <span class="info-value">@Model.FlowerName</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Danh mục</span>
+                            <span class="info-value">
+                                @(string.IsNullOrWhiteSpace(Model.CategoryName) ? "Đang cập nhật" : Model.CategoryName)
+                            </span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Giá bán</span>
+                            <span class="info-value">@Model.Price.ToString("N0") đ</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Tình trạng</span>
+                            <span class="info-value">@(isInStock ? "Còn hàng" : "Hết hàng")</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Số lượng kho</span>
+                            <span class="info-value">@Model.StockQuantity</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flower-detail-deco flower-detail-deco-left"></div>
+        <div class="flower-detail-deco flower-detail-deco-right"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function changeMainImage(url) {
+            const mainImage = document.getElementById('mainFlowerImage');
+            if (mainImage && url) {
+                mainImage.src = url;
+            }
+        }
+    </script>
+}

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace FlowerShop.Client.Controllers
+namespace FlowerShop.Client
 {
     public class FlowerController : Controller
     {
@@ -24,6 +24,20 @@ namespace FlowerShop.Client.Controllers
                 return View(new List<FlowerDTO>());
             }
             return View(flowers);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Detail(Guid id)
+        {
+            var response = await _baseService.GetAsync<FlowerDTO>($"/Odata/Flowers/{id}");
+
+            if (response == null || !response.Success || response.Data == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy hoa.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(response.Data);
         }
 
         [HttpGet]

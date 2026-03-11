@@ -1,10 +1,9 @@
 using FlowerShop.Application;
 using FlowerShop.Client.Models;
-using FlowerShop.Client.Models.Home;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace FlowerShop.Client.Controllers
+namespace FlowerShop.Client
 {
     public class HomeController : Controller
     {

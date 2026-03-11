@@ -30,6 +30,19 @@ namespace FlowerShop.Application
             var response = userQuery.ProjectTo<UserDTO>(_mapper.ConfigurationProvider);
             return response;
         }
+        public async Task<ApiResponse<UserDTO>> GetUserByIDAsync(Guid id)
+        {
+            var user = await _unitOfWork.UserRepository.GetByIDAsync(id);
+
+            if (user == null)
+            {
+                throw new NotFoundException("Không tìm thấy người dùng.");
+            }
+
+            var response = _mapper.Map<UserDTO>(user);
+            return new ApiResponse<UserDTO>(response);
+        }
+
         public async Task<ApiResponse<UserDTO>> RegisterAsync(UserRegisterDTO dto)
         {
             var existingUser = await _unitOfWork.UserRepository.GetByAsync(u => u.Email == dto.Email);

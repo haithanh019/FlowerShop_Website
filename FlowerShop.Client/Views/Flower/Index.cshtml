@@ -1,5 +1,238 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<FlowerShop.Application.FlowerDTO>
+
 @{
+    ViewData["Title"] = "Danh sách hoa";
+    var flowers = Model?.ToList() ?? new List<FlowerShop.Application.FlowerDTO>();
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/flower.css" asp-append-version="true" />
+}
+
+<div class="flower-page py-4 py-lg-5">
+    <div class="flower-hero card border-0 shadow-sm mb-4 mb-lg-5 overflow-hidden">
+        <div class="card-body p-4 p-lg-5">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7">
+                    <span class="flower-badge mb-3 d-inline-block">Bộ sưu tập mới</span>
+                    <h1 class="flower-page-title mb-3">Những đóa hoa dịu dàng cho mọi khoảnh khắc</h1>
+                    <p class="flower-page-subtitle mb-4">
+                        Chọn một bó hoa tươi với sắc pastel nhẹ nhàng, phù hợp cho tặng người thân, bạn bè hoặc tự thưởng cho chính mình.
+                    </p>
+
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#flower-list" class="btn btn-flower-primary px-4 py-2 rounded-pill">Xem sản phẩm</a>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-flower-outline px-4 py-2 rounded-pill">Về trang chủ</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="hero-summary">
+                        <div class="summary-item">
+                            <div class="summary-number">@flowers.Count</div>
+                            <div class="summary-label">Sản phẩm</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-number">@flowers.Count(x => x.StockQuantity > 0)</div>
+                            <div class="summary-label">Còn hàng</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-number">@flowers.Count(x => x.StockQuantity <= 0)</div>
+                            <div class="summary-label">Tạm hết</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flower-hero-deco flower-hero-deco-1"></div>
+        <div class="flower-hero-deco flower-hero-deco-2"></div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert flower-alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert flower-alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert flower-alert-danger mb-4">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    <div class="row g-4" id="flower-list">
+        <div class="col-lg-3">
+            <div class="card flower-filter-card border-0 shadow-sm sticky-lg-top">
+                <div class="card-body p-4">
+                    <h5 class="filter-title mb-3">Tìm nhanh</h5>
+
+                    <div class="mb-3">
+                        <label for="flowerSearch" class="form-label flower-label">Tên hoa</label>
+                        <input id="flowerSearch" type="text" class="form-control flower-input" placeholder="Nhập tên hoa..." />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="stockFilter" class="form-label flower-label">Trạng thái</label>
+                        <select id="stockFilter" class="form-select flower-input">
+                            <option value="all">Tất cả</option>
+                            <option value="in-stock">Còn hàng</option>
+                            <option value="out-stock">Hết hàng</option>
+                        </select>
+                    </div>
+
+                    <button type="button" id="resetFilter" class="btn btn-flower-outline w-100 rounded-pill">
+                        Xóa bộ lọc
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            @if (!flowers.Any())
+            {
+                <div class="card border-0 shadow-sm flower-empty-card">
+                    <div class="card-body p-5 text-center">
+                        <h4 class="mb-2">Chưa có sản phẩm</h4>
+                        <p class="mb-0 text-muted">Danh sách hoa hiện đang trống hoặc chưa tải được dữ liệu.</p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row g-4" id="flowerGrid">
+                    @foreach (var item in flowers)
+                    {
+                        var firstImage = item.FlowerImages?.FirstOrDefault()?.Url;
+                        var isInStock = item.StockQuantity > 0;
+
+                        <div class="col-sm-6 col-xl-4 flower-item"
+                             data-name="@item.FlowerName?.ToLower()"
+                             data-stock="@(isInStock ? "in-stock" : "out-stock")">
+                            <div class="card flower-product-card h-100 border-0 shadow-sm">
+                                <div class="flower-product-image-wrap">
+                                    @if (!string.IsNullOrWhiteSpace(firstImage))
+                                    {
+                                        <img src="@firstImage" class="flower-product-image" alt="@item.FlowerName" />
+                                    }
+                                    else
+                                    {
+                                        <div class="flower-product-placeholder">
+                                            <span>Không có ảnh</span>
+                                        </div>
+                                    }
+
+                                    <span class="flower-stock-badge @(isInStock ? "in-stock" : "out-stock")">
+                                        @(isInStock ? "Còn hàng" : "Hết hàng")
+                                    </span>
+                                </div>
+
+                                <div class="card-body d-flex flex-column p-4">
+                                    <div class="flower-category mb-2">
+                                        @(string.IsNullOrWhiteSpace(item.CategoryName) ? "Danh mục hoa" : item.CategoryName)
+                                    </div>
+
+                                    <h5 class="flower-product-name mb-2">@item.FlowerName</h5>
+
+                                    <p class="flower-product-desc mb-3">
+                                        @{
+                                            var description = string.IsNullOrWhiteSpace(item.Description)
+                                            ? "Sản phẩm hoa tươi với thiết kế nhẹ nhàng và thanh lịch."
+                                            : item.Description;
+                                        }
+                                        @(description.Length > 90 ? description.Substring(0, 90) + "..." : description)
+                                    </p>
+
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div class="flower-price">
+                                                @item.Price.ToString("N0") đ
+                                            </div>
+                                            <div class="flower-stock-text">
+                                                Kho: @item.StockQuantity
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex gap-2">
+                                            <a asp-controller="Flower"
+                                               asp-action="Detail"
+                                               asp-route-id="@item.FlowerID"
+                                               class="btn btn-flower-primary flex-fill rounded-pill">
+                                                Xem chi tiết
+                                            </a>
+
+                                            <button type="button" class="btn btn-flower-soft rounded-pill px-3" disabled>
+                                                Giỏ hàng
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div id="noResultBox" class="card border-0 shadow-sm flower-empty-card d-none mt-4">
+                    <div class="card-body p-5 text-center">
+                        <h5 class="mb-2">Không tìm thấy sản phẩm phù hợp</h5>
+                        <p class="mb-0 text-muted">Hãy thử từ khóa khác hoặc xóa bộ lọc hiện tại.</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (() => {
+            const searchInput = document.getElementById('flowerSearch');
+            const stockFilter = document.getElementById('stockFilter');
+            const resetButton = document.getElementById('resetFilter');
+            const items = Array.from(document.querySelectorAll('.flower-item'));
+            const noResultBox = document.getElementById('noResultBox');
+
+            function applyFilter() {
+                const keyword = (searchInput?.value || '').trim().toLowerCase();
+                const stock = stockFilter?.value || 'all';
+                let visibleCount = 0;
+
+                items.forEach(item => {
+                    const name = item.dataset.name || '';
+                    const itemStock = item.dataset.stock || '';
+
+                    const matchKeyword = !keyword || name.includes(keyword);
+                    const matchStock = stock === 'all' || stock === itemStock;
+
+                    const show = matchKeyword && matchStock;
+                    item.classList.toggle('d-none', !show);
+
+                    if (show) visibleCount++;
+                });
+
+                if (noResultBox) {
+                    noResultBox.classList.toggle('d-none', visibleCount !== 0);
+                }
+            }
+
+            searchInput?.addEventListener('input', applyFilter);
+            stockFilter?.addEventListener('change', applyFilter);
+
+            resetButton?.addEventListener('click', () => {
+                if (searchInput) searchInput.value = '';
+                if (stockFilter) stockFilter.value = 'all';
+                applyFilter();
+            });
+        })();
+    </script>
 }
