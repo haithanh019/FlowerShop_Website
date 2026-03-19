@@ -55,6 +55,7 @@ namespace FlowerShop.Client
 
             var dto = new CartItemCreateDTO
             {
+                CartID = cartID,
                 FlowerID = flowerID,
                 Quantity = 1
             };

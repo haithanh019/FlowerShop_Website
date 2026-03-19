@@ -35,10 +35,10 @@ namespace FlowerShop.Application
             return new ApiResponse<OrderDTO>(_mapper.Map<OrderDTO>(order));
         }
 
-        public async Task<ApiResponse<IEnumerable<OrderDTO>>> GetOrdersByUserAsync(Guid userId)
+        public async Task<ApiResponse<IEnumerable<OrderDTO>>> GetOrdersByUserAsync(Guid id)
         {
             var orders = await _unitOfWork.OrderRepository.FindAsync(
-                o => o.UserID == userId,
+                o => o.UserID == id,
                 includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages"
             );
             return new ApiResponse<IEnumerable<OrderDTO>>(_mapper.Map<IEnumerable<OrderDTO>>(orders));

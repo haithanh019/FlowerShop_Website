@@ -95,9 +95,5 @@ namespace FlowerShop.Application
             return new ApiResponse<bool>(true, "Xóa sản phẩm khỏi giỏ hàng thành công");
         }
 
-        public Task<ApiResponse<CartItemDTO>> AddToCartAsync(Guid id, CartItemCreateDTO dto)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
