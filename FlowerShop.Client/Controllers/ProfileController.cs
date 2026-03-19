@@ -22,7 +22,7 @@ namespace FlowerShop.Client
                 return RedirectToAction("Login", "Auth");
             }
 
-            var response = await _baseService.GetAsync<UserDTO>($"/Odata/Users({userId})", token);
+            var response = await _baseService.GetAsync<UserDTO>($"Odata/Users/{userId}", token);
             if (response == null || !response.Success || response.Data == null)
             {
                 TempData["ErrorMessage"] = "Không tải được thông tin tài khoản.";
@@ -66,7 +66,7 @@ namespace FlowerShop.Client
                 PhoneNumber = model.PhoneNumber
             };
 
-            var response = await _baseService.PutAsync<UserDTO>($"/Odata/Users({userId})", updateDto, token);
+            var response = await _baseService.PutAsync<UserDTO>($"/Odata/Users/{userId}", updateDto, token);
 
             if (response.Success && response.Data != null)
             {
@@ -94,7 +94,7 @@ namespace FlowerShop.Client
                 return RedirectToAction("Login", "Auth");
             }
 
-            var response = await _baseService.DeleteAsync<bool>($"/Odata/Users({userId})", token);
+            var response = await _baseService.DeleteAsync<bool>($"/Odata/Users/{userId}", token);
 
             if (response.Success)
             {

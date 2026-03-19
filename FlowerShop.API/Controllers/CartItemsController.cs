@@ -12,9 +12,9 @@ namespace FlowerShop.API
             _facadeService = facadeService;
         }
 
-        public async Task<IActionResult> Post([FromQuery] Guid id, [FromBody] CartItemCreateDTO dto)
+        public async Task<IActionResult> Post([FromRoute] Guid key, [FromBody] CartItemCreateDTO dto)
         {
-            var result = await _facadeService.CartItemService.AddToCartAsync(id, dto);
+            var result = await _facadeService.CartItemService.AddToCartAsync(key, dto);
             return Ok(result);
         }
 

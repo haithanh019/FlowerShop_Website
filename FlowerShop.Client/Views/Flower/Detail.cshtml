@@ -82,11 +82,35 @@
                     </div>
 
                     <div class="flower-detail-actions d-flex flex-wrap gap-3 mb-4">
-                        <button type="button" class="btn btn-flower-primary px-4 py-2 rounded-pill" disabled>
-                            Thêm vào giỏ hàng
-                        </button>
+                        @if (isInStock)
+                        {
+                            <form asp-controller="Cart" asp-action="AddToCart" method="post"
+                                  class="d-flex gap-3 align-items-center">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="flowerId" value="@Model.FlowerID" />
 
-                        <a asp-controller="Flower" asp-action="Index" class="btn btn-flower-outline px-4 py-2 rounded-pill">
+                                <div class="d-flex align-items-center gap-2">
+                                    <label class="form-label mb-0 flower-label">SL:</label>
+                                    <input type="number" name="quantity"
+                                           value="1" min="1" max="@Model.StockQuantity"
+                                           class="form-control flower-input text-center"
+                                           style="width:80px" />
+                                </div>
+
+                                <button type="submit" class="btn btn-flower-primary px-4 py-2 rounded-pill">
+                                    Thêm vào giỏ hàng
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-flower-primary px-4 py-2 rounded-pill" disabled>
+                                Hết hàng
+                            </button>
+                        }
+
+                        <a asp-controller="Flower" asp-action="Index"
+                               class="btn btn-flower-outline px-4 py-2 rounded-pill">
                             Xem thêm sản phẩm
                         </a>
                     </div>

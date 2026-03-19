@@ -20,7 +20,10 @@ namespace FlowerShop.API
             builder.Services.AddDbContext<FlowerShopDbContext>(options =>
                options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.ConnectionStringKey)));
             //Auto Mapper
-            builder.Services.AddAutoMapper(typeof(MapperProfile));
+            builder.Services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<MapperProfile>();
+            });
             //Unit of Work
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             //Facade Service

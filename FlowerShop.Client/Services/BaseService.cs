@@ -34,8 +34,21 @@ namespace FlowerShop.Client
             var responseBody = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-            var apiResponse = JsonSerializer.Deserialize<ApiResponse<T>>(responseBody, options);
-            return apiResponse ?? new ApiResponse<T>("Error to connect with API");
+            // ✅ Guard: body rỗng hoặc không phải JSON → trả về lỗi rõ ràng thay vì crash
+            if (string.IsNullOrWhiteSpace(responseBody))
+            {
+                return new ApiResponse<T>($"API trả về phản hồi rỗng. HTTP {(int)response.StatusCode}");
+            }
+
+            try
+            {
+                var apiResponse = JsonSerializer.Deserialize<ApiResponse<T>>(responseBody, options);
+                return apiResponse ?? new ApiResponse<T>("Không parse được phản hồi từ API.");
+            }
+            catch (JsonException ex)
+            {
+                return new ApiResponse<T>($"JSON parse error: {ex.Message} | Body: {responseBody[..Math.Min(200, responseBody.Length)]}");
+            }
         }
         //=======================================================================================================
         public async Task<T?> GetODataAsync<T>(string endpoint, string? token = null)

@@ -171,9 +171,23 @@
                                                 Xem chi tiết
                                             </a>
 
-                                            <button type="button" class="btn btn-flower-soft rounded-pill px-3" disabled>
-                                                Giỏ hàng
-                                            </button>
+                                            @if (isInStock)
+                                            {
+                                                <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="FlowerID" value="@item.FlowerID" />
+                                                    <input type="hidden" name="Quantity" value="1" />
+                                                    <button type="submit" class="btn btn-flower-soft rounded-pill px-3">
+                                                        🛒
+                                                    </button>
+                                                </form>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-flower-soft rounded-pill px-3" disabled>
+                                                    🛒
+                                                </button>
+                                            }
                                         </div>
                                     </div>
                                 </div>

@@ -1,0 +1,182 @@
+﻿@model FlowerShop.Application.CartDTO
+
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    var items = Model.CartItems?.ToList() ?? new List<FlowerShop.Application.CartItemDTO>();
+    var totalAmount = items.Sum(x => x.TotalPrice);
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/cart.css" asp-append-version="true" />
+}
+
+<div class="cart-page py-4 py-lg-5">
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert cart-alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert cart-alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card cart-card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="cart-title mb-0">Giỏ hàng của bạn</h3>
+                        <span class="cart-badge">@items.Count sản phẩm</span>
+                    </div>
+
+                    @if (!items.Any())
+                    {
+                        <div class="cart-empty text-center py-5">
+                            <div class="cart-empty-icon mb-3">🌸</div>
+                            <h5 class="mb-2">Giỏ hàng trống</h5>
+                            <p class="text-muted mb-4">Hãy chọn thêm những đóa hoa tươi đẹp nhé!</p>
+                            <a asp-controller="Flower" asp-action="Index"
+                                   class="btn btn-cart-primary rounded-pill px-4">
+                                Xem sản phẩm ngay
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="cart-items">
+                            @foreach (var item in items)
+                            {
+                                <div class="cart-item-row" id="item-@item.CartItemID">
+                                    <div class="cart-item-image">
+                                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                        {
+                                            <img src="@item.ImageUrl" alt="@item.FlowerName" />
+                                        }
+                                        else
+                                        {
+                                            <div class="cart-item-placeholder">🌺</div>
+                                        }
+                                    </div>
+
+                                    <div class="cart-item-info">
+                                        <h5 class="cart-item-name">@item.FlowerName</h5>
+                                        <p class="cart-item-price">@item.UnitPrice.ToString("N0") đ / bó</p>
+                                    </div>
+
+                                    <div class="cart-item-qty">
+                                        <form asp-controller="Cart" asp-action="UpdateQuantity"
+                                              method="post" class="qty-form">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="cartItemId" value="@item.CartItemID" />
+
+                                            <div class="qty-control">
+                                                <button type="button" class="qty-btn qty-minus"
+                                                        data-form="qty-@item.CartItemID">
+                                                    −
+                                                </button>
+                                                <input type="number"
+                                                       name="quantity"
+                                                       value="@item.Quantity"
+                                                       min="1" max="999"
+                                                       class="qty-input"
+                                                       id="qty-@item.CartItemID" />
+                                                <button type="button" class="qty-btn qty-plus"
+                                                        data-form="qty-@item.CartItemID">
+                                                    +
+                                                </button>
+                                            </div>
+
+                                            <button type="submit"
+                                                    class="btn btn-cart-soft btn-sm rounded-pill mt-2 w-100">
+                                                Cập nhật
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    <div class="cart-item-total">
+                                        <div class="item-total-price">@item.TotalPrice.ToString("N0") đ</div>
+
+                                        <form asp-controller="Cart" asp-action="RemoveItem" method="post">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="cartItemId" value="@item.CartItemID" />
+                                            <button type="submit" class="btn-remove"
+                                                    onclick="return confirm('Xóa sản phẩm này khỏi giỏ?')">
+                                                ✕
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card cart-card border-0 shadow-sm sticky-lg-top">
+                <div class="card-body p-4">
+                    <h4 class="cart-title mb-4">Tổng đơn hàng</h4>
+
+                    <div class="order-summary">
+                        <div class="summary-row">
+                            <span>Số lượng sản phẩm</span>
+                            <span>@items.Count</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tổng số bó</span>
+                            <span>@items.Sum(x => x.Quantity)</span>
+                        </div>
+                        <div class="summary-row summary-divider"></div>
+                        <div class="summary-row summary-total">
+                            <span>Tổng tiền</span>
+                            <span class="total-amount">@totalAmount.ToString("N0") đ</span>
+                        </div>
+                    </div>
+
+                    @if (items.Any())
+                    {
+                        <a asp-controller="Order" asp-action="Checkout"
+                               class="btn btn-cart-primary w-100 rounded-pill py-2 mt-4">
+                            Tiến hành thanh toán
+                        </a>
+                    }
+
+                    <a asp-controller="Flower" asp-action="Index"
+                           class="btn btn-cart-outline w-100 rounded-pill py-2 mt-2">
+                        Tiếp tục mua hàng
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.qty-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const inputId = this.getAttribute('data-form');
+                const input = document.getElementById(inputId);
+                if (!input) return;
+
+                let val = parseInt(input.value) || 1;
+
+                if (this.classList.contains('qty-plus')) {
+                    val = Math.min(val + 1, 999);
+                } else if (this.classList.contains('qty-minus')) {
+                    val = Math.max(val - 1, 1);
+                }
+
+                input.value = val;
+            });
+        });
+    </script>
+}

@@ -1,5 +1,6 @@
 ﻿using FlowerShop.Application;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 namespace FlowerShop.API
@@ -12,10 +13,10 @@ namespace FlowerShop.API
             _facadeService = facadeService;
         }
 
-        [HttpGet("Odata/Carts")]
-        public async Task<IActionResult> GetByUser([FromQuery] Guid userId)
+        [EnableQuery]
+        public async Task<IActionResult> Get([FromRoute] Guid key)
         {
-            var result = await _facadeService.CartService.GetCartByUserIDAsync(userId);
+            var result = await _facadeService.CartService.GetCartByUserIDAsync(key);
             return Ok(result);
         }
     }
