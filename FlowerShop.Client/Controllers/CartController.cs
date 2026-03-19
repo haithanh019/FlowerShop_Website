@@ -15,18 +15,18 @@ namespace FlowerShop.Client
         public async Task<IActionResult> Index()
         {
             var token = HttpContext.Session.GetString("JWToken");
-            var userId = HttpContext.Session.GetString("UserID");
+            var userID = HttpContext.Session.GetString("UserID");
 
-            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(userID))
                 return RedirectToAction("Login", "Auth");
 
             var response = await _baseService.GetAsync<CartDTO>(
-                $"Odata/Carts/{userId}", token);
+                $"Odata/Carts({userID})", token);
 
             if (!response.Success || response.Data == null)
             {
                 TempData["ErrorMessage"] = "Không thể tải giỏ hàng.";
-                return View(new CartDTO { UserID = Guid.Parse(userId) });
+                return View(new CartDTO { UserID = Guid.Parse(userID) });
             }
 
             return View(response.Data);
@@ -34,16 +34,16 @@ namespace FlowerShop.Client
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddToCart(Guid flowerId)
+        public async Task<IActionResult> AddToCart(Guid flowerID)
         {
             var token = HttpContext.Session.GetString("JWToken");
-            var userId = HttpContext.Session.GetString("UserID");
+            var userID = HttpContext.Session.GetString("UserID");
 
-            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(userID))
                 return RedirectToAction("Login", "Auth");
 
             var cartResponse = await _baseService.GetAsync<CartDTO>(
-                $"Odata/Carts/{userId}", token);
+                $"Odata/Carts({userID})", token);
 
             if (!cartResponse.Success || cartResponse.Data == null)
             {
@@ -51,16 +51,16 @@ namespace FlowerShop.Client
                 return RedirectToAction("Index", "Flower");
             }
 
-            var cartId = cartResponse.Data.CartID;
+            var cartID = cartResponse.Data.CartID;
 
             var dto = new CartItemCreateDTO
             {
-                FlowerID = flowerId,
+                FlowerID = flowerID,
                 Quantity = 1
             };
 
             var addResponse = await _baseService.PostAsync<CartItemDTO>(
-                $"Odata/CartItems/{cartId}", dto, token);
+                $"Odata/CartItems", dto, token);
 
             if (addResponse.Success)
                 TempData["SuccessMessage"] = "Đã thêm vào giỏ hàng!";
@@ -72,7 +72,7 @@ namespace FlowerShop.Client
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateQuantity(Guid cartItemId, int quantity)
+        public async Task<IActionResult> UpdateQuantity(Guid cartItemID, int quantity)
         {
             var token = HttpContext.Session.GetString("JWToken");
 
@@ -80,12 +80,12 @@ namespace FlowerShop.Client
                 return RedirectToAction("Login", "Auth");
 
             if (quantity <= 0)
-                return await RemoveItem(cartItemId);
+                return await RemoveItem(cartItemID);
 
             var dto = new CartItemUpdateDTO { Quantity = quantity };
 
             var response = await _baseService.PutAsync<CartItemDTO>(
-                $"Odata/CartItems/{cartItemId}", dto, token);
+                $"Odata/CartItems({cartItemID})", dto, token);
 
             if (!response.Success)
                 TempData["ErrorMessage"] = "Cập nhật thất bại.";
@@ -95,7 +95,7 @@ namespace FlowerShop.Client
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveItem(Guid cartItemId)
+        public async Task<IActionResult> RemoveItem(Guid cartItemID)
         {
             var token = HttpContext.Session.GetString("JWToken");
 
@@ -103,7 +103,7 @@ namespace FlowerShop.Client
                 return RedirectToAction("Login", "Auth");
 
             var response = await _baseService.DeleteAsync<bool>(
-                $"Odata/CartItems/{cartItemId}", token);
+                $"Odata/CartItems({cartItemID})", token);
 
             if (response.Success)
                 TempData["SuccessMessage"] = "Đã xóa sản phẩm khỏi giỏ hàng.";

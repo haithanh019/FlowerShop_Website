@@ -16,9 +16,9 @@ namespace FlowerShop.Application
             _mapper = mapper;
         }
 
-        public async Task<ApiResponse<CartItemDTO>> AddToCartAsync(Guid id, CartItemCreateDTO dto)
+        public async Task<ApiResponse<CartItemDTO>> AddToCartAsync(CartItemCreateDTO dto)
         {
-            var cart = await _unitOfWork.CartRepository.GetByIDAsync(id) ?? throw new NotFoundException("Không tìm thấy giỏ hàng.");
+            var cart = await _unitOfWork.CartRepository.GetByIDAsync(dto.CartID) ?? throw new NotFoundException("Không tìm thấy giỏ hàng.");
 
             var flower = await _unitOfWork.FlowerRepository.GetByAsync(
                 f => f.FlowerID == dto.FlowerID,
@@ -93,6 +93,11 @@ namespace FlowerShop.Application
             _unitOfWork.CartItemRepository.Delete(cartItem);
             await _unitOfWork.SaveAsync();
             return new ApiResponse<bool>(true, "Xóa sản phẩm khỏi giỏ hàng thành công");
+        }
+
+        public Task<ApiResponse<CartItemDTO>> AddToCartAsync(Guid id, CartItemCreateDTO dto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

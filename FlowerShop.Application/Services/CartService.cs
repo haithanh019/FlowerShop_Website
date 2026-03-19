@@ -22,7 +22,15 @@ namespace FlowerShop.Application
             );
             if (cart == null)
             {
-                return new ApiResponse<CartDTO>("Không tìm thấy giỏ hàng của người dùng này.");
+                cart = new Cart
+                {
+                    CartID = Guid.NewGuid(),
+                    UserID = id,
+                    CreatedAt = DateTime.UtcNow,
+                    CartItems = new List<CartItem>()
+                };
+                await _unitOfWork.CartRepository.AddAsync(cart);
+                await _unitOfWork.SaveAsync();
             }
 
             var cartDto = _mapper.Map<CartDTO>(cart);

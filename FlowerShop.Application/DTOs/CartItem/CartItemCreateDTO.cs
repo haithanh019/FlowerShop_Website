@@ -4,6 +4,9 @@ namespace FlowerShop.Application
 {
     public class CartItemCreateDTO
     {
+        [Required]
+        public Guid CartID { get; set; }
+
         [Required(ErrorMessage = "Vui lòng chọn sản phẩm")]
         public Guid FlowerID { get; set; }
 
