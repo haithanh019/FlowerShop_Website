@@ -1,0 +1,353 @@
+﻿@model IEnumerable<FlowerShop.Application.FlowerDTO>
+
+@{
+    ViewData["Title"] = "Quản lý Hoa";
+    var categories = ViewBag.Categories as IEnumerable<FlowerShop.Application.CategoryDTO>
+                     ?? new List<FlowerShop.Application.CategoryDTO>();
+}
+
+<div class="d-flex flex-column gap-4">
+
+    @* ── Stats nhanh ── *@
+    <div class="row g-3">
+        <div class="col-6 col-lg-3">
+            <div class="admin-stat-card">
+                <div class="stat-icon pink">🌸</div>
+                <div>
+                    <div class="stat-value">@Model.Count()</div>
+                    <div class="stat-label">Tổng sản phẩm</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="admin-stat-card">
+                <div class="stat-icon green">✅</div>
+                <div>
+                    <div class="stat-value">@Model.Count(f => f.IsActive)</div>
+                    <div class="stat-label">Đang kinh doanh</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="admin-stat-card">
+                <div class="stat-icon peach">📦</div>
+                <div>
+                    <div class="stat-value">@Model.Sum(f => f.StockQuantity)</div>
+                    <div class="stat-label">Tổng tồn kho</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="admin-stat-card">
+                <div class="stat-icon blue">🏷️</div>
+                <div>
+                    <div class="stat-value">@Model.Select(f => f.CategoryID).Distinct().Count()</div>
+                    <div class="stat-label">Danh mục</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* ── Table ── *@
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <div class="admin-card-title">🌺 Danh sách hoa</div>
+            <div class="admin-toolbar">
+                <input type="text" id="flowerSearch" class="admin-search"
+                       placeholder="Tìm theo tên, danh mục..." />
+                <button class="btn-admin-primary" onclick="openModal('modalCreate')">
+                    ＋ Thêm hoa mới
+                </button>
+            </div>
+        </div>
+
+        <div style="overflow-x:auto">
+            <table class="admin-table" id="flowerTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên hoa</th>
+                        <th>Danh mục</th>
+                        <th>Giá</th>
+                        <th>Tồn kho</th>
+                        <th>Trạng thái</th>
+                        <th style="text-align:center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="7" style="text-align:center;padding:40px;color:#aaa">
+                                Chưa có sản phẩm nào
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        var i = 1;
+                        foreach (var f in Model)
+                        {
+                            <tr>
+                                <td style="color:#aaa;font-size:.82rem">@i</td>
+                                <td>
+                                    <div style="font-weight:600">@f.FlowerName</div>
+                                    @if (!string.IsNullOrEmpty(f.Description))
+                                    {
+                                        <div style="font-size:.78rem;color:#aaa;max-width:220px;
+                                            overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
+                                            @f.Description
+                                        </div>
+                                    }
+                                </td>
+                                <td>
+                                    <span style="background:rgba(179,224,245,.25);color:#5f99b5;
+                                        border-radius:999px;padding:3px 10px;font-size:.8rem">
+                                        @f.CategoryName
+                                    </span>
+                                </td>
+                                <td style="font-weight:600;color:#d66b6b">
+                                    @f.Price.ToString("N0") đ
+                                </td>
+                                <td>@f.StockQuantity</td>
+                                <td>
+                                    @if (f.IsActive)
+                                    {
+                                        <span class="badge-active">Hoạt động</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge-inactive">Ẩn</span>
+                                    }
+                                </td>
+                                <td style="text-align:center;white-space:nowrap">
+                                    <button class="btn-admin-edit"
+                                            onclick="openFlowerEditModal(
+                                        '@f.FlowerID',
+                                        '@f.FlowerName.Replace("'", "\\'")',
+                                        '@(f.Description?.Replace("'", "\\'") ?? "")',
+                                        @f.Price.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                                        @f.StockQuantity,
+                                        @f.IsActive.ToString().ToLower(),
+                                        '@f.CategoryID')">
+                                        ✏️ Sửa
+                                    </button>
+                                    <button class="btn-admin-delete"
+                                            onclick="openFlowerDeleteModal('@f.FlowerID','@f.FlowerName.Replace("'", "\\'")')">
+                                        🗑️ Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@* ══════════ MODAL: TẠO MỚI ══════════ *@
+<div id="modalCreate" class="admin-modal-overlay">
+    <div class="admin-modal" style="max-width:580px">
+        <div class="admin-modal-header">
+            <div class="admin-modal-title">➕ Thêm hoa mới</div>
+            <button class="admin-modal-close" data-close-modal="modalCreate">✕</button>
+        </div>
+        <form asp-area="Admin" asp-controller="Flower" asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+            <div class="admin-modal-body">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="admin-form-group mb-0">
+                            <label class="admin-form-label">Tên hoa <span>*</span></label>
+                            <input type="text" name="FlowerName" class="admin-form-control"
+                                   placeholder="Nhập tên hoa..." maxlength="150" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="admin-form-group mb-0">
+                            <label class="admin-form-label">Giá (đ) <span>*</span></label>
+                            <input type="number" name="Price" class="admin-form-control"
+                                   placeholder="0" min="0" step="1000" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="admin-form-group mb-0">
+                            <label class="admin-form-label">Tồn kho <span>*</span></label>
+                            <input type="number" name="StockQuantity" class="admin-form-control"
+                                   placeholder="0" min="0" required />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="admin-form-group mb-0">
+                            <label class="admin-form-label">Danh mục <span>*</span></label>
+                            <select name="CategoryID" class="admin-form-control" required>
+                                <option value="">-- Chọn danh mục --</option>
+                                @foreach (var cat in categories)
+                                {
+                                    <option value="@cat.CategoryID">@cat.CategoryName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="admin-form-group mb-0">
+                            <label class="admin-form-label">Mô tả</label>
+                            <textarea name="Description" class="admin-form-control"
+                                      placeholder="Mô tả ngắn về loài hoa..." maxlength="1000"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="admin-toggle">
+                            <input type="checkbox" name="IsActive" value="true"
+                                   id="createIsActive" class="toggle-input" checked />
+                            <label for="createIsActive" class="toggle-label"></label>
+                            <span style="font-size:.88rem;color:#555">Đang kinh doanh</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-modal-footer">
+                <button type="button" class="btn-admin-cancel"
+                        data-close-modal="modalCreate">
+                    Hủy
+                </button>
+                <button type="submit" class="btn-admin-save">🌸 Thêm hoa</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@* ══════════ MODAL: CHỈNH SỬA ══════════ *@
+<div id="modalEdit" class="admin-modal-overlay">
+    <div class="admin-modal" style="max-width:580px">
+        <div class="admin-modal-header">
+            <div class="admin-modal-title">✏️ Chỉnh sửa hoa</div>
+            <button class="admin-modal-close" data-close-modal="modalEdit">✕</button>
+        </div>
+        <form id="formFlowerEdit" method="post">
+            @Html.AntiForgeryToken()
+            <div class="admin-modal-body">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="admin-form-group mb-0">
+                            <label class="admin-form-label">Tên hoa <span>*</span></label>
+                            <input type="text" id="eFlowerName" name="FlowerName"
+                                   class="admin-form-control" maxlength="150" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="admin-form-group mb-0">
+                            <label class="admin-form-label">Giá (đ) <span>*</span></label>
+                            <input type="number" id="ePrice" name="Price"
+                                   class="admin-form-control" min="0" step="1000" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="admin-form-group mb-0">
+                            <label class="admin-form-label">Tồn kho <span>*</span></label>
+                            <input type="number" id="eStock" name="StockQuantity"
+                                   class="admin-form-control" min="0" required />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="admin-form-group mb-0">
+                            <label class="admin-form-label">Danh mục <span>*</span></label>
+                            <select id="eCategoryID" name="CategoryID"
+                                    class="admin-form-control" required>
+                                @foreach (var cat in categories)
+                                {
+                                    <option value="@cat.CategoryID">@cat.CategoryName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="admin-form-group mb-0">
+                            <label class="admin-form-label">Mô tả</label>
+                            <textarea id="eDesc" name="Description"
+                                      class="admin-form-control" maxlength="1000"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="admin-toggle">
+                            <input type="checkbox" id="eIsActive" name="IsActive"
+                                   value="true" class="toggle-input" />
+                            <label for="eIsActive" class="toggle-label"></label>
+                            <span style="font-size:.88rem;color:#555">Đang kinh doanh</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-modal-footer">
+                <button type="button" class="btn-admin-cancel"
+                        data-close-modal="modalEdit">
+                    Hủy
+                </button>
+                <button type="submit" class="btn-admin-save">Cập nhật</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@* ══════════ MODAL: XÓA ══════════ *@
+<div id="modalDelete" class="admin-modal-overlay">
+    <div class="admin-modal" style="max-width:400px">
+        <div class="admin-modal-header">
+            <div class="admin-modal-title">🗑️ Xác nhận xóa</div>
+            <button class="admin-modal-close" data-close-modal="modalDelete">✕</button>
+        </div>
+        <form id="formFlowerDelete" method="post">
+            @Html.AntiForgeryToken()
+            <div class="admin-modal-body" style="text-align:center;padding:28px">
+                <div style="font-size:2.5rem;margin-bottom:12px">⚠️</div>
+                <p style="font-size:.95rem;color:#555">
+                    Bạn có chắc muốn xóa<br />
+                    <strong id="flowerDeleteName" style="color:#d66b6b"></strong>?
+                </p>
+                <p style="font-size:.8rem;color:#aaa;margin-top:8px">
+                    Hành động này không thể hoàn tác.
+                </p>
+            </div>
+            <div class="admin-modal-footer" style="justify-content:center;gap:14px">
+                <button type="button" class="btn-admin-cancel"
+                        data-close-modal="modalDelete">
+                    Hủy
+                </button>
+                <button type="submit" class="btn-admin-danger">Xóa ngay</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // ── Search ──
+        document.getElementById('flowerSearch').addEventListener('input', function () {
+            const q = this.value.toLowerCase();
+            document.querySelectorAll('#flowerTable tbody tr').forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+            });
+        });
+
+        // ── Edit modal ──
+        function openFlowerEditModal(id, name, desc, price, stock, isActive, catId) {
+            document.getElementById('eFlowerName').value = name;
+            document.getElementById('eDesc').value       = desc;
+            document.getElementById('ePrice').value      = price;
+            document.getElementById('eStock').value      = stock;
+            document.getElementById('eIsActive').checked = isActive;
+            document.getElementById('eCategoryID').value = catId;
+            document.getElementById('formFlowerEdit').action = `/Admin/Flower/Edit/${id}`;
+            openModal('modalEdit');
+        }
+
+        // ── Delete modal ──
+        function openFlowerDeleteModal(id, name) {
+            document.getElementById('flowerDeleteName').textContent = name;
+            document.getElementById('formFlowerDelete').action = `/Admin/Flower/Delete/${id}`;
+            openModal('modalDelete');
+        }
+    </script>
+}

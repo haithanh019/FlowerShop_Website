@@ -1,0 +1,197 @@
+﻿@model IEnumerable<FlowerShop.Application.CategoryDTO>
+
+@{
+    ViewData["Title"] = "Quản lý Danh mục";
+}
+
+<div class="d-flex flex-column gap-4">
+
+    @* ── Toolbar ── *@
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <div class="admin-card-title">🏷️ Danh mục sản phẩm</div>
+            <div class="admin-toolbar">
+                <input type="text" id="categorySearch" class="admin-search"
+                       placeholder="Tìm kiếm danh mục..." />
+                <button class="btn-admin-primary" onclick="openModal('modalCreate')">
+                    ＋ Thêm danh mục
+                </button>
+            </div>
+        </div>
+
+        <table class="admin-table" id="categoryTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tên danh mục</th>
+                    <th>Mô tả</th>
+                    <th>Ngày tạo</th>
+                    <th style="text-align:center">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="5" style="text-align:center;padding:40px;color:#aaa">
+                            Chưa có danh mục nào
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    var i = 1;
+                    foreach (var cat in Model)
+                    {
+                        <tr>
+                            <td style="color:#aaa;font-size:.82rem">@i</td>
+                            <td><strong>@cat.CategoryName</strong></td>
+                            <td style="color:#666;max-width:300px">
+                                @(string.IsNullOrEmpty(cat.Description) ? "—" : cat.Description)
+                            </td>
+                            <td style="color:#aaa;font-size:.82rem">
+                                @cat.CreatedAt.ToString("dd/MM/yyyy")
+                            </td>
+                            <td style="text-align:center">
+                                <button class="btn-admin-edit"
+                                        onclick="openEditModal('@cat.CategoryID','@cat.CategoryName','@(cat.Description ?? "")')">
+                                    ✏️ Sửa
+                                </button>
+                                <button class="btn-admin-delete"
+                                        onclick="openDeleteModal('@cat.CategoryID','@cat.CategoryName')">
+                                    🗑️ Xóa
+                                </button>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@* ══════════ MODAL: TẠO MỚI ══════════ *@
+<div id="modalCreate" class="admin-modal-overlay">
+    <div class="admin-modal">
+        <div class="admin-modal-header">
+            <div class="admin-modal-title">➕ Thêm danh mục mới</div>
+            <button class="admin-modal-close" data-close-modal="modalCreate">✕</button>
+        </div>
+        <form asp-area="Admin" asp-controller="Category" asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+            <div class="admin-modal-body">
+                <div class="admin-form-group">
+                    <label class="admin-form-label">
+                        Tên danh mục <span>*</span>
+                    </label>
+                    <input type="text" name="CategoryName" class="admin-form-control"
+                           placeholder="Ví dụ: Hoa hồng, Hoa ly..." maxlength="100" required />
+                </div>
+                <div class="admin-form-group">
+                    <label class="admin-form-label">Mô tả</label>
+                    <textarea name="Description" class="admin-form-control"
+                              placeholder="Mô tả ngắn về danh mục..." maxlength="300"></textarea>
+                </div>
+            </div>
+            <div class="admin-modal-footer">
+                <button type="button" class="btn-admin-cancel"
+                        data-close-modal="modalCreate">
+                    Hủy
+                </button>
+                <button type="submit" class="btn-admin-save">Lưu danh mục</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@* ══════════ MODAL: CHỈNH SỬA ══════════ *@
+<div id="modalEdit" class="admin-modal-overlay">
+    <div class="admin-modal">
+        <div class="admin-modal-header">
+            <div class="admin-modal-title">✏️ Chỉnh sửa danh mục</div>
+            <button class="admin-modal-close" data-close-modal="modalEdit">✕</button>
+        </div>
+        <form id="formEdit" method="post">
+            @Html.AntiForgeryToken()
+            <div class="admin-modal-body">
+                <div class="admin-form-group">
+                    <label class="admin-form-label">Tên danh mục <span>*</span></label>
+                    <input type="text" id="editName" name="CategoryName"
+                           class="admin-form-control" maxlength="100" required />
+                </div>
+                <div class="admin-form-group">
+                    <label class="admin-form-label">Mô tả</label>
+                    <textarea id="editDesc" name="Description"
+                              class="admin-form-control" maxlength="300"></textarea>
+                </div>
+            </div>
+            <div class="admin-modal-footer">
+                <button type="button" class="btn-admin-cancel"
+                        data-close-modal="modalEdit">
+                    Hủy
+                </button>
+                <button type="submit" class="btn-admin-save">Cập nhật</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@* ══════════ MODAL: XÓA ══════════ *@
+<div id="modalDelete" class="admin-modal-overlay">
+    <div class="admin-modal" style="max-width:400px">
+        <div class="admin-modal-header">
+            <div class="admin-modal-title">🗑️ Xác nhận xóa</div>
+            <button class="admin-modal-close" data-close-modal="modalDelete">✕</button>
+        </div>
+        <form id="formDelete" method="post">
+            @Html.AntiForgeryToken()
+            <div class="admin-modal-body" style="text-align:center;padding:28px">
+                <div style="font-size:2.5rem;margin-bottom:12px">⚠️</div>
+                <p style="font-size:.95rem;color:#555">
+                    Bạn có chắc muốn xóa danh mục<br />
+                    <strong id="deleteNameDisplay" style="color:#d66b6b"></strong>?
+                </p>
+                <p style="font-size:.8rem;color:#aaa;margin-top:8px">
+                    Hành động này không thể hoàn tác.
+                </p>
+            </div>
+            <div class="admin-modal-footer" style="justify-content:center;gap:14px">
+                <button type="button" class="btn-admin-cancel"
+                        data-close-modal="modalDelete">
+                    Hủy
+                </button>
+                <button type="submit" class="btn-admin-danger">Xóa ngay</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // ── Search ──
+        document.getElementById('categorySearch').addEventListener('input', function () {
+            const q = this.value.toLowerCase();
+            document.querySelectorAll('#categoryTable tbody tr').forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+            });
+        });
+
+        // ── Edit modal ──
+        function openEditModal(id, name, desc) {
+            document.getElementById('editName').value = name;
+            document.getElementById('editDesc').value = desc;
+            document.getElementById('formEdit').action =
+                `/Admin/Category/Edit/${id}`;
+            openModal('modalEdit');
+        }
+
+        // ── Delete modal ──
+        function openDeleteModal(id, name) {
+            document.getElementById('deleteNameDisplay').textContent = name;
+            document.getElementById('formDelete').action =
+                `/Admin/Category/Delete/${id}`;
+            openModal('modalDelete');
+        }
+    </script>
+}

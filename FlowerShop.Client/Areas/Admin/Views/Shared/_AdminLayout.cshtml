@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] — Admin FlowerShop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
+</head>
+<body class="admin-body">
+
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar-logo">
+            <span class="logo-icon">🌸</span>
+            <div>
+                <div class="logo-text">FlowerShop</div>
+                <div class="logo-sub">Admin Panel</div>
+            </div>
+        </div>
+
+        <nav class="admin-nav">
+            <div class="admin-nav-label">Quản lý</div>
+
+            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index"
+                   class="admin-nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : "")">
+                <span class="nav-icon">📊</span>
+                <span>Tổng quan</span>
+            </a>
+
+            <a asp-area="Admin" asp-controller="Flower" asp-action="Index"
+                   class="admin-nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Flower" ? "active" : "")">
+                <span class="nav-icon">🌺</span>
+                <span>Hoa</span>
+            </a>
+
+            <a asp-area="Admin" asp-controller="Category" asp-action="Index"
+                   class="admin-nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Category" ? "active" : "")">
+                <span class="nav-icon">🏷️</span>
+                <span>Danh mục</span>
+            </a>
+
+            <div class="admin-nav-label" style="margin-top:12px">Hệ thống</div>
+
+            <a asp-area="" asp-controller="Home" asp-action="Index"
+                   class="admin-nav-item" target="_blank">
+                <span class="nav-icon">🌐</span>
+                <span>Xem trang web</span>
+            </a>
+        </nav>
+
+        <div class="admin-sidebar-footer">
+            <a asp-area="" asp-controller="Auth" asp-action="Logout">
+                <span>🚪</span>
+                <span>Đăng xuất</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="admin-main">
+        <header class="admin-topbar">
+            <div class="admin-topbar-title">@(ViewData["Title"] ?? "Admin")</div>
+            <div class="admin-topbar-user">
+                <div class="admin-avatar">A</div>
+                <span>Admin</span>
+            </div>
+        </header>
+
+        <div class="admin-content">
+            @RenderBody()
+        </div>
+    </div>
+
+    <div id="adminToast" class="admin-toast">
+        <span id="adminToastIcon">✅</span>
+        <span id="adminToastMsg"></span>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+            // Toast utility
+            function showAdminToast(msg, type = 'success') {
+                const toast = document.getElementById('adminToast');
+                const msgEl = document.getElementById('adminToastMsg');
+                const iconEl = document.getElementById('adminToastIcon');
+                msgEl.textContent = msg;
+                toast.className = 'admin-toast ' + type;
+                iconEl.textContent = type === 'success' ? '✅' : '❌';
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3500);
+            }
+
+            // Modal helpers
+            function openModal(id) {
+                document.getElementById(id).classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal(id) {
+                document.getElementById(id).classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            // Close modal khi click overlay
+            document.querySelectorAll('.admin-modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', function (e) {
+                    if (e.target === this) closeModal(this.id);
+                });
+            });
+
+            // Auto-show toast từ TempData
+            window.addEventListener('DOMContentLoaded', () => {
+                const successMsg = '@TempData["SuccessMessage"]';
+                const errorMsg   = '@TempData["ErrorMessage"]';
+                if (successMsg && successMsg.trim()) showAdminToast(successMsg, 'success');
+                else if (errorMsg && errorMsg.trim()) showAdminToast(errorMsg, 'error');
+
+                // Re-bind modal close buttons
+                document.querySelectorAll('[data-close-modal]').forEach(btn => {
+                    btn.addEventListener('click', () => closeModal(btn.dataset.closeModal));
+                });
+            });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
