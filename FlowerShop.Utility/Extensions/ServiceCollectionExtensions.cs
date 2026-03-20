@@ -16,7 +16,6 @@ namespace FlowerShop.Utility
 
             // 2. Register Services (Dependency Injection)
             services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<ICloudinaryService, CloudinaryService>();
 
             // 3. Add other helpers here in the future (e.g., Caching)
 

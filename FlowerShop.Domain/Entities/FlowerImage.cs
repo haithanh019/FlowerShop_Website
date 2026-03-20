@@ -5,7 +5,7 @@ namespace FlowerShop.Domain
     public class FlowerImage
     {
         [Key]
-        public Guid ProductImageID { get; set; } = Guid.NewGuid();
+        public Guid FlowerImageID { get; set; } = Guid.NewGuid();
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [Required]

@@ -34,7 +34,6 @@ namespace FlowerShop.Client
             var responseBody = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-            // ✅ Guard: body rỗng hoặc không phải JSON → trả về lỗi rõ ràng thay vì crash
             if (string.IsNullOrWhiteSpace(responseBody))
             {
                 return new ApiResponse<T>($"API trả về phản hồi rỗng. HTTP {(int)response.StatusCode}");
@@ -87,6 +86,13 @@ namespace FlowerShop.Client
             var response = await client.PostAsync(endpoint, content);
             return await ReadResponseAsync<T>(response);
         }
+        public async Task<ApiResponse<T>> PostMultipartAsync<T>(string endpoint, MultipartFormDataContent content, string? token = null)
+        {
+            var client = CreateClient(token);
+            var response = await client.PostAsync(endpoint, content);
+            return await ReadResponseAsync<T>(response);
+        }
+
         public async Task<ApiResponse<T>> PutAsync<T>(string endpoint, object data, string? token = null)
         {
             var client = CreateClient(token);

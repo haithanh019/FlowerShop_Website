@@ -138,7 +138,7 @@ namespace FlowerShop.Application
             var images = imageUrls
                 .Select((url, i) => new FlowerImage
                 {
-                    ProductImageID = Guid.NewGuid(),
+                    FlowerImageID = Guid.NewGuid(),
                     FlowerID = flowerID,
                     Flower = flower,
                     Url = url,
@@ -174,7 +174,7 @@ namespace FlowerShop.Application
             if (deleteImageIds != null && deleteImageIds.Any())
             {
                 var imagesToDelete = flower.FlowerImages
-                    .Where(img => deleteImageIds.Contains(img.ProductImageID))
+                    .Where(img => deleteImageIds.Contains(img.FlowerImageID))
                     .ToList();
 
                 if (imagesToDelete.Any())
