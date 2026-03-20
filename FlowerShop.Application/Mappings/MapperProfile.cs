@@ -30,6 +30,8 @@ namespace FlowerShop.Application
 
             // FlowerImage mappings
             CreateMap<FlowerImage, FlowerImageDTO>();
+            CreateMap<FlowerImageDTO, FlowerImage>()
+                .ForMember(dest => dest.Flower, opt => opt.Ignore());
 
             // Cart mappings
             CreateMap<Cart, CartDTO>()

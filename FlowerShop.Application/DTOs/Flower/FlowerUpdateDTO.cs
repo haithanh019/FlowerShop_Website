@@ -21,5 +21,9 @@ namespace FlowerShop.Application
 
         [Required]
         public Guid CategoryID { get; set; }
+
+        public ICollection<string>? Urls { get; set; }
+        public ICollection<string>? PublicIds { get; set; }
+        public ICollection<Guid>? DeleteImageIds { get; set; }
     }
 }

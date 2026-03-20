@@ -23,5 +23,7 @@ namespace FlowerShop.Application
 
         [Required(ErrorMessage = "Category is required")]
         public Guid CategoryID { get; set; }
+        public ICollection<string>? Urls { get; set; }
+        public ICollection<string>? PublicIds { get; set; }
     }
 }

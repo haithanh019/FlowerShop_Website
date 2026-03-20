@@ -2,7 +2,8 @@
 {
     public class FlowerImageDTO
     {
-        public Guid ProductImageID { get; set; }
+        public Guid FlowerImageID { get; set; }
         public string Url { get; set; } = string.Empty;
+        public string? PublicID { get; set; }
     }
 }

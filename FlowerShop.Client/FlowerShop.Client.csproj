@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\User\" />
+    <Folder Include="Areas\Admin\Views\Order\" />
     <Folder Include="wwwroot\js\admin\" />
   </ItemGroup>
 

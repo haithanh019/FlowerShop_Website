@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] — Admin FlowerShop</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin/admin.css" asp-append-version="true" />
     @RenderSection("Styles", required: false)
 </head>
 <body class="admin-body">
@@ -22,7 +22,7 @@
         <nav class="admin-nav">
             <div class="admin-nav-label">Quản lý</div>
 
-            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index"
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index"
                    class="admin-nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : "")">
                 <span class="nav-icon">📊</span>
                 <span>Tổng quan</span>

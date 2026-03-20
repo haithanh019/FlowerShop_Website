@@ -1,7 +1,7 @@
 ﻿using FlowerShop.Application;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FlowerShop.Client.Areas.Admin
+namespace FlowerShop.Client.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class CategoryController : Controller

@@ -72,8 +72,9 @@ namespace FlowerShop.Application
         public async Task<ApiResponse<bool>> DeleteCategoryAsync(Guid id)
         {
             var category = await _unitOfWork.CategoryRepository.GetByIDAsync(id) ?? throw new NotFoundException("Không tìm thấy danh mục");
-            var hasFlowers = await _unitOfWork.FlowerRepository.GetByAsync(f => f.CategoryID == id) ?? throw new BadRequestException("Không thể xóa danh mục đang có hoa. Hãy xóa hoa trước.");
-
+            var hasFlowers = await _unitOfWork.FlowerRepository.GetByAsync(f => f.CategoryID == id);
+            if (hasFlowers != null)
+                throw new BadRequestException("Không thể xóa danh mục đang có hoa. Hãy xóa hoa trước.");
             _unitOfWork.CategoryRepository.Delete(category);
             await _unitOfWork.SaveAsync();
             return new ApiResponse<bool>(true, "Xóa danh mục thành công");
