@@ -51,18 +51,12 @@ namespace FlowerShop.Client.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            [FromForm] FlowerCreateDTO model,
-            IFormFileCollection? FlowerImages)
+        public async Task<IActionResult> Create([FromForm] FlowerCreateDTO model)
         {
             var guard = CheckAdmin();
             if (guard != null) return guard;
 
-            if (FlowerImages != null && FlowerImages.Any())
-                model.FlowerImages = (ICollection<IFormFile>?)FlowerImages;
-
             var token = HttpContext.Session.GetString("JWToken");
-
             var content = BuildMultipart(model);
             var response = await _baseService.PostMultipartAsync<FlowerDTO>(
                 "Odata/Flowers", content, token);
@@ -77,23 +71,12 @@ namespace FlowerShop.Client.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(
-            Guid id,
-            [FromForm] FlowerUpdateDTO model,
-            IFormFileCollection? FlowerImages)
+        public async Task<IActionResult> Edit(Guid id, [FromForm] FlowerUpdateDTO model)
         {
             var guard = CheckAdmin();
             if (guard != null) return guard;
 
-            if (FlowerImages != null && FlowerImages.Any())
-                model.FlowerImages = (ICollection<IFormFile>?)FlowerImages;
-
-            var deleteIds = Request.Form["DeleteImageIds"].ToList();
-            if (deleteIds.Any())
-                model.DeleteImageIds = deleteIds.Where(x => x != null).ToList()!;
-
             var token = HttpContext.Session.GetString("JWToken");
-
             var content = BuildMultipartUpdate(model);
             var response = await _baseService.PutMultipartAsync<FlowerDTO>(
                 $"Odata/Flowers({id})", content, token);

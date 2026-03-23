@@ -507,22 +507,6 @@
             }
         }
 
-        // Toggle overlay khi tích checkbox xóa ảnh
-        function toggleDeleteOverlay(checkbox) {
-            const label   = checkbox.closest('label');
-            const img     = label.querySelector('img');
-            const overlay = label.querySelector('.delete-overlay');
-            if (checkbox.checked) {
-                img.style.opacity = '0.4';
-                img.style.border  = '2px solid #d66b6b';
-                overlay.style.display = 'flex';
-            } else {
-                img.style.opacity = '1';
-                img.style.border  = '2px solid #eee';
-                overlay.style.display = 'none';
-            }
-        }
-
         // EDIT: preview ảnh mới chọn
         function previewEditImages(input) {
             const preview = document.getElementById('editImagePreview');
