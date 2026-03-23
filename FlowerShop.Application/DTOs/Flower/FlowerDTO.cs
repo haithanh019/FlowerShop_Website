@@ -24,7 +24,6 @@ namespace FlowerShop.Application
         public Guid CategoryID { get; set; }
         public string CategoryName { get; set; } = string.Empty;
 
-        // Danh sách hình ảnh (Nested DTO)
         public List<FlowerImageDTO> FlowerImages { get; set; } = new();
     }
 }

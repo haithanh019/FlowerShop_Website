@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using FlowerShop.Domain;
 using FlowerShop.Infrastructure;
 using FlowerShop.Utility;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlowerShop.Application
@@ -17,6 +18,7 @@ namespace FlowerShop.Application
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+
         public IQueryable<FlowerDTO> GetFlowersOData()
         {
             return _unitOfWork.FlowerRepository
@@ -34,8 +36,7 @@ namespace FlowerShop.Application
             if (flower == null)
                 throw new NotFoundException("Không tìm thấy hoa");
 
-            var response = _mapper.Map<FlowerDTO>(flower);
-            return new ApiResponse<FlowerDTO>(response);
+            return new ApiResponse<FlowerDTO>(_mapper.Map<FlowerDTO>(flower));
         }
 
         public async Task<ApiResponse<FlowerDTO>> CreateFlowerAsync(FlowerCreateDTO dto)
@@ -49,7 +50,7 @@ namespace FlowerShop.Application
             if (category == null)
                 throw new NotFoundException($"Danh mục với ID {dto.CategoryID} không tìm thấy.");
 
-            ValidateImages(dto.Urls?.ToList());
+            ValidateImages(dto.FlowerImages?.Select(f => f.FileName).ToList());
 
             var flower = _mapper.Map<Flower>(dto);
             flower.Category = category;
@@ -58,11 +59,10 @@ namespace FlowerShop.Application
             await _unitOfWork.FlowerRepository.AddAsync(flower);
             await _unitOfWork.SaveAsync();
 
-            await UploadFlowerImagesAsync(flower, flower.FlowerID, dto.Urls, dto.PublicIds);
+            await UploadFlowerImagesAsync(flower, dto.FlowerImages);
             await _unitOfWork.SaveAsync();
 
-            var response = _mapper.Map<FlowerDTO>(flower);
-            return new ApiResponse<FlowerDTO>(response, "Thêm hoa thành công");
+            return new ApiResponse<FlowerDTO>(_mapper.Map<FlowerDTO>(flower), "Thêm hoa thành công");
         }
 
         public async Task<ApiResponse<FlowerDTO>> UpdateFlowerAsync(Guid id, FlowerUpdateDTO dto)
@@ -90,13 +90,12 @@ namespace FlowerShop.Application
 
             _mapper.Map(dto, flower);
 
-            await SyncFlowerImagesAsync(flower, dto.DeleteImageIds, dto.Urls, dto.PublicIds);
+            await SyncFlowerImagesAsync(flower, dto.DeleteImageIds, dto.FlowerImages);
 
             _unitOfWork.FlowerRepository.Update(flower);
             await _unitOfWork.SaveAsync();
 
-            var response = _mapper.Map<FlowerDTO>(flower);
-            return new ApiResponse<FlowerDTO>(response, "Cập nhật hoa thành công");
+            return new ApiResponse<FlowerDTO>(_mapper.Map<FlowerDTO>(flower), "Cập nhật hoa thành công");
         }
 
         public async Task<ApiResponse<bool>> DeleteFlowerAsync(Guid id)
@@ -111,7 +110,13 @@ namespace FlowerShop.Application
 
             if (flower.FlowerImages != null && flower.FlowerImages.Any())
             {
-                _unitOfWork.FlowerImageRepository.DeleteRange(flower.FlowerImages);
+                var publicIds = flower.FlowerImages
+                    .Where(img => !string.IsNullOrEmpty(img.PublicID))
+                    .Select(img => img.PublicID!)
+                    .ToList();
+
+                if (publicIds.Any())
+                    await _unitOfWork.FlowerImageRepository.DeleteImagesAsync(publicIds);
             }
 
             _unitOfWork.FlowerRepository.Delete(flower);
@@ -124,71 +129,46 @@ namespace FlowerShop.Application
         // PRIVATE HELPERS
         // ─────────────────────────────────────────
 
-        private async Task UploadFlowerImagesAsync(
-            Flower flower,
-            Guid flowerID,
-            ICollection<string>? imageUrls,
-            ICollection<string>? publicIds)
+        private async Task UploadFlowerImagesAsync(Flower flower, ICollection<IFormFile>? files)
         {
-            if (imageUrls == null || !imageUrls.Any())
-                return;
+            if (files == null || !files.Any()) return;
 
-            var ids = publicIds?.ToList() ?? new List<string>();
+            foreach (var file in files)
+            {
+                var image = new FlowerImage { FlowerID = flower.FlowerID, Flower = flower };
+                await _unitOfWork.FlowerImageRepository.UploadImageAsync(file, "flowers", image);
+            }
+        }
 
-            var images = imageUrls
-                .Select((url, i) => new FlowerImage
+        private static void ValidateImages(ICollection<string>? fileNames, int existingCount = 0)
+        {
+            if (fileNames == null || !fileNames.Any()) return;
+
+            if (existingCount + fileNames.Count > 5)
+                throw new ValidationException(new Dictionary<string, string[]>
                 {
-                    FlowerImageID = Guid.NewGuid(),
-                    FlowerID = flowerID,
-                    Flower = flower,
-                    Url = url,
-                    PublicID = i < ids.Count ? ids[i] : string.Empty,
-                })
-                .ToList();
-
-            await _unitOfWork.FlowerImageRepository.AddRangeAsync(images);
+                    [nameof(fileNames)] = ["ERROR_MAXIMUM_IMAGE"]
+                });
         }
-
-        private static void ValidateImages(ICollection<string>? images, int existingCount = 0)
-        {
-            if (images == null || !images.Any())
-                return;
-
-            var errors = new Dictionary<string, string[]>();
-            var totalCount = existingCount + images.Count;
-
-            if (totalCount > 5)
-                errors.Add(nameof(images), ["ERROR_MAXIMUM_IMAGE"]);
-
-            if (errors.Any())
-                throw new ValidationException(errors);
-        }
-
 
         private async Task SyncFlowerImagesAsync(
             Flower flower,
-            ICollection<Guid>? deleteImageIds,
-            ICollection<string>? urls,
-            ICollection<string>? publicIds)
+            ICollection<string>? deletePublicIds,
+            ICollection<IFormFile>? newImages)
         {
-            if (deleteImageIds != null && deleteImageIds.Any())
+            if (deletePublicIds != null && deletePublicIds.Any())
             {
-                var imagesToDelete = flower.FlowerImages
-                    .Where(img => deleteImageIds.Contains(img.FlowerImageID))
+                await _unitOfWork.FlowerImageRepository.DeleteImagesAsync(deletePublicIds.ToList());
+                flower.FlowerImages = flower.FlowerImages
+                    .Where(img => !deletePublicIds.Contains(img.PublicID))
                     .ToList();
-
-                if (imagesToDelete.Any())
-                {
-                    _unitOfWork.FlowerImageRepository.DeleteRange(imagesToDelete);
-
-                    foreach (var img in imagesToDelete)
-                        flower.FlowerImages.Remove(img);
-                }
             }
 
-            ValidateImages(urls?.ToList(), existingCount: flower.FlowerImages.Count);
+            ValidateImages(
+                newImages?.Select(f => f.FileName).ToList(),
+                existingCount: flower.FlowerImages.Count);
 
-            await UploadFlowerImagesAsync(flower, flower.FlowerID, urls, publicIds);
+            await UploadFlowerImagesAsync(flower, newImages);
         }
     }
 }

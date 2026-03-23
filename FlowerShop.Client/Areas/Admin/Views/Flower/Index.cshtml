@@ -8,7 +8,7 @@
 
 <div class="d-flex flex-column gap-4">
 
-    @* ── Stats nhanh ── *@
+    @* ── Stats ── *@
     <div class="row g-3">
         <div class="col-6 col-lg-3">
             <div class="admin-stat-card">
@@ -66,6 +66,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Ảnh</th>
                         <th>Tên hoa</th>
                         <th>Danh mục</th>
                         <th>Giá</th>
@@ -78,7 +79,7 @@
                     @if (!Model.Any())
                     {
                         <tr>
-                            <td colspan="7" style="text-align:center;padding:40px;color:#aaa">
+                            <td colspan="8" style="text-align:center;padding:40px;color:#aaa">
                                 Chưa có sản phẩm nào
                             </td>
                         </tr>
@@ -88,13 +89,33 @@
                         var i = 1;
                         foreach (var f in Model)
                         {
+                            var firstImage = f.FlowerImages?.FirstOrDefault();
+                            var imagesJson = System.Text.Json.JsonSerializer.Serialize(
+                                f.FlowerImages?.Select(img => new { img.FlowerImageID, img.Url })
+                                ?? Enumerable.Empty<object>());
                             <tr>
                                 <td style="color:#aaa;font-size:.82rem">@i</td>
+                                <td>
+                                    @if (firstImage != null)
+                                    {
+                                        <img src="@firstImage.Url" alt="@f.FlowerName"
+                                             style="width:48px;height:48px;object-fit:cover;
+                                        border-radius:8px;border:1px solid #eee" />
+                                    }
+                                    else
+                                    {
+                                        <div style="width:48px;height:48px;border-radius:8px;
+                                            background:#f5f5f5;display:flex;align-items:center;
+                                            justify-content:center;color:#ccc;font-size:1.2rem">
+                                            🌸
+                                        </div>
+                                    }
+                                </td>
                                 <td>
                                     <div style="font-weight:600">@f.FlowerName</div>
                                     @if (!string.IsNullOrEmpty(f.Description))
                                     {
-                                        <div style="font-size:.78rem;color:#aaa;max-width:220px;
+                                        <div style="font-size:.78rem;color:#aaa;max-width:200px;
                                             overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
                                             @f.Description
                                         </div>
@@ -122,18 +143,19 @@
                                 </td>
                                 <td style="text-align:center;white-space:nowrap">
                                     <button class="btn-admin-edit"
-                                            onclick="openFlowerEditModal(
-                                        '@f.FlowerID',
-                                        '@f.FlowerName.Replace("'", "\\'")',
-                                        '@(f.Description?.Replace("'", "\\'") ?? "")',
+                                            onclick='openFlowerEditModal(
+                                        "@f.FlowerID",
+                                        @Html.Raw(System.Text.Json.JsonSerializer.Serialize(f.FlowerName)),
+                                        @Html.Raw(System.Text.Json.JsonSerializer.Serialize(f.Description ?? "")),
                                         @f.Price.ToString(System.Globalization.CultureInfo.InvariantCulture),
                                         @f.StockQuantity,
                                         @f.IsActive.ToString().ToLower(),
-                                        '@f.CategoryID')">
+                                        "@f.CategoryID",
+                                        @Html.Raw(imagesJson))'>
                                         ✏️ Sửa
                                     </button>
                                     <button class="btn-admin-delete"
-                                            onclick="openFlowerDeleteModal('@f.FlowerID','@f.FlowerName.Replace("'", "\\'")')">
+                                            onclick='openFlowerDeleteModal("@f.FlowerID", @Html.Raw(System.Text.Json.JsonSerializer.Serialize(f.FlowerName)))'>
                                         🗑️ Xóa
                                     </button>
                                 </td>
@@ -149,7 +171,7 @@
 
 @* ══════════ MODAL: TẠO MỚI ══════════ *@
 <div id="modalCreate" class="admin-modal-overlay">
-    <div class="admin-modal" style="max-width:580px">
+    <div class="admin-modal" style="max-width:620px">
         <div class="admin-modal-header">
             <div class="admin-modal-title">➕ Thêm hoa mới</div>
             <button class="admin-modal-close" data-close-modal="modalCreate">✕</button>
@@ -206,13 +228,34 @@
                             <span style="font-size:.88rem;color:#555">Đang kinh doanh</span>
                         </div>
                     </div>
+
+                    @* ── Phần ảnh ── *@
+                    <div class="col-12">
+                        <div class="admin-form-group mb-0">
+                            <label class="admin-form-label">
+                                Ảnh sản phẩm
+                                <span style="font-weight:400;color:#aaa;font-size:.8rem">
+                                    (tối đa 5 ảnh, nhập URL)
+                                </span>
+                            </label>
+                            <div id="createImageList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px"></div>
+                            <div style="display:flex;gap:8px">
+                                <input type="text" id="createImageInput" class="admin-form-control"
+                                       placeholder="https://... nhập URL ảnh rồi nhấn Thêm" />
+                                <button type="button" class="btn-admin-primary"
+                                        style="white-space:nowrap;padding:0 16px"
+                                        onclick="addCreateImage()">
+                                    + Thêm
+                                </button>
+                            </div>
+                            @* Hidden field chứa toàn bộ URLs (phân tách bằng newline) *@
+                            <input type="hidden" name="ImageUrlsRaw" id="createImageUrlsRaw" />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="admin-modal-footer">
-                <button type="button" class="btn-admin-cancel"
-                        data-close-modal="modalCreate">
-                    Hủy
-                </button>
+                <button type="button" class="btn-admin-cancel" data-close-modal="modalCreate">Hủy</button>
                 <button type="submit" class="btn-admin-save">🌸 Thêm hoa</button>
             </div>
         </form>
@@ -221,7 +264,7 @@
 
 @* ══════════ MODAL: CHỈNH SỬA ══════════ *@
 <div id="modalEdit" class="admin-modal-overlay">
-    <div class="admin-modal" style="max-width:580px">
+    <div class="admin-modal" style="max-width:620px">
         <div class="admin-modal-header">
             <div class="admin-modal-title">✏️ Chỉnh sửa hoa</div>
             <button class="admin-modal-close" data-close-modal="modalEdit">✕</button>
@@ -278,13 +321,49 @@
                             <span style="font-size:.88rem;color:#555">Đang kinh doanh</span>
                         </div>
                     </div>
+
+                    @* ── Phần ảnh hiện có ── *@
+                    <div class="col-12">
+                        <div class="admin-form-group mb-0">
+                            <label class="admin-form-label">
+                                Ảnh hiện tại
+                                <span style="font-weight:400;color:#aaa;font-size:.8rem">
+                                    (nhấn 🗑️ để đánh dấu xóa)
+                                </span>
+                            </label>
+                            <div id="editCurrentImages"
+                                 style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px"></div>
+                            <input type="hidden" name="DeleteImageIdsRaw" id="editDeleteIdsRaw" />
+                        </div>
+                    </div>
+
+                    @* ── Thêm ảnh mới ── *@
+                    <div class="col-12">
+                        <div class="admin-form-group mb-0">
+                            <label class="admin-form-label">
+                                Thêm ảnh mới
+                                <span style="font-weight:400;color:#aaa;font-size:.8rem">
+                                    (tổng ảnh sau thay đổi không quá 5)
+                                </span>
+                            </label>
+                            <div id="editNewImageList"
+                                 style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px"></div>
+                            <div style="display:flex;gap:8px">
+                                <input type="text" id="editImageInput" class="admin-form-control"
+                                       placeholder="https://... nhập URL ảnh rồi nhấn Thêm" />
+                                <button type="button" class="btn-admin-primary"
+                                        style="white-space:nowrap;padding:0 16px"
+                                        onclick="addEditImage()">
+                                    + Thêm
+                                </button>
+                            </div>
+                            <input type="hidden" name="NewImageUrlsRaw" id="editNewUrlsRaw" />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="admin-modal-footer">
-                <button type="button" class="btn-admin-cancel"
-                        data-close-modal="modalEdit">
-                    Hủy
-                </button>
+                <button type="button" class="btn-admin-cancel" data-close-modal="modalEdit">Hủy</button>
                 <button type="submit" class="btn-admin-save">Cập nhật</button>
             </div>
         </form>
@@ -303,18 +382,15 @@
             <div class="admin-modal-body" style="text-align:center;padding:28px">
                 <div style="font-size:2.5rem;margin-bottom:12px">⚠️</div>
                 <p style="font-size:.95rem;color:#555">
-                    Bạn có chắc muốn xóa<br />
+                    Bạn có chắc muốn xóa hoa<br />
                     <strong id="flowerDeleteName" style="color:#d66b6b"></strong>?
                 </p>
                 <p style="font-size:.8rem;color:#aaa;margin-top:8px">
-                    Hành động này không thể hoàn tác.
+                    Toàn bộ ảnh liên quan cũng sẽ bị xóa. Hành động này không thể hoàn tác.
                 </p>
             </div>
             <div class="admin-modal-footer" style="justify-content:center;gap:14px">
-                <button type="button" class="btn-admin-cancel"
-                        data-close-modal="modalDelete">
-                    Hủy
-                </button>
+                <button type="button" class="btn-admin-cancel" data-close-modal="modalDelete">Hủy</button>
                 <button type="submit" class="btn-admin-danger">Xóa ngay</button>
             </div>
         </form>
@@ -323,7 +399,9 @@
 
 @section Scripts {
     <script>
-        // ── Search ──
+        // ══════════════════════════════════════════════════
+        // SEARCH
+        // ══════════════════════════════════════════════════
         document.getElementById('flowerSearch').addEventListener('input', function () {
             const q = this.value.toLowerCase();
             document.querySelectorAll('#flowerTable tbody tr').forEach(row => {
@@ -331,19 +409,194 @@
             });
         });
 
-        // ── Edit modal ──
-        function openFlowerEditModal(id, name, desc, price, stock, isActive, catId) {
-            document.getElementById('eFlowerName').value = name;
-            document.getElementById('eDesc').value       = desc;
-            document.getElementById('ePrice').value      = price;
-            document.getElementById('eStock').value      = stock;
-            document.getElementById('eIsActive').checked = isActive;
-            document.getElementById('eCategoryID').value = catId;
+        // ══════════════════════════════════════════════════
+        // CREATE — quản lý danh sách URL ảnh
+        // ══════════════════════════════════════════════════
+        let createUrls = [];
+
+        function addCreateImage() {
+            const input = document.getElementById('createImageInput');
+            const url = input.value.trim();
+            if (!url) return;
+            if (createUrls.length >= 5) {
+                alert('Tối đa 5 ảnh cho mỗi sản phẩm.');
+                return;
+            }
+            if (createUrls.includes(url)) {
+                alert('URL này đã được thêm.');
+                return;
+            }
+            createUrls.push(url);
+            input.value = '';
+            renderCreateImages();
+            syncCreateHidden();
+        }
+
+        function removeCreateImage(index) {
+            createUrls.splice(index, 1);
+            renderCreateImages();
+            syncCreateHidden();
+        }
+
+        function renderCreateImages() {
+            const container = document.getElementById('createImageList');
+            container.innerHTML = createUrls.map((url, i) => `
+                <div style="display:flex;align-items:center;gap:8px;
+                            background:#fafafa;border:1px solid #eee;
+                            border-radius:8px;padding:6px 10px">
+                    <img src="${url}" alt="preview"
+                         style="width:40px;height:40px;object-fit:cover;border-radius:6px;
+                                border:1px solid #eee;flex-shrink:0"
+                         onerror="this.style.display='none'" />
+                    <span style="flex:1;font-size:.82rem;color:#555;
+                                 overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+                          title="${url}">${url}</span>
+                    <button type="button" onclick="removeCreateImage(${i})"
+                            style="background:none;border:none;cursor:pointer;
+                                   color:#d66b6b;font-size:1rem;flex-shrink:0">🗑️</button>
+                </div>
+            `).join('');
+        }
+
+        function syncCreateHidden() {
+            document.getElementById('createImageUrlsRaw').value = createUrls.join('\n');
+        }
+
+        // Reset khi đóng modal Create
+        document.querySelector('[data-close-modal="modalCreate"]')?.addEventListener('click', () => {
+            createUrls = [];
+            renderCreateImages();
+            syncCreateHidden();
+            document.getElementById('createImageInput').value = '';
+        });
+
+        // ══════════════════════════════════════════════════
+        // EDIT — quản lý ảnh hiện có + ảnh mới
+        // ══════════════════════════════════════════════════
+        let editCurrentImages = []; // { productImageID, url }
+        let editDeleteIds     = []; // Guid[] — ảnh đánh dấu xóa
+        let editNewUrls       = []; // string[] — URL ảnh mới thêm
+
+        function openFlowerEditModal(id, name, desc, price, stock, isActive, catId, images) {
+            document.getElementById('eFlowerName').value  = name;
+            document.getElementById('eDesc').value        = desc;
+            document.getElementById('ePrice').value       = price;
+            document.getElementById('eStock').value       = stock;
+            document.getElementById('eIsActive').checked  = isActive;
+            document.getElementById('eCategoryID').value  = catId;
             document.getElementById('formFlowerEdit').action = `/Admin/Flower/Edit/${id}`;
+
+            // Reset state ảnh
+            editCurrentImages = images || [];
+            editDeleteIds     = [];
+            editNewUrls       = [];
+
+            renderEditCurrentImages();
+            renderEditNewImages();
+            syncEditHiddens();
+
             openModal('modalEdit');
         }
 
-        // ── Delete modal ──
+        function markDeleteImage(productImageID) {
+            if (editDeleteIds.includes(productImageID)) {
+                // Bỏ đánh dấu xóa
+                editDeleteIds = editDeleteIds.filter(id => id !== productImageID);
+            } else {
+                editDeleteIds.push(productImageID);
+            }
+            renderEditCurrentImages();
+            syncEditHiddens();
+        }
+
+        function renderEditCurrentImages() {
+            const container = document.getElementById('editCurrentImages');
+            if (!editCurrentImages.length) {
+                container.innerHTML = '<span style="color:#aaa;font-size:.85rem">Chưa có ảnh</span>';
+                return;
+            }
+            container.innerHTML = editCurrentImages.map(img => {
+                const markedDelete = editDeleteIds.includes(img.productImageID);
+                return `
+                <div style="position:relative;display:inline-block">
+                    <img src="${img.url}" alt="ảnh"
+                         style="width:72px;height:72px;object-fit:cover;border-radius:10px;
+                                border:2px solid ${markedDelete ? '#d66b6b' : '#eee'};
+                                opacity:${markedDelete ? '0.45' : '1'};
+                                transition:all .2s" />
+                    <button type="button"
+                            onclick="markDeleteImage('${img.productImageID}')"
+                            title="${markedDelete ? 'Huỷ xóa' : 'Đánh dấu xóa'}"
+                            style="position:absolute;top:-6px;right:-6px;
+                                   width:22px;height:22px;border-radius:50%;
+                                   background:${markedDelete ? '#aaa' : '#d66b6b'};
+                                   color:#fff;border:none;cursor:pointer;
+                                   font-size:.75rem;line-height:22px;text-align:center">
+                        ${markedDelete ? '↩' : '✕'}
+                    </button>
+                </div>`;
+            }).join('');
+        }
+
+        function addEditImage() {
+            const input = document.getElementById('editImageInput');
+            const url = input.value.trim();
+            if (!url) return;
+
+            const remainingCurrent = editCurrentImages.length - editDeleteIds.length;
+            const totalAfter = remainingCurrent + editNewUrls.length + 1;
+            if (totalAfter > 5) {
+                alert(`Tối đa 5 ảnh. Hiện còn ${remainingCurrent} ảnh cũ và ${editNewUrls.length} ảnh mới thêm.`);
+                return;
+            }
+            if (editNewUrls.includes(url)) {
+                alert('URL này đã được thêm.');
+                return;
+            }
+            editNewUrls.push(url);
+            input.value = '';
+            renderEditNewImages();
+            syncEditHiddens();
+        }
+
+        function removeEditNewImage(index) {
+            editNewUrls.splice(index, 1);
+            renderEditNewImages();
+            syncEditHiddens();
+        }
+
+        function renderEditNewImages() {
+            const container = document.getElementById('editNewImageList');
+            if (!editNewUrls.length) {
+                container.innerHTML = '';
+                return;
+            }
+            container.innerHTML = editNewUrls.map((url, i) => `
+                <div style="display:flex;align-items:center;gap:8px;
+                            background:#fafafa;border:1px solid #eee;
+                            border-radius:8px;padding:6px 10px">
+                    <img src="${url}" alt="preview"
+                         style="width:40px;height:40px;object-fit:cover;border-radius:6px;
+                                border:1px solid #eee;flex-shrink:0"
+                         onerror="this.style.display='none'" />
+                    <span style="flex:1;font-size:.82rem;color:#555;
+                                 overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+                          title="${url}">${url}</span>
+                    <button type="button" onclick="removeEditNewImage(${i})"
+                            style="background:none;border:none;cursor:pointer;
+                                   color:#d66b6b;font-size:1rem;flex-shrink:0">🗑️</button>
+                </div>
+            `).join('');
+        }
+
+        function syncEditHiddens() {
+            document.getElementById('editDeleteIdsRaw').value = editDeleteIds.join(',');
+            document.getElementById('editNewUrlsRaw').value   = editNewUrls.join('\n');
+        }
+
+        // ══════════════════════════════════════════════════
+        // DELETE modal
+        // ══════════════════════════════════════════════════
         function openFlowerDeleteModal(id, name) {
             document.getElementById('flowerDeleteName').textContent = name;
             document.getElementById('formFlowerDelete').action = `/Admin/Flower/Delete/${id}`;

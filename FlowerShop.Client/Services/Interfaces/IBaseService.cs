@@ -9,6 +9,7 @@ namespace FlowerShop.Client
         Task<ApiResponse<T>> PostAsync<T>(string endpoint, object data, string? token = null);
         Task<ApiResponse<T>> PostMultipartAsync<T>(string endpoint, MultipartFormDataContent content, string? token = null);
         Task<ApiResponse<T>> PutAsync<T>(string endpoint, object data, string? token = null);
+        Task<ApiResponse<T>> PutMultipartAsync<T>(string endpoint, MultipartFormDataContent content, string? token = null);
         Task<ApiResponse<T>> DeleteAsync<T>(string endpoint, string? token = null);
     }
 }

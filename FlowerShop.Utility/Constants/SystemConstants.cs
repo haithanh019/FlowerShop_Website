@@ -3,6 +3,8 @@
     public static class SystemConstants
     {
         public const string ConnectionStringKey = "DefaultConnection";
+        public const string AutoMapperLicenseKey = "LicenseKey";
+
 
         public static class Roles
         {

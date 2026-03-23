@@ -55,7 +55,7 @@ namespace FlowerShop.Infrastructure.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("FlowerShop.Domain.Cart", b =>
@@ -75,7 +75,7 @@ namespace FlowerShop.Infrastructure.Migrations
                     b.HasIndex("UserID")
                         .IsUnique();
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("FlowerShop.Domain.CartItem", b =>
@@ -106,7 +106,7 @@ namespace FlowerShop.Infrastructure.Migrations
 
                     b.HasIndex("FlowerID");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItems", (string)null);
                 });
 
             modelBuilder.Entity("FlowerShop.Domain.Category", b =>
@@ -129,7 +129,7 @@ namespace FlowerShop.Infrastructure.Migrations
 
                     b.HasKey("CategoryID");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("FlowerShop.Domain.Flower", b =>
@@ -167,7 +167,7 @@ namespace FlowerShop.Infrastructure.Migrations
 
                     b.HasIndex("CategoryID");
 
-                    b.ToTable("Flowers");
+                    b.ToTable("Flowers", (string)null);
                 });
 
             modelBuilder.Entity("FlowerShop.Domain.FlowerImage", b =>
@@ -195,7 +195,7 @@ namespace FlowerShop.Infrastructure.Migrations
 
                     b.HasIndex("FlowerID");
 
-                    b.ToTable("FlowerImages");
+                    b.ToTable("FlowerImages", (string)null);
                 });
 
             modelBuilder.Entity("FlowerShop.Domain.Order", b =>
@@ -237,7 +237,7 @@ namespace FlowerShop.Infrastructure.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("FlowerShop.Domain.OrderItem", b =>
@@ -272,7 +272,7 @@ namespace FlowerShop.Infrastructure.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("FlowerShop.Domain.Payment", b =>
@@ -308,7 +308,7 @@ namespace FlowerShop.Infrastructure.Migrations
                     b.HasIndex("OrderID")
                         .IsUnique();
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("FlowerShop.Domain.User", b =>
@@ -349,7 +349,7 @@ namespace FlowerShop.Infrastructure.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("FlowerShop.Domain.Address", b =>

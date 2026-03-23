@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace FlowerShop.Application
 {
@@ -23,7 +24,6 @@ namespace FlowerShop.Application
 
         [Required(ErrorMessage = "Category is required")]
         public Guid CategoryID { get; set; }
-        public ICollection<string>? Urls { get; set; }
-        public ICollection<string>? PublicIds { get; set; }
+        public ICollection<IFormFile>? FlowerImages { get; set; }
     }
 }

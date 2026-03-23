@@ -8,8 +8,7 @@ namespace FlowerShop.Domain
         public Guid FlowerImageID { get; set; } = Guid.NewGuid();
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        [Required]
-        public required string Url { get; set; }
+        public string Url { get; set; } = string.Empty;
 
         [MaxLength(100)]
         public string PublicID { get; set; } = string.Empty;

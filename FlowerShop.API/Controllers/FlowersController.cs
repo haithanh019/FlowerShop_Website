@@ -22,13 +22,13 @@ namespace FlowerShop.API
             return Ok(result);
         }
 
-        public async Task<IActionResult> Post([FromBody] FlowerCreateDTO dto)
+        public async Task<IActionResult> Post([FromForm] FlowerCreateDTO dto)
         {
             var result = await _facadeService.FlowerService.CreateFlowerAsync(dto);
             return Ok(result);
         }
 
-        public async Task<IActionResult> Put([FromRoute] Guid key, [FromBody] FlowerUpdateDTO dto)
+        public async Task<IActionResult> Put([FromRoute] Guid key, [FromForm] FlowerUpdateDTO dto)
         {
             var result = await _facadeService.FlowerService.UpdateFlowerAsync(key, dto);
             return Ok(result);

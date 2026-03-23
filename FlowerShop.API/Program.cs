@@ -18,10 +18,13 @@ namespace FlowerShop.API
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<FlowerShopDbContext>(options =>
-               options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.ConnectionStringKey)));
+               options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.ConnectionStringKey),
+               sqlOptions => sqlOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
+            ));
             //Auto Mapper
             builder.Services.AddAutoMapper(cfg =>
             {
+                cfg.LicenseKey = builder.Configuration["AutoMapper:LicenseKey"];
                 cfg.AddProfile<MapperProfile>();
             });
             //Unit of Work
@@ -40,6 +43,7 @@ namespace FlowerShop.API
                 var odataBuilder = new ODataConventionModelBuilder();
                 odataBuilder.EntitySet<UserDTO>("Users");
                 odataBuilder.EntitySet<CategoryDTO>("Categories");
+                odataBuilder.EntitySet<FlowerImageDTO>("FlowerImages");
                 odataBuilder.EntitySet<FlowerDTO>("Flowers");
                 odataBuilder.EntitySet<CartDTO>("Carts");
                 odataBuilder.EntitySet<CartItemDTO>("CartItems");

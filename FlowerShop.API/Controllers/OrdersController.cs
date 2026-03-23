@@ -23,13 +23,6 @@ namespace FlowerShop.API
             return Ok(result);
         }
 
-        [HttpGet("Odata/Orders/MyOrders")]
-        public async Task<IActionResult> GetMyOrders([FromQuery] Guid id)
-        {
-            var result = await _facadeService.OrderService.GetOrdersByUserAsync(id);
-            return Ok(result);
-        }
-
         public async Task<IActionResult> Post([FromQuery] Guid id, [FromBody] OrderCreateDTO dto)
         {
             var result = await _facadeService.OrderService.CreateOrderFromCartAsync(id, dto);

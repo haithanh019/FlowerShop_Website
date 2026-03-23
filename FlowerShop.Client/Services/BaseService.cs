@@ -92,7 +92,6 @@ namespace FlowerShop.Client
             var response = await client.PostAsync(endpoint, content);
             return await ReadResponseAsync<T>(response);
         }
-
         public async Task<ApiResponse<T>> PutAsync<T>(string endpoint, object data, string? token = null)
         {
             var client = CreateClient(token);
@@ -100,7 +99,12 @@ namespace FlowerShop.Client
             var response = await client.PutAsync(endpoint, content);
             return await ReadResponseAsync<T>(response);
         }
-
+        public async Task<ApiResponse<T>> PutMultipartAsync<T>(string endpoint, MultipartFormDataContent content, string? token = null)
+        {
+            var client = CreateClient(token);
+            var response = await client.PutAsync(endpoint, content);
+            return await ReadResponseAsync<T>(response);
+        }
         public async Task<ApiResponse<T>> DeleteAsync<T>(string endpoint, string? token = null)
         {
             var client = CreateClient(token);
