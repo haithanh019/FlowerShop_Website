@@ -136,7 +136,7 @@ namespace FlowerShop.Application
             foreach (var file in files)
             {
                 var image = new FlowerImage { FlowerID = flower.FlowerID, Flower = flower };
-                await _unitOfWork.FlowerImageRepository.UploadImageAsync(file, "flowers", image);
+                await _unitOfWork.FlowerImageRepository.UploadImageAsync(file, "flower_shop", image);
             }
         }
 

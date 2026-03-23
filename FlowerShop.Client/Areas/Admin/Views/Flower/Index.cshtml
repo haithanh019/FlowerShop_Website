@@ -90,8 +90,9 @@
                         foreach (var f in Model)
                         {
                             var firstImage = f.FlowerImages?.FirstOrDefault();
+                            // Serialize PublicID (dùng để xóa) + Url (hiển thị)
                             var imagesJson = System.Text.Json.JsonSerializer.Serialize(
-                                f.FlowerImages?.Select(img => new { img.FlowerImageID, img.Url })
+                                f.FlowerImages?.Select(img => new { img.PublicID, img.Url })
                                 ?? Enumerable.Empty<object>());
                             <tr>
                                 <td style="color:#aaa;font-size:.82rem">@i</td>
@@ -176,7 +177,9 @@
             <div class="admin-modal-title">➕ Thêm hoa mới</div>
             <button class="admin-modal-close" data-close-modal="modalCreate">✕</button>
         </div>
-        <form asp-area="Admin" asp-controller="Flower" asp-action="Create" method="post">
+        {{!-- enctype bắt buộc để gửi file --}}
+        <form asp-area="Admin" asp-controller="Flower" asp-action="Create"
+              method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             <div class="admin-modal-body">
                 <div class="row g-3">
@@ -229,27 +232,19 @@
                         </div>
                     </div>
 
-                    @* ── Phần ảnh ── *@
+                    @* ── Phần ảnh — chọn file thực sự ── *@
                     <div class="col-12">
                         <div class="admin-form-group mb-0">
                             <label class="admin-form-label">
                                 Ảnh sản phẩm
-                                <span style="font-weight:400;color:#aaa;font-size:.8rem">
-                                    (tối đa 5 ảnh, nhập URL)
-                                </span>
+                                <span style="font-weight:400;color:#aaa;font-size:.8rem">(tối đa 5 ảnh)</span>
                             </label>
-                            <div id="createImageList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px"></div>
-                            <div style="display:flex;gap:8px">
-                                <input type="text" id="createImageInput" class="admin-form-control"
-                                       placeholder="https://... nhập URL ảnh rồi nhấn Thêm" />
-                                <button type="button" class="btn-admin-primary"
-                                        style="white-space:nowrap;padding:0 16px"
-                                        onclick="addCreateImage()">
-                                    + Thêm
-                                </button>
-                            </div>
-                            @* Hidden field chứa toàn bộ URLs (phân tách bằng newline) *@
-                            <input type="hidden" name="ImageUrlsRaw" id="createImageUrlsRaw" />
+                            <input type="file" name="FlowerImages" id="createFileInput"
+                                   class="admin-form-control"
+                                   accept="image/*" multiple
+                                   onchange="previewCreateImages(this)" />
+                            <div id="createImagePreview"
+                                 style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"></div>
                         </div>
                     </div>
                 </div>
@@ -269,7 +264,7 @@
             <div class="admin-modal-title">✏️ Chỉnh sửa hoa</div>
             <button class="admin-modal-close" data-close-modal="modalEdit">✕</button>
         </div>
-        <form id="formFlowerEdit" method="post">
+        <form id="formFlowerEdit" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             <div class="admin-modal-body">
                 <div class="row g-3">
@@ -322,18 +317,17 @@
                         </div>
                     </div>
 
-                    @* ── Phần ảnh hiện có ── *@
+                    @* ── Ảnh hiện tại — checkbox PublicID để xóa ── *@
                     <div class="col-12">
                         <div class="admin-form-group mb-0">
                             <label class="admin-form-label">
                                 Ảnh hiện tại
                                 <span style="font-weight:400;color:#aaa;font-size:.8rem">
-                                    (nhấn 🗑️ để đánh dấu xóa)
+                                    (tích vào ảnh muốn xóa)
                                 </span>
                             </label>
                             <div id="editCurrentImages"
                                  style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px"></div>
-                            <input type="hidden" name="DeleteImageIdsRaw" id="editDeleteIdsRaw" />
                         </div>
                     </div>
 
@@ -343,21 +337,15 @@
                             <label class="admin-form-label">
                                 Thêm ảnh mới
                                 <span style="font-weight:400;color:#aaa;font-size:.8rem">
-                                    (tổng ảnh sau thay đổi không quá 5)
+                                    (tổng ảnh không quá 5)
                                 </span>
                             </label>
-                            <div id="editNewImageList"
-                                 style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px"></div>
-                            <div style="display:flex;gap:8px">
-                                <input type="text" id="editImageInput" class="admin-form-control"
-                                       placeholder="https://... nhập URL ảnh rồi nhấn Thêm" />
-                                <button type="button" class="btn-admin-primary"
-                                        style="white-space:nowrap;padding:0 16px"
-                                        onclick="addEditImage()">
-                                    + Thêm
-                                </button>
-                            </div>
-                            <input type="hidden" name="NewImageUrlsRaw" id="editNewUrlsRaw" />
+                            <input type="file" name="FlowerImages" id="editFileInput"
+                                   class="admin-form-control"
+                                   accept="image/*" multiple
+                                   onchange="previewEditImages(this)" />
+                            <div id="editImagePreview"
+                                 style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"></div>
                         </div>
                     </div>
                 </div>
@@ -399,9 +387,7 @@
 
 @section Scripts {
     <script>
-        // ══════════════════════════════════════════════════
-        // SEARCH
-        // ══════════════════════════════════════════════════
+        // ── Search ────────────────────────────────────────
         document.getElementById('flowerSearch').addEventListener('input', function () {
             const q = this.value.toLowerCase();
             document.querySelectorAll('#flowerTable tbody tr').forEach(row => {
@@ -409,74 +395,26 @@
             });
         });
 
-        // ══════════════════════════════════════════════════
-        // CREATE — quản lý danh sách URL ảnh
-        // ══════════════════════════════════════════════════
-        let createUrls = [];
-
-        function addCreateImage() {
-            const input = document.getElementById('createImageInput');
-            const url = input.value.trim();
-            if (!url) return;
-            if (createUrls.length >= 5) {
-                alert('Tối đa 5 ảnh cho mỗi sản phẩm.');
+        // ── CREATE: preview ảnh đã chọn ──────────────────
+        function previewCreateImages(input) {
+            const preview = document.getElementById('createImagePreview');
+            preview.innerHTML = '';
+            if (input.files.length > 5) {
+                alert('Chỉ được chọn tối đa 5 ảnh.');
+                input.value = '';
                 return;
             }
-            if (createUrls.includes(url)) {
-                alert('URL này đã được thêm.');
-                return;
-            }
-            createUrls.push(url);
-            input.value = '';
-            renderCreateImages();
-            syncCreateHidden();
+            [...input.files].forEach(file => {
+                const url = URL.createObjectURL(file);
+                preview.innerHTML += `
+                    <img src="${url}" alt="${file.name}"
+                         style="width:64px;height:64px;object-fit:cover;
+                                border-radius:8px;border:1px solid #eee"
+                         title="${file.name}" />`;
+            });
         }
 
-        function removeCreateImage(index) {
-            createUrls.splice(index, 1);
-            renderCreateImages();
-            syncCreateHidden();
-        }
-
-        function renderCreateImages() {
-            const container = document.getElementById('createImageList');
-            container.innerHTML = createUrls.map((url, i) => `
-                <div style="display:flex;align-items:center;gap:8px;
-                            background:#fafafa;border:1px solid #eee;
-                            border-radius:8px;padding:6px 10px">
-                    <img src="${url}" alt="preview"
-                         style="width:40px;height:40px;object-fit:cover;border-radius:6px;
-                                border:1px solid #eee;flex-shrink:0"
-                         onerror="this.style.display='none'" />
-                    <span style="flex:1;font-size:.82rem;color:#555;
-                                 overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
-                          title="${url}">${url}</span>
-                    <button type="button" onclick="removeCreateImage(${i})"
-                            style="background:none;border:none;cursor:pointer;
-                                   color:#d66b6b;font-size:1rem;flex-shrink:0">🗑️</button>
-                </div>
-            `).join('');
-        }
-
-        function syncCreateHidden() {
-            document.getElementById('createImageUrlsRaw').value = createUrls.join('\n');
-        }
-
-        // Reset khi đóng modal Create
-        document.querySelector('[data-close-modal="modalCreate"]')?.addEventListener('click', () => {
-            createUrls = [];
-            renderCreateImages();
-            syncCreateHidden();
-            document.getElementById('createImageInput').value = '';
-        });
-
-        // ══════════════════════════════════════════════════
-        // EDIT — quản lý ảnh hiện có + ảnh mới
-        // ══════════════════════════════════════════════════
-        let editCurrentImages = []; // { productImageID, url }
-        let editDeleteIds     = []; // Guid[] — ảnh đánh dấu xóa
-        let editNewUrls       = []; // string[] — URL ảnh mới thêm
-
+        // ── EDIT: mở modal, render ảnh hiện tại ──────────
         function openFlowerEditModal(id, name, desc, price, stock, isActive, catId, images) {
             document.getElementById('eFlowerName').value  = name;
             document.getElementById('eDesc').value        = desc;
@@ -486,117 +424,120 @@
             document.getElementById('eCategoryID').value  = catId;
             document.getElementById('formFlowerEdit').action = `/Admin/Flower/Edit/${id}`;
 
-            // Reset state ảnh
-            editCurrentImages = images || [];
-            editDeleteIds     = [];
-            editNewUrls       = [];
+            // Reset file input + preview
+            document.getElementById('editFileInput').value = '';
+            document.getElementById('editImagePreview').innerHTML = '';
 
-            renderEditCurrentImages();
-            renderEditNewImages();
-            syncEditHiddens();
+            // Xóa các checkbox cũ còn sót trong form (nếu có)
+            document.querySelectorAll('#formFlowerEdit input[name="DeleteImageIds"]')
+                    .forEach(el => el.remove());
+
+            const container = document.getElementById('editCurrentImages');
+            container.innerHTML = '';
+
+            if (!images || !images.length) {
+                container.innerHTML = '<span style="color:#aaa;font-size:.85rem">Chưa có ảnh</span>';
+            } else {
+                images.forEach(img => {
+                    const canDelete = img.publicID && img.publicID.trim() !== '';
+
+                    // Wrapper label
+                    const label = document.createElement('label');
+                    label.style.cssText = `position:relative;display:inline-block;
+                        cursor:${canDelete ? 'pointer' : 'default'}`;
+                    label.title = canDelete ? 'Tích để xóa' : 'Không thể xóa ảnh này';
+
+                    // ✅ Checkbox — append vào form, KHÔNG vào label innerHTML
+                    if (canDelete) {
+                        const cb = document.createElement('input');
+                        cb.type    = 'checkbox';
+                        cb.name    = 'DeleteImageIds';
+                        cb.value   = img.publicID;
+                        cb.style.display = 'none';
+                        cb.addEventListener('change', () => toggleDeleteOverlay(cb));
+                        label.appendChild(cb);
+                    }
+
+                    // Ảnh preview
+                    const imgEl = document.createElement('img');
+                    imgEl.src = img.url;
+                    imgEl.alt = 'ảnh';
+                    imgEl.style.cssText = `width:72px;height:72px;object-fit:cover;
+                        border-radius:10px;border:2px solid #eee;display:block`;
+                    label.appendChild(imgEl);
+
+                    // Overlay đỏ khi chọn xóa
+                    const overlay = document.createElement('div');
+                    overlay.className = 'delete-overlay';
+                    overlay.textContent = '✕';
+                    overlay.style.cssText = `display:none;position:absolute;inset:0;
+                        border-radius:10px;background:rgba(214,107,107,.6);
+                        color:#fff;font-size:1.4rem;
+                        align-items:center;justify-content:center`;
+                    label.appendChild(overlay);
+
+                    // Badge "no ID" nếu không có PublicID
+                    if (!canDelete) {
+                        const badge = document.createElement('div');
+                        badge.textContent = 'no ID';
+                        badge.style.cssText = `position:absolute;bottom:2px;left:0;right:0;
+                            text-align:center;font-size:.6rem;color:#aaa`;
+                        label.appendChild(badge);
+                    }
+
+                    container.appendChild(label);
+                });
+            }
 
             openModal('modalEdit');
         }
 
-        function markDeleteImage(productImageID) {
-            if (editDeleteIds.includes(productImageID)) {
-                // Bỏ đánh dấu xóa
-                editDeleteIds = editDeleteIds.filter(id => id !== productImageID);
+        function toggleDeleteOverlay(checkbox) {
+            const label   = checkbox.closest('label');
+            const img     = label.querySelector('img');
+            const overlay = label.querySelector('.delete-overlay');
+            if (checkbox.checked) {
+                img.style.opacity = '0.4';
+                img.style.border  = '2px solid #d66b6b';
+                overlay.style.display = 'flex';
             } else {
-                editDeleteIds.push(productImageID);
+                img.style.opacity = '1';
+                img.style.border  = '2px solid #eee';
+                overlay.style.display = 'none';
             }
-            renderEditCurrentImages();
-            syncEditHiddens();
         }
 
-        function renderEditCurrentImages() {
-            const container = document.getElementById('editCurrentImages');
-            if (!editCurrentImages.length) {
-                container.innerHTML = '<span style="color:#aaa;font-size:.85rem">Chưa có ảnh</span>';
-                return;
+        // Toggle overlay khi tích checkbox xóa ảnh
+        function toggleDeleteOverlay(checkbox) {
+            const label   = checkbox.closest('label');
+            const img     = label.querySelector('img');
+            const overlay = label.querySelector('.delete-overlay');
+            if (checkbox.checked) {
+                img.style.opacity = '0.4';
+                img.style.border  = '2px solid #d66b6b';
+                overlay.style.display = 'flex';
+            } else {
+                img.style.opacity = '1';
+                img.style.border  = '2px solid #eee';
+                overlay.style.display = 'none';
             }
-            container.innerHTML = editCurrentImages.map(img => {
-                const markedDelete = editDeleteIds.includes(img.productImageID);
-                return `
-                <div style="position:relative;display:inline-block">
-                    <img src="${img.url}" alt="ảnh"
-                         style="width:72px;height:72px;object-fit:cover;border-radius:10px;
-                                border:2px solid ${markedDelete ? '#d66b6b' : '#eee'};
-                                opacity:${markedDelete ? '0.45' : '1'};
-                                transition:all .2s" />
-                    <button type="button"
-                            onclick="markDeleteImage('${img.productImageID}')"
-                            title="${markedDelete ? 'Huỷ xóa' : 'Đánh dấu xóa'}"
-                            style="position:absolute;top:-6px;right:-6px;
-                                   width:22px;height:22px;border-radius:50%;
-                                   background:${markedDelete ? '#aaa' : '#d66b6b'};
-                                   color:#fff;border:none;cursor:pointer;
-                                   font-size:.75rem;line-height:22px;text-align:center">
-                        ${markedDelete ? '↩' : '✕'}
-                    </button>
-                </div>`;
-            }).join('');
         }
 
-        function addEditImage() {
-            const input = document.getElementById('editImageInput');
-            const url = input.value.trim();
-            if (!url) return;
-
-            const remainingCurrent = editCurrentImages.length - editDeleteIds.length;
-            const totalAfter = remainingCurrent + editNewUrls.length + 1;
-            if (totalAfter > 5) {
-                alert(`Tối đa 5 ảnh. Hiện còn ${remainingCurrent} ảnh cũ và ${editNewUrls.length} ảnh mới thêm.`);
-                return;
-            }
-            if (editNewUrls.includes(url)) {
-                alert('URL này đã được thêm.');
-                return;
-            }
-            editNewUrls.push(url);
-            input.value = '';
-            renderEditNewImages();
-            syncEditHiddens();
+        // EDIT: preview ảnh mới chọn
+        function previewEditImages(input) {
+            const preview = document.getElementById('editImagePreview');
+            preview.innerHTML = '';
+            [...input.files].forEach(file => {
+                const url = URL.createObjectURL(file);
+                preview.innerHTML += `
+                    <img src="${url}" alt="${file.name}"
+                         style="width:64px;height:64px;object-fit:cover;
+                                border-radius:8px;border:1px solid #eee"
+                         title="${file.name}" />`;
+            });
         }
 
-        function removeEditNewImage(index) {
-            editNewUrls.splice(index, 1);
-            renderEditNewImages();
-            syncEditHiddens();
-        }
-
-        function renderEditNewImages() {
-            const container = document.getElementById('editNewImageList');
-            if (!editNewUrls.length) {
-                container.innerHTML = '';
-                return;
-            }
-            container.innerHTML = editNewUrls.map((url, i) => `
-                <div style="display:flex;align-items:center;gap:8px;
-                            background:#fafafa;border:1px solid #eee;
-                            border-radius:8px;padding:6px 10px">
-                    <img src="${url}" alt="preview"
-                         style="width:40px;height:40px;object-fit:cover;border-radius:6px;
-                                border:1px solid #eee;flex-shrink:0"
-                         onerror="this.style.display='none'" />
-                    <span style="flex:1;font-size:.82rem;color:#555;
-                                 overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
-                          title="${url}">${url}</span>
-                    <button type="button" onclick="removeEditNewImage(${i})"
-                            style="background:none;border:none;cursor:pointer;
-                                   color:#d66b6b;font-size:1rem;flex-shrink:0">🗑️</button>
-                </div>
-            `).join('');
-        }
-
-        function syncEditHiddens() {
-            document.getElementById('editDeleteIdsRaw').value = editDeleteIds.join(',');
-            document.getElementById('editNewUrlsRaw').value   = editNewUrls.join('\n');
-        }
-
-        // ══════════════════════════════════════════════════
-        // DELETE modal
-        // ══════════════════════════════════════════════════
+        // ── DELETE modal ──────────────────────────────────
         function openFlowerDeleteModal(id, name) {
             document.getElementById('flowerDeleteName').textContent = name;
             document.getElementById('formFlowerDelete').action = `/Admin/Flower/Delete/${id}`;

@@ -12,10 +12,6 @@ namespace FlowerShop.Client.Areas.Admin.Controllers
         {
             _baseService = baseService;
         }
-
-        // ─────────────────────────────────────────
-        // Guard: kiểm tra session Admin
-        // ─────────────────────────────────────────
         private IActionResult? CheckAdmin()
         {
             var token = HttpContext.Session.GetString("JWToken");
@@ -27,10 +23,6 @@ namespace FlowerShop.Client.Areas.Admin.Controllers
             return null;
         }
 
-        // ─────────────────────────────────────────
-        // GET /Admin/Category
-        // Hiển thị danh sách tất cả danh mục
-        // ─────────────────────────────────────────
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -46,10 +38,6 @@ namespace FlowerShop.Client.Areas.Admin.Controllers
             return View(categories);
         }
 
-        // ─────────────────────────────────────────
-        // POST /Admin/Category/Create
-        // Tạo danh mục mới (gọi từ modal trong Index)
-        // ─────────────────────────────────────────
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CategoryCreateDTO model)
@@ -74,10 +62,6 @@ namespace FlowerShop.Client.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // ─────────────────────────────────────────
-        // POST /Admin/Category/Edit/{id}
-        // Cập nhật danh mục (gọi từ modal trong Index)
-        // ─────────────────────────────────────────
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, CategoryUpdateDTO model)
@@ -102,10 +86,6 @@ namespace FlowerShop.Client.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // ─────────────────────────────────────────
-        // POST /Admin/Category/Delete/{id}
-        // Xóa danh mục (gọi từ modal trong Index)
-        // ─────────────────────────────────────────
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)

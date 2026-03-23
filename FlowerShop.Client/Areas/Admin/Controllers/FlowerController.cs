@@ -90,7 +90,7 @@ namespace FlowerShop.Client.Areas.Admin.Controllers
 
             var deleteIds = Request.Form["DeleteImageIds"].ToList();
             if (deleteIds.Any())
-                model.DeleteImageIds = deleteIds!;
+                model.DeleteImageIds = deleteIds.Where(x => x != null).ToList()!;
 
             var token = HttpContext.Session.GetString("JWToken");
 

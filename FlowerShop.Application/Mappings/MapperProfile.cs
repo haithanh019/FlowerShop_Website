@@ -21,11 +21,15 @@ namespace FlowerShop.Application
             CreateMap<CategoryUpdateDTO, Category>();
 
             // Flower mappings
-            CreateMap<FlowerCreateDTO, Flower>();
-            CreateMap<FlowerUpdateDTO, Flower>();
+            CreateMap<FlowerCreateDTO, Flower>()
+                .ForMember(dest => dest.FlowerImages, opt => opt.Ignore())
+                .ForMember(dest => dest.Category, opt => opt.Ignore());
+            CreateMap<FlowerUpdateDTO, Flower>()
+                .ForMember(dest => dest.FlowerImages, opt => opt.Ignore())
+                .ForMember(dest => dest.Category, opt => opt.Ignore());
             CreateMap<Flower, FlowerDTO>()
                 .ForMember(dest => dest.CategoryName,
-        opt => opt.MapFrom(src => src.Category.CategoryName))
+                 opt => opt.MapFrom(src => src.Category.CategoryName))
                 .ForMember(dest => dest.FlowerImages, opt => opt.MapFrom(src => src.FlowerImages));
 
             // FlowerImage mappings
@@ -35,7 +39,7 @@ namespace FlowerShop.Application
 
             // Cart mappings
             CreateMap<Cart, CartDTO>()
-    .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.CartItems));
+                .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.CartItems));
             // CartItem mappings
             CreateMap<CartItemCreateDTO, CartItem>()
                 .ForMember(dest => dest.UnitPrice, opt => opt.Ignore());
