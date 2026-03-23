@@ -92,7 +92,7 @@
                             var firstImage = f.FlowerImages?.FirstOrDefault();
                             // Serialize PublicID (dùng để xóa) + Url (hiển thị)
                             var imagesJson = System.Text.Json.JsonSerializer.Serialize(
-                                f.FlowerImages?.Select(img => new { img.PublicID, img.Url })
+                                f.FlowerImages?.Select(img => new { publicID = img.PublicID, url = img.Url })
                                 ?? Enumerable.Empty<object>());
                             <tr>
                                 <td style="color:#aaa;font-size:.82rem">@i</td>

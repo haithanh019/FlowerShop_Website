@@ -22,7 +22,7 @@ namespace FlowerShop.Client
                 viewModel.Categories = categoryResponse;
             }
 
-            var flowerResponse = await _baseService.GetODataAsync<IEnumerable<FlowerDTO>>("/Odata/Flowers");
+            var flowerResponse = await _baseService.GetODataAsync<IEnumerable<FlowerDTO>>("Odata/Flowers?$expand=FlowerImages&$filter=IsActive eq true");
             if (flowerResponse != null)
             {
                 viewModel.Flowers = flowerResponse;

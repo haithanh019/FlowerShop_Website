@@ -15,7 +15,7 @@ namespace FlowerShop.Client
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var flowers = await _baseService.GetODataAsync<IEnumerable<FlowerDTO>>("/Odata/Flowers");
+            var flowers = await _baseService.GetODataAsync<IEnumerable<FlowerDTO>>("Odata/Flowers?$expand=FlowerImages&$filter=IsActive eq true");
 
             if (flowers == null)
             {
