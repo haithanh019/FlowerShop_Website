@@ -1,0 +1,114 @@
+﻿@model FlowerShop.Application.CartDTO
+@{
+    ViewData["Title"] = "Thanh toán";
+    var items = Model.CartItems?.ToList() ?? new();
+    var subtotal = items.Sum(x => x.TotalPrice);
+    decimal shipping = 30000;   
+    var total = subtotal + shipping;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/checkout.css" asp-append-version="true" />
+}
+
+<div class="checkout-page py-4 py-lg-5">
+    <div class="row g-4">
+
+        <div class="col-lg-7">
+            <div class="card checkout-card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="checkout-title mb-4">Thông tin giao hàng</h4>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Số điện thoại</label>
+                        <input type="tel" id="phoneNumber"
+                               class="form-control checkout-input"
+                               placeholder="Nhập số điện thoại nhận hàng" />
+                        <div class="invalid-feedback" id="err-phone"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Địa chỉ giao hàng</label>
+                        <textarea id="shippingAddress" rows="3"
+                                  class="form-control checkout-input"
+                                  placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành..."></textarea>
+                        <div class="invalid-feedback" id="err-address"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Ghi chú <span class="text-muted fw-normal">(tuỳ chọn)</span></label>
+                        <textarea id="orderNote" rows="2"
+                                  class="form-control checkout-input"
+                                  placeholder="Ghi chú cho người giao hàng..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card checkout-card border-0 shadow-sm sticky-lg-top">
+                <div class="card-body p-4">
+                    <h4 class="checkout-title mb-4">Đơn hàng của bạn</h4>
+
+                    <div class="checkout-items mb-3">
+                        @foreach (var item in items)
+                        {
+                            <div class="checkout-item d-flex align-items-center gap-3 mb-3">
+                                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                {
+                                    <img src="@item.ImageUrl" class="checkout-item-img" alt="@item.FlowerName" />
+                                }
+                                else
+                                {
+                                    <div class="checkout-item-placeholder">🌺</div>
+                                }
+                                <div class="flex-grow-1">
+                                    <div class="fw-semibold">@item.FlowerName</div>
+                                    <div class="text-muted small">@item.UnitPrice.ToString("N0") đ × @item.Quantity</div>
+                                </div>
+                                <div class="fw-bold checkout-item-total">
+                                    @item.TotalPrice.ToString("N0") đ
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <hr class="dashed-divider" />
+
+                    <div class="summary-rows">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Tạm tính</span>
+                            <span>@subtotal.ToString("N0") đ</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Phí vận chuyển</span>
+                            <span>@shipping.ToString("N0") đ</span>
+                        </div>
+                        <div class="d-flex justify-content-between fw-bold fs-5 mt-3">
+                            <span>Tổng cộng</span>
+                            <span class="text-checkout-primary">@total.ToString("N0") đ</span>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="cartID" value="@Model.CartID" />
+                    <input type="hidden" id="shippingFee" value="@shipping" />
+
+                    <button type="button" id="btnPlaceOrder"
+                            class="btn btn-checkout-primary w-100 rounded-pill py-2 mt-4">
+                        <span id="btnText">Đặt hàng ngay</span>
+                        <span id="btnSpinner" class="spinner-border spinner-border-sm ms-2 d-none"></span>
+                    </button>
+
+                    <a asp-controller="Cart" asp-action="Index"
+                           class="btn btn-checkout-outline w-100 rounded-pill py-2 mt-2">
+                        Quay lại giỏ hàng
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/checkout.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,48 @@
+﻿@model FlowerShop.Application.OrderDTO
+@{
+    ViewData["Title"] = "Đặt hàng thành công";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/checkout.css" asp-append-version="true" />
+}
+
+<div class="confirmation-page text-center py-5">
+    <div class="confirmation-icon mb-3">🌸</div>
+    <h3 class="fw-bold text-checkout-primary">Đặt hàng thành công!</h3>
+    <p class="text-muted mb-1">Mã đơn hàng: <strong>#@Model.OrderID.ToString("N").ToUpper()[..8]</strong></p>
+    <p class="text-muted mb-4">Cảm ơn bạn đã mua hàng. Chúng tôi sẽ liên hệ xác nhận sớm nhất.</p>
+
+    <div class="card border-0 shadow-sm mx-auto" style="max-width:520px">
+        <div class="card-body p-4 text-start">
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Giao đến</span>
+                <span class="fw-semibold">@Model.ShippingAddress</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Điện thoại</span>
+                <span>@Model.PhoneNumber</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Trạng thái</span>
+                <span class="badge bg-warning text-dark">@Model.OrderStatus</span>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between fw-bold">
+                <span>Tổng tiền</span>
+                <span class="text-checkout-primary">@Model.TotalAmount.ToString("N0") đ</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex gap-3 justify-content-center">
+        <a asp-controller="Flower" asp-action="Index"
+               class="btn btn-checkout-primary rounded-pill px-4">
+            Tiếp tục mua hàng
+        </a>
+        <a asp-controller="Order" asp-action="MyOrders"
+               class="btn btn-checkout-outline rounded-pill px-4">
+            Xem đơn hàng của tôi
+        </a>
+    </div>
+</div>

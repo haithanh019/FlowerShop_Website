@@ -15,7 +15,7 @@ namespace FlowerShop.API.Controllers
         [EnableQuery]
         public async Task<IActionResult> Get([FromRoute] Guid key)
         {
-            var result = await _facadeService.OrderService.GetOrderByIDAsync(key);
+            var result = await _facadeService.OrderService.GetOrdersByUserAsync(key);
             return Ok(result);
         }
 

@@ -1,0 +1,177 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ── Reuse biến từ cart.css ──────────────────────────────────────────────── */
+:root {
+    --co-pink: #f8c1c1;
+    --co-pink-dark: #d66b6b;
+    --co-blue: #b3e0f5;
+    --co-bg: #fff9f9;
+    --co-text: #4a4a4a;
+    --co-shadow: 0 10px 20px rgba(0,0,0,.05);
+    --co-radius: 22px;
+    --co-border: rgba(248,193,193,.25);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top left, rgba(248,193,193,.2), transparent 22%), radial-gradient(circle at bottom right, rgba(179,224,245,.2), transparent 22%), var(--co-bg);
+    color: var(--co-text);
+}
+
+/* ── Card ────────────────────────────────────────────────────────────────── */
+.checkout-card {
+    border-radius: var(--co-radius);
+    background: rgba(255,255,255,.96);
+    box-shadow: var(--co-shadow);
+    border: 1px solid var(--co-border) !important;
+}
+
+.checkout-title {
+    color: var(--co-pink-dark);
+    font-weight: 700;
+}
+
+/* ── Form inputs ─────────────────────────────────────────────────────────── */
+.checkout-input {
+    border-radius: 12px;
+    border: 1px solid #f0c1c1;
+    font-family: 'Poppins', sans-serif;
+    font-size: .93rem;
+    color: var(--co-text);
+    transition: border-color .2s, box-shadow .2s;
+}
+
+    .checkout-input:focus {
+        border-color: var(--co-pink-dark);
+        box-shadow: 0 0 0 3px rgba(214,107,107,.12);
+        outline: none;
+    }
+
+    .checkout-input.is-invalid {
+        border-color: #d9534f;
+    }
+
+.invalid-feedback {
+    font-size: .8rem;
+    color: #d9534f;
+    margin-top: 4px;
+    display: block;
+}
+
+/* ── Item preview ────────────────────────────────────────────────────────── */
+.checkout-items {
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+    .checkout-items::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .checkout-items::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .checkout-items::-webkit-scrollbar-thumb {
+        background: var(--co-pink);
+        border-radius: 99px;
+    }
+
+.checkout-item-img {
+    width: 52px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.checkout-item-placeholder {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(248,193,193,.25), rgba(179,224,245,.25));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.checkout-item-total {
+    white-space: nowrap;
+    color: var(--co-pink-dark);
+}
+
+/* ── Divider ─────────────────────────────────────────────────────────────── */
+.dashed-divider {
+    border: none;
+    border-top: 1px dashed rgba(214,107,107,.25);
+    margin: 12px 0;
+}
+
+/* ── Color alias ─────────────────────────────────────────────────────────── */
+.text-checkout-primary {
+    color: var(--co-pink-dark);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.btn-checkout-primary {
+    background: linear-gradient(135deg, var(--co-pink), var(--co-blue));
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    transition: all .2s;
+    box-shadow: 0 8px 18px rgba(214,107,107,.18);
+}
+
+    .btn-checkout-primary:hover {
+        color: #fff;
+        transform: scale(1.02);
+        filter: brightness(1.04);
+    }
+
+    .btn-checkout-primary:disabled {
+        opacity: .7;
+        transform: none;
+        cursor: not-allowed;
+    }
+
+.btn-checkout-outline {
+    background: #fff;
+    color: var(--co-pink-dark);
+    border: 1px solid #f0c1c1;
+    font-weight: 500;
+    transition: all .2s;
+}
+
+    .btn-checkout-outline:hover {
+        background: #fff4f4;
+        color: var(--co-pink-dark);
+        transform: scale(1.02);
+    }
+
+/* ── Confirmation page ───────────────────────────────────────────────────── */
+.confirmation-page {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.confirmation-icon {
+    font-size: 4rem;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+    .checkout-card {
+        border-radius: 16px;
+    }
+
+    .checkout-items {
+        max-height: 220px;
+    }
+
+    .sticky-lg-top {
+        position: static !important;
+    }
+}

@@ -1,0 +1,119 @@
+﻿@model IEnumerable<FlowerShop.Application.OrderDTO>
+@{
+    ViewData["Title"] = "Đơn hàng của tôi";
+    var orders = Model?.ToList() ?? new();
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/checkout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/myorders.css" asp-append-version="true" />
+}
+
+<div class="myorders-page py-4 py-lg-5">
+
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h4 class="checkout-title mb-0">🧾 Đơn hàng của tôi</h4>
+        <a asp-controller="Flower" asp-action="Index"
+               class="btn btn-checkout-outline rounded-pill px-4">
+            Tiếp tục mua hàng
+        </a>
+    </div>
+
+    @if (!orders.Any())
+    {
+        <div class="empty-orders text-center py-5">
+            <div style="font-size:3.5rem">📦</div>
+            <h5 class="mt-3 text-muted">Bạn chưa có đơn hàng nào</h5>
+            <a asp-controller="Flower" asp-action="Index"
+                   class="btn btn-checkout-primary rounded-pill px-5 mt-3">
+                Khám phá hoa
+            </a>
+        </div>
+    }
+    else
+    {
+        foreach (var order in orders)
+        {
+            var statusClass = order.OrderStatus switch
+            {
+                "Pending" => "badge-pending",
+                "Confirmed" => "badge-confirmed",
+                "Shipping" => "badge-shipping",
+                "Completed" => "badge-completed",
+                "Cancelled" => "badge-cancelled",
+                _ => "badge-pending"
+            };
+            var statusLabel = order.OrderStatus switch
+            {
+                "Pending" => "Chờ xác nhận",
+                "Confirmed" => "Đã xác nhận",
+                "Shipping" => "Đang giao",
+                "Completed" => "Hoàn thành",
+                "Cancelled" => "Đã hủy",
+                _ => order.OrderStatus
+            };
+            var canCancel = order.OrderStatus is "Pending" or "Confirmed";
+
+            <div class="order-card mb-4" id="order-@order.OrderID">
+                <div class="order-card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
+                    <div>
+                        <span class="order-id text-muted small">
+                            #@order.OrderID.ToString("N").ToUpper()[..8]
+                        </span>
+                        <span class="order-date text-muted small ms-3">
+                            @order.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                        </span>
+                    </div>
+                    <span class="order-badge @statusClass">@statusLabel</span>
+                </div>
+
+                <div class="order-items p-3">
+                    @foreach (var item in order.OrderItems)
+                    {
+                        <div class="order-item d-flex align-items-center gap-3 mb-2">
+                            @if (!string.IsNullOrEmpty(item.ImageUrl))
+                            {
+                                <img src="@item.ImageUrl" class="order-item-img" alt="@item.FlowerName" />
+                            }
+                            else
+                            {
+                                <div class="order-item-placeholder">🌺</div>
+                            }
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">@item.FlowerName</div>
+                                <div class="text-muted small">
+                                    @item.UnitPrice.ToString("N0") đ × @item.Quantity
+                                </div>
+                            </div>
+                            <div class="fw-bold text-checkout-primary">
+                                @item.LineTotal.ToString("N0") đ
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="order-card-footer d-flex flex-wrap align-items-center justify-content-between gap-2 px-3 pb-3">
+                    <div class="text-muted small">
+                        📍 @order.ShippingAddress &nbsp;|&nbsp; 📞 @order.PhoneNumber
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="fw-bold">
+                            Tổng: <span class="text-checkout-primary">@order.TotalAmount.ToString("N0") đ</span>
+                        </span>
+                        @if (canCancel)
+                        {
+                            <button class="btn btn-cancel-order rounded-pill"
+                                    onclick="cancelOrder('@order.OrderID', this)">
+                                Hủy đơn
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@section Scripts {
+    <script src="~/js/myorders.js" asp-append-version="true"></script>
+}
