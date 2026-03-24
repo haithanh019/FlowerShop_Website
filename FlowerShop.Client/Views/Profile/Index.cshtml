@@ -73,22 +73,6 @@
                             </button>
                         </div>
 
-                        @if (TempData["SuccessMessage"] != null)
-                        {
-                            <div class="alert profile-alert-success alert-dismissible fade show" role="alert">
-                                @TempData["SuccessMessage"]
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        }
-
-                        @if (TempData["ErrorMessage"] != null)
-                        {
-                            <div class="alert profile-alert-danger alert-dismissible fade show" role="alert">
-                                @TempData["ErrorMessage"]
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        }
-
                         <div class="profile-info-list">
                             <div class="info-item">
                                 <span class="info-label">Email</span>

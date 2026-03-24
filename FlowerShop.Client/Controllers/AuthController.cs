@@ -61,6 +61,7 @@ namespace FlowerShop.Client.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
+            TempData["SuccessMessage"] = "Đăng xuất thành công!";
             return RedirectToAction("Login");
         }
     }

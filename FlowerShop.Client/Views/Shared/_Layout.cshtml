@@ -12,9 +12,34 @@
     <link rel="stylesheet" href="~/FlowerShop.Client.styles.css" asp-append-version="true" />
     @RenderSection("Styles", required: false)
 </head>
-<body>
-    <partial name="_HeaderPartial" />
 
+<body>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div id="toastData"
+             data-msg="@TempData["SuccessMessage"]"
+             data-type="success"
+             style="display:none"></div>
+    }
+    else if (TempData["ErrorMessage"] != null)
+    {
+        <div id="toastData"
+             data-msg="@TempData["ErrorMessage"]"
+             data-type="error"
+             style="display:none"></div>
+    }
+    <partial name="_HeaderPartial" />
+    @* ── Toast UI ── *@
+    <div id="userToast" class="user-toast" role="alert" aria-live="polite">
+        <span id="userToastIcon"></span>
+        <span id="userToastMsg"></span>
+        <button onclick="document.getElementById('userToast').classList.remove('show')"
+                style="background:none;border:none;color:inherit;
+            font-size:1rem;cursor:pointer;margin-left:auto"
+                aria-label="Đóng thông báo">
+            ✕
+        </button>
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -22,6 +47,8 @@
     </div>
 
     <partial name="_FooterPartial" />
+
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

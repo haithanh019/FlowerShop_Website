@@ -92,10 +92,7 @@
         toast._timer = setTimeout(() => toast.classList.remove('show'), 3500);
     };
 
-    /* ── Auto-show toast từ TempData ────────────────────────────────────────── */
-    document.addEventListener('DOMContentLoaded', () => {
-        const toastEl = document.getElementById('toastData');
-        if (toastEl) window.showToast(toastEl.dataset.msg, toastEl.dataset.type);
-    });
+    const toastEl = document.getElementById('toastData');
+    if (toastEl) window.showToast(toastEl.dataset.msg, toastEl.dataset.type);
 
 })();

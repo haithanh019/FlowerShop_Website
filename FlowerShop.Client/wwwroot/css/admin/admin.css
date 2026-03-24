@@ -594,7 +594,7 @@ select.admin-form-control {
 /* ── Notification toast ── */
 .admin-toast {
     position: fixed;
-    top: 24px;
+    top: 65px;
     right: 24px;
     background: #fff;
     border-radius: 16px;

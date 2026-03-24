@@ -48,29 +48,6 @@
         <div class="flower-hero-deco flower-hero-deco-2"></div>
     </div>
 
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="alert flower-alert-success alert-dismissible fade show" role="alert">
-            @TempData["SuccessMessage"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    }
-
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <div class="alert flower-alert-danger alert-dismissible fade show" role="alert">
-            @TempData["ErrorMessage"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    }
-
-    @if (ViewBag.ErrorMessage != null)
-    {
-        <div class="alert flower-alert-danger mb-4">
-            @ViewBag.ErrorMessage
-        </div>
-    }
-
     <div class="row g-4" id="flower-list">
         <div class="col-lg-3">
             <div class="card flower-filter-card border-0 shadow-sm sticky-lg-top">
