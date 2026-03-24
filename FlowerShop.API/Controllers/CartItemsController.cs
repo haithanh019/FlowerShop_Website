@@ -2,15 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 
-namespace FlowerShop.API
+namespace FlowerShop.API.Controllers
 {
-    public class CartItemsController : ODataController
+    public class CartItemsController(IFacadeService facadeService) : ODataController
     {
-        private readonly IFacadeService _facadeService;
-        public CartItemsController(IFacadeService facadeService)
-        {
-            _facadeService = facadeService;
-        }
+        private readonly IFacadeService _facadeService = facadeService;
 
         public async Task<IActionResult> Post([FromBody] CartItemCreateDTO dto)
         {

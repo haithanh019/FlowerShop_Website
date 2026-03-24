@@ -3,15 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 
-namespace FlowerShop.API
+namespace FlowerShop.API.Controllers
 {
-    public class CategoriesController : ODataController
+    public class CategoriesController(IFacadeService facadeService) : ODataController
     {
-        private readonly IFacadeService _facadeService;
-        public CategoriesController(IFacadeService facadeService)
-        {
-            _facadeService = facadeService;
-        }
+        private readonly IFacadeService _facadeService = facadeService;
+
         [EnableQuery]
         public IQueryable<CategoryDTO> Get() => _facadeService.CategoryService.GetCategoriesOData();
 
