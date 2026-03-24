@@ -1,16 +1,11 @@
 ﻿using FlowerShop.Application;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FlowerShop.Client
+namespace FlowerShop.Client.Controllers
 {
-    public class FlowerController : Controller
+    public class FlowerController(IBaseService baseService) : Controller
     {
-        private readonly IBaseService _baseService;
-
-        public FlowerController(IBaseService baseService)
-        {
-            _baseService = baseService;
-        }
+        private readonly IBaseService _baseService = baseService;
 
         [HttpGet]
         public async Task<IActionResult> Index()

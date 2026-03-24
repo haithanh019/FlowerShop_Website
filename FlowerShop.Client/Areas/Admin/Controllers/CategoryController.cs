@@ -4,29 +4,28 @@ using Microsoft.AspNetCore.Mvc;
 namespace FlowerShop.Client.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoryController : Controller
+    public class CategoryController(IBaseService baseService) : Controller
     {
-        private readonly IBaseService _baseService;
+        private readonly IBaseService _baseService = baseService;
 
-        public CategoryController(IBaseService baseService)
+        private IActionResult? CheckAdmin
         {
-            _baseService = baseService;
-        }
-        private IActionResult? CheckAdmin()
-        {
-            var token = HttpContext.Session.GetString("JWToken");
-            var role = HttpContext.Session.GetString("Role");
+            get
+            {
+                var token = HttpContext.Session.GetString("JWToken");
+                var role = HttpContext.Session.GetString("Role");
 
-            if (string.IsNullOrEmpty(token) || role != "Admin")
-                return RedirectToAction("Login", "Auth", new { area = "" });
+                if (string.IsNullOrEmpty(token) || role != "Admin")
+                    return RedirectToAction("Login", "Auth", new { area = "" });
 
-            return null;
+                return null;
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var guard = CheckAdmin();
+            var guard = CheckAdmin;
             if (guard != null) return guard;
 
             var categories = await _baseService.GetODataAsync<IEnumerable<CategoryDTO>>("Odata/Categories");
@@ -42,7 +41,7 @@ namespace FlowerShop.Client.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CategoryCreateDTO model)
         {
-            var guard = CheckAdmin();
+            var guard = CheckAdmin;
             if (guard != null) return guard;
 
             if (!ModelState.IsValid)
@@ -66,7 +65,7 @@ namespace FlowerShop.Client.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, CategoryUpdateDTO model)
         {
-            var guard = CheckAdmin();
+            var guard = CheckAdmin;
             if (guard != null) return guard;
 
             if (!ModelState.IsValid)
@@ -90,7 +89,7 @@ namespace FlowerShop.Client.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var guard = CheckAdmin();
+            var guard = CheckAdmin;
             if (guard != null) return guard;
 
             var token = HttpContext.Session.GetString("JWToken");

@@ -2,16 +2,12 @@ using FlowerShop.Application;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace FlowerShop.Client
+namespace FlowerShop.Client.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(IBaseService baseService) : Controller
     {
-        private readonly IBaseService _baseService;
+        private readonly IBaseService _baseService = baseService;
 
-        public HomeController(IBaseService baseService)
-        {
-            _baseService = baseService;
-        }
         public async Task<IActionResult> Index()
         {
             var viewModel = new HomeViewModel();
