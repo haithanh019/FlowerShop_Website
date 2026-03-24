@@ -86,9 +86,11 @@ body {
     border-radius: 14px;
     overflow: hidden;
     background: #fff;
+    width: fit-content;
 }
 
 .qty-btn {
+    flex: 0 0 38px;
     width: 38px;
     height: 40px;
     border: none;
@@ -98,6 +100,10 @@ body {
     font-weight: 700;
     cursor: pointer;
     transition: background .15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
 }
 
     .qty-btn:hover {
@@ -105,6 +111,7 @@ body {
     }
 
 .qty-input {
+    flex: 0 0 52px;
     width: 52px;
     border: none;
     border-left: 1px solid #f0c1c1;
@@ -125,10 +132,9 @@ body {
 /* Total & remove */
 .item-total-price {
     color: var(--cart-pink-dark);
-    font-weight: 700;
-    font-size: 1.1rem;
+    font-weight: 500;
+    font-size: 0.9rem;
     text-align: right;
-    margin-bottom: 8px;
 }
 
 .btn-remove {
@@ -231,6 +237,18 @@ body {
 /* Empty */
 .cart-empty-icon {
     font-size: 3.5rem;
+}
+
+.item-total-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.item-total-price {
+    font-weight: 600;
+    white-space: nowrap;
 }
 
 /* Responsive */

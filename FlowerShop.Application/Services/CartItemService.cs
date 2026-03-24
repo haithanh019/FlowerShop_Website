@@ -9,7 +9,8 @@ namespace FlowerShop.Application
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
+        private const int MaxQtyPerItem = 10;
+        private const int MaxQtyPerCart = 10;
         public CartItemService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
@@ -18,6 +19,9 @@ namespace FlowerShop.Application
 
         public async Task<ApiResponse<CartItemDTO>> AddToCartAsync(CartItemCreateDTO dto)
         {
+            if (dto.Quantity > MaxQtyPerItem)
+                throw new BadRequestException(
+                    $"Mỗi loại hoa tối đa {MaxQtyPerItem} bó. Vui lòng liên hệ trực tiếp người bán để đặt số lượng lớn.");
             var cart = await _unitOfWork.CartRepository.GetByIDAsync(dto.CartID) ?? throw new NotFoundException("Không tìm thấy giỏ hàng.");
 
             var flower = await _unitOfWork.FlowerRepository.GetByAsync(
@@ -27,11 +31,34 @@ namespace FlowerShop.Application
             ) ?? throw new NotFoundException("Không tìm thấy hoa.");
             if (!flower.IsActive)
                 throw new BadRequestException($"Hoa '{flower.FlowerName}' hiện không còn kinh doanh.");
-
+            if (dto.Quantity <= 0)
+                throw new BadRequestException("Số lượng phải lớn hơn 0.");
             var existingItem = await _unitOfWork.CartItemRepository.GetByAsync(
                 ci => ci.CartID == cart.CartID && ci.FlowerID == dto.FlowerID,
                 trackChanges: true
             );
+
+            var allItems = await _unitOfWork.CartItemRepository
+            .FindAsync(ci => ci.CartID == cart.CartID);
+
+            var currentCartQty = allItems
+                .Where(ci => ci.FlowerID != dto.FlowerID)
+                .Sum(ci => ci.Quantity);
+
+            var newItemQty = existingItem != null
+                ? existingItem.Quantity + dto.Quantity
+                : dto.Quantity;
+
+            if (newItemQty > MaxQtyPerItem)
+                throw new BadRequestException(
+                    $"Hoa '{flower.FlowerName}' tối đa {MaxQtyPerItem} bó. " +
+                    $"Vui lòng liên hệ trực tiếp người bán để đặt số lượng lớn.");
+
+            if (currentCartQty + newItemQty > MaxQtyPerCart)
+                throw new BadRequestException(
+                    $"Giỏ hàng tối đa {MaxQtyPerCart} bó hoa. " +
+                    $"Vui lòng liên hệ trực tiếp người bán để đặt số lượng lớn.");
+
 
             CartItem cartItem;
             if (existingItem != null)
@@ -67,6 +94,14 @@ namespace FlowerShop.Application
 
         public async Task<ApiResponse<CartItemDTO>> UpdateCartItemAsync(Guid id, CartItemUpdateDTO dto)
         {
+            if (dto.Quantity <= 0)
+                throw new BadRequestException("Số lượng phải lớn hơn 0.");
+
+            if (dto.Quantity > MaxQtyPerItem)
+                throw new BadRequestException(
+                    $"Mỗi loại hoa tối đa {MaxQtyPerItem} bó. " +
+                    $"Vui lòng liên hệ trực tiếp người bán để đặt số lượng lớn.");
+
             var cartItem = await _unitOfWork.CartItemRepository.GetByAsync(
                 ci => ci.CartItemID == id,
                 trackChanges: true,
@@ -74,6 +109,16 @@ namespace FlowerShop.Application
             );
             if (cartItem == null)
                 throw new NotFoundException("Không tìm thấy sản phẩm trong giỏ hàng.");
+
+            var allItems = await _unitOfWork.CartItemRepository
+            .FindAsync(ci => ci.CartID == cartItem.CartID && ci.CartItemID != id);
+
+            var otherQty = allItems.Sum(ci => ci.Quantity);
+
+            if (otherQty + dto.Quantity > MaxQtyPerCart)
+                throw new BadRequestException(
+                    $"Giỏ hàng tối đa {MaxQtyPerCart} bó hoa. " +
+                    $"Vui lòng liên hệ trực tiếp người bán để đặt số lượng lớn.");
 
             if (cartItem.Flower!.StockQuantity < dto.Quantity)
                 throw new BadRequestException(

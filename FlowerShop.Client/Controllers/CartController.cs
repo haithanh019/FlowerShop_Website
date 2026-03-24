@@ -11,6 +11,7 @@ namespace FlowerShop.Client
         {
             _baseService = baseService;
         }
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -51,68 +52,56 @@ namespace FlowerShop.Client
                 return RedirectToAction("Index", "Flower");
             }
 
-            var cartID = cartResponse.Data.CartID;
-
             var dto = new CartItemCreateDTO
             {
-                CartID = cartID,
+                CartID = cartResponse.Data.CartID,
                 FlowerID = flowerID,
                 Quantity = 1
             };
 
             var addResponse = await _baseService.PostAsync<CartItemDTO>(
-                $"Odata/CartItems", dto, token);
+                "Odata/CartItems", dto, token);
 
-            if (addResponse.Success)
-                TempData["SuccessMessage"] = "Đã thêm vào giỏ hàng!";
-            else
-                TempData["ErrorMessage"] = "Thêm vào giỏ hàng thất bại.";
+            TempData[addResponse.Success ? "SuccessMessage" : "ErrorMessage"] =
+                addResponse.Success ? "Đã thêm vào giỏ hàng!" : "Thêm vào giỏ hàng thất bại.";
 
             return RedirectToAction("Index", "Flower");
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateQuantity(Guid cartItemID, int quantity)
+        public async Task<IActionResult> UpdateQuantityAjax(
+            Guid cartItemID, [FromBody] CartItemUpdateDTO dto)
         {
             var token = HttpContext.Session.GetString("JWToken");
-
             if (string.IsNullOrEmpty(token))
-                return RedirectToAction("Login", "Auth");
+                return Json(new { success = false, message = "Chưa đăng nhập." });
 
-            if (quantity <= 0)
-                return await RemoveItem(cartItemID);
-
-            var dto = new CartItemUpdateDTO { Quantity = quantity };
-
-            var response = await _baseService.PutAsync<CartItemDTO>(
+            // Quantity >= 1 đã được [Range] đảm bảo — gọi thẳng PUT
+            var res = await _baseService.PutAsync<CartItemDTO>(
                 $"Odata/CartItems({cartItemID})", dto, token);
 
-            if (!response.Success)
-                TempData["ErrorMessage"] = "Cập nhật thất bại.";
-
-            return RedirectToAction(nameof(Index));
+            return Json(new
+            {
+                success = res.Success,
+                message = res.Success ? "Đã cập nhật." : "Cập nhật thất bại."
+            });
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveItem(Guid cartItemID)
+        public async Task<IActionResult> RemoveItemAjax(Guid cartItemID)
         {
             var token = HttpContext.Session.GetString("JWToken");
-
             if (string.IsNullOrEmpty(token))
-                return RedirectToAction("Login", "Auth");
+                return Json(new { success = false, message = "Chưa đăng nhập." });
 
-            var response = await _baseService.DeleteAsync<bool>(
+            var res = await _baseService.DeleteAsync<bool>(
                 $"Odata/CartItems({cartItemID})", token);
 
-            if (response.Success)
-                TempData["SuccessMessage"] = "Đã xóa sản phẩm khỏi giỏ hàng.";
-            else
-                TempData["ErrorMessage"] = "Xóa thất bại.";
-
-            return RedirectToAction(nameof(Index));
+            return Json(new
+            {
+                success = res.Success,
+                message = res.Success ? "Đã xóa." : "Xóa thất bại."
+            });
         }
     }
 }
-
