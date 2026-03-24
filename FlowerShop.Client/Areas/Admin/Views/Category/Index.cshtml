@@ -71,7 +71,7 @@
     </div>
 </div>
 
-@* ══════════ MODAL: TẠO MỚI ══════════ *@
+@* ══════════ MODAL: Create ══════════ *@
 <div id="modalCreate" class="admin-modal-overlay">
     <div class="admin-modal">
         <div class="admin-modal-header">
@@ -105,7 +105,7 @@
     </div>
 </div>
 
-@* ══════════ MODAL: CHỈNH SỬA ══════════ *@
+@* ══════════ MODAL: Edit ══════════ *@
 <div id="modalEdit" class="admin-modal-overlay">
     <div class="admin-modal">
         <div class="admin-modal-header">
@@ -137,7 +137,7 @@
     </div>
 </div>
 
-@* ══════════ MODAL: XÓA ══════════ *@
+@* ══════════ MODAL: Delete ══════════ *@
 <div id="modalDelete" class="admin-modal-overlay">
     <div class="admin-modal" style="max-width:400px">
         <div class="admin-modal-header">
@@ -168,30 +168,5 @@
 </div>
 
 @section Scripts {
-    <script>
-        // ── Search ──
-        document.getElementById('categorySearch').addEventListener('input', function () {
-            const q = this.value.toLowerCase();
-            document.querySelectorAll('#categoryTable tbody tr').forEach(row => {
-                row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
-            });
-        });
-
-        // ── Edit modal ──
-        function openEditModal(id, name, desc) {
-            document.getElementById('editName').value = name;
-            document.getElementById('editDesc').value = desc;
-            document.getElementById('formEdit').action =
-                `/Admin/Category/Edit/${id}`;
-            openModal('modalEdit');
-        }
-
-        // ── Delete modal ──
-        function openDeleteModal(id, name) {
-            document.getElementById('deleteNameDisplay').textContent = name;
-            document.getElementById('formDelete').action =
-                `/Admin/Category/Delete/${id}`;
-            openModal('modalDelete');
-        }
-    </script>
+    <script src="~/js/admin/category-admin.js" asp-append-version="true"></script>
 }
