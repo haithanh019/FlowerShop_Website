@@ -9,7 +9,7 @@
         public IOrderService OrderService { get; }
         public ICartItemService CartItemService { get; }
         public IAddressService AddressService { get; }
-
+        public IPaymentService PaymentService { get; }
         public FacadeService(CoreDependencies coreDependencies, InfraDependencies infraDependencies)
         {
             UserService = new UserService(coreDependencies.UnitOfWork, coreDependencies.Mapper, infraDependencies.Configuration);
@@ -19,7 +19,7 @@
             OrderService = new OrderService(coreDependencies.UnitOfWork, coreDependencies.Mapper);
             CartItemService = new CartItemService(coreDependencies.UnitOfWork, coreDependencies.Mapper);
             AddressService = new AddressService(coreDependencies.UnitOfWork, coreDependencies.Mapper);
-
+            PaymentService = new PaymentService(coreDependencies.UnitOfWork, coreDependencies.Mapper, infraDependencies.Configuration);
         }
     }
 }

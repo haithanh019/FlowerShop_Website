@@ -50,6 +50,7 @@ namespace FlowerShop.API
                 odataBuilder.EntitySet<CartItemDTO>("CartItems");
                 odataBuilder.EntitySet<AddressDTO>("Addresses");
                 odataBuilder.EntitySet<OrderDTO>("Orders");
+                odataBuilder.EntitySet<PaymentDTO>("Payments");
                 return odataBuilder.GetEdmModel();
             }
 
@@ -62,6 +63,16 @@ namespace FlowerShop.API
                 .Count()
                 .SetMaxTop(100)
                 .AddRouteComponents("Odata", GetEdmModel()));
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowNgrok", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
 
             //JWT
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
@@ -109,6 +120,8 @@ namespace FlowerShop.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowNgrok");
 
             app.UseAuthentication();
 

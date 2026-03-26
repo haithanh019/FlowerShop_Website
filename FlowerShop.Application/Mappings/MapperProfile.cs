@@ -76,6 +76,14 @@ namespace FlowerShop.Application
                         src.Flower != null && src.Flower.FlowerImages != null
                             ? src.Flower.FlowerImages.Select(img => img.Url).FirstOrDefault()
                             : null));
+
+            // Payment mappings
+            CreateMap<Payment, PaymentDTO>()
+                .ForMember(dest => dest.PaymentMethod,
+                    opt => opt.MapFrom(src => src.PaymentMethod.ToString()))
+                .ForMember(dest => dest.PaymentStatus,
+                    opt => opt.MapFrom(src => src.PaymentStatus.ToString()));
+
         }
     }
 }

@@ -9,6 +9,6 @@
         IAddressService AddressService { get; }
         IOrderService OrderService { get; }
         ICartItemService CartItemService { get; }
-
+        IPaymentService PaymentService { get; }
     }
 }
