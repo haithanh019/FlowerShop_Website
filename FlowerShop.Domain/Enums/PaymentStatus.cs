@@ -10,7 +10,7 @@ namespace FlowerShop.Domain
         [Display(Name = "Paid")]
         Accepted = 1,
 
-        [Display(Name = "Delived")]
+        [Display(Name = "Cancelled")]
         Delivered = 2,
 
         [Display(Name = "Refunded")]

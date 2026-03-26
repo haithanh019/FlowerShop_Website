@@ -23,6 +23,9 @@ namespace FlowerShop.Application
         [Precision(18, 2)]
         public decimal TotalAmount { get; set; }
 
+        public string? Note { get; set; }
+        public PaymentDTO? Payment { get; set; }
+
         public List<OrderItemDTO> OrderItems { get; set; } = new();
     }
 }

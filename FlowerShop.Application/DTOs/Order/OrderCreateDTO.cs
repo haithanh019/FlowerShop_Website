@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FlowerShop.Domain;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace FlowerShop.Application
@@ -19,5 +20,12 @@ namespace FlowerShop.Application
         [Precision(18, 2)]
         [Range(0, double.MaxValue)]
         public decimal ShippingFee { get; set; } = 0;
+
+        [Required(ErrorMessage = "Vui lòng chọn phương thức thanh toán")]
+        public PaymentMethod PaymentMethod { get; set; }
+
+        public string? Note { get; set; }
+        public string? ReturnUrl { get; set; }
+        public string? CancelUrl { get; set; }
     }
 }
