@@ -12,6 +12,13 @@ namespace FlowerShop.API.Controllers
         [EnableQuery]
         public IQueryable<OrderDTO> Get() => _facadeService.OrderService.GetOrdersOData();
 
+        [HttpGet("Order/{id:guid}")]
+        public async Task<IActionResult> GetOrderByID(Guid id)
+        {
+            var result = await _facadeService.OrderService.GetOrderByIDAsync(id);
+            return Ok(result);
+        }
+
         [EnableQuery]
         public async Task<IActionResult> Get([FromRoute] Guid key)
         {

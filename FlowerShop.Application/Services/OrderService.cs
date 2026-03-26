@@ -6,16 +6,10 @@ using FlowerShop.Utility;
 
 namespace FlowerShop.Application
 {
-    public class OrderService : IOrderService
+    public class OrderService(IUnitOfWork unitOfWork, IMapper mapper) : IOrderService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        public OrderService(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-        }
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly IMapper _mapper = mapper;
 
         public IQueryable<OrderDTO> GetOrdersOData()
         {
@@ -28,10 +22,7 @@ namespace FlowerShop.Application
             var order = await _unitOfWork.OrderRepository.GetByAsync(
                 o => o.OrderID == id,
                 includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages"
-            );
-            if (order == null)
-                throw new NotFoundException("Không tìm thấy đơn hàng.");
-
+            ) ?? throw new NotFoundException("Không tìm thấy đơn hàng.");
             return new ApiResponse<OrderDTO>(_mapper.Map<OrderDTO>(order));
         }
 
@@ -50,10 +41,8 @@ namespace FlowerShop.Application
                 c => c.CartID == dto.CartID && c.UserID == userId,
                 trackChanges: true,
                 includeProperties: "CartItems,CartItems.Flower,CartItems.Flower.FlowerImages"
-            );
-            if (cart == null)
-                throw new NotFoundException("Không tìm thấy giỏ hàng.");
-            if (!cart.CartItems.Any())
+            ) ?? throw new NotFoundException("Không tìm thấy giỏ hàng.");
+            if (cart.CartItems.Count == 0)
                 throw new BadRequestException("Giỏ hàng đang trống.");
 
             foreach (var item in cart.CartItems)
@@ -112,10 +101,7 @@ namespace FlowerShop.Application
                 o => o.OrderID == id,
                 trackChanges: true,
                 includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages"
-            );
-            if (order == null)
-                throw new NotFoundException("Không tìm thấy đơn hàng.");
-
+            ) ?? throw new NotFoundException("Không tìm thấy đơn hàng.");
             if (order.OrderStatus == OrderStatus.Completed || order.OrderStatus == OrderStatus.Cancelled)
                 throw new BadRequestException($"Đơn hàng đã '{order.OrderStatus}' không thể thay đổi trạng thái.");
 
@@ -132,10 +118,7 @@ namespace FlowerShop.Application
                 o => o.OrderID == id,
                 trackChanges: true,
                 includeProperties: "OrderItems,OrderItems.Flower"
-            );
-            if (order == null)
-                throw new NotFoundException("Không tìm thấy đơn hàng.");
-
+            ) ?? throw new NotFoundException("Không tìm thấy đơn hàng.");
             if (order.OrderStatus != OrderStatus.Pending && order.OrderStatus != OrderStatus.Confirmed)
                 throw new BadRequestException("Chỉ có thể hủy đơn hàng ở trạng thái Pending hoặc Confirmed.");
 

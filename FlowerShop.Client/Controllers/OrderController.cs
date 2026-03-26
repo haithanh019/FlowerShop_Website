@@ -20,7 +20,7 @@ namespace FlowerShop.Client.Controllers
                 $"Odata/Orders({userID})", token);
 
             var orders = res.Success && res.Data != null
-                ? res.Data.OrderByDescending(o => o.CreatedAt).ToList()
+                ? [.. res.Data.OrderByDescending(o => o.CreatedAt)]
                 : new List<OrderDTO>();
 
             return View(orders);
@@ -55,7 +55,7 @@ namespace FlowerShop.Client.Controllers
             var cartRes = await _baseService.GetAsync<CartDTO>(
                 $"Odata/Carts({userID})", token);
 
-            if (!cartRes.Success || cartRes.Data == null || !cartRes.Data.CartItems.Any())
+            if (!cartRes.Success || cartRes.Data == null || cartRes.Data.CartItems.Count == 0)
             {
                 TempData["ErrorMessage"] = "Giỏ hàng trống, không thể thanh toán.";
                 return RedirectToAction("Index", "Cart");
