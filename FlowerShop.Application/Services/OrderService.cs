@@ -10,32 +10,31 @@ namespace FlowerShop.Application
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
-
         public IQueryable<OrderDTO> GetOrdersOData()
         {
             return _unitOfWork.OrderRepository.GetQuery()
                 .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider);
         }
 
-        public async Task<ApiResponse<OrderDTO>> GetOrderByIDAsync(Guid id)
+        public async Task<ApiResult<OrderDTO>> GetOrderByIDAsync(Guid id)
         {
             var order = await _unitOfWork.OrderRepository.GetByAsync(
                 o => o.OrderID == id,
                 includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages"
             ) ?? throw new NotFoundException("Không tìm thấy đơn hàng.");
-            return new ApiResponse<OrderDTO>(_mapper.Map<OrderDTO>(order));
+            return new ApiResult<OrderDTO>(_mapper.Map<OrderDTO>(order));
         }
 
-        public async Task<ApiResponse<IEnumerable<OrderDTO>>> GetOrdersByUserAsync(Guid id)
+        public async Task<ApiResult<IEnumerable<OrderDTO>>> GetOrdersByUserAsync(Guid id)
         {
             var orders = await _unitOfWork.OrderRepository.FindAsync(
                 o => o.UserID == id,
                 includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages"
             );
-            return new ApiResponse<IEnumerable<OrderDTO>>(_mapper.Map<IEnumerable<OrderDTO>>(orders));
+            return new ApiResult<IEnumerable<OrderDTO>>(_mapper.Map<IEnumerable<OrderDTO>>(orders));
         }
 
-        public async Task<ApiResponse<OrderDTO>> CreateOrderFromCartAsync(Guid userId, OrderCreateDTO dto)
+        public async Task<ApiResult<OrderDTO>> CreateOrderFromCartAsync(Guid userId, OrderCreateDTO dto)
         {
             var cart = await _unitOfWork.CartRepository.GetByAsync(
                 c => c.CartID == dto.CartID && c.UserID == userId,
@@ -65,7 +64,7 @@ namespace FlowerShop.Application
                 ShippingFee = dto.ShippingFee,
                 Subtotal = subtotal,
                 TotalAmount = totalAmount,
-                OrderStatus = OrderStatus.Pending
+                OrderStatus = OrderStatus.Processing
             };
 
             foreach (var item in cart.CartItems)
@@ -92,10 +91,10 @@ namespace FlowerShop.Application
                 includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages"
             );
 
-            return new ApiResponse<OrderDTO>(_mapper.Map<OrderDTO>(created), "Đặt hàng thành công");
+            return new ApiResult<OrderDTO>(_mapper.Map<OrderDTO>(created), "Đặt hàng thành công");
         }
 
-        public async Task<ApiResponse<OrderDTO>> UpdateOrderStatusAsync(Guid id, OrderUpdateDTO dto)
+        public async Task<ApiResult<OrderDTO>> UpdateOrderStatusAsync(Guid id, OrderUpdateDTO dto)
         {
             var order = await _unitOfWork.OrderRepository.GetByAsync(
                 o => o.OrderID == id,
@@ -109,18 +108,18 @@ namespace FlowerShop.Application
             _unitOfWork.OrderRepository.Update(order);
             await _unitOfWork.SaveAsync();
 
-            return new ApiResponse<OrderDTO>(_mapper.Map<OrderDTO>(order), "Cập nhật trạng thái đơn hàng thành công");
+            return new ApiResult<OrderDTO>(_mapper.Map<OrderDTO>(order), "Cập nhật trạng thái đơn hàng thành công");
         }
 
-        public async Task<ApiResponse<bool>> CancelOrderAsync(Guid id)
+        public async Task<ApiResult<bool>> CancelOrderAsync(Guid id)
         {
             var order = await _unitOfWork.OrderRepository.GetByAsync(
                 o => o.OrderID == id,
                 trackChanges: true,
                 includeProperties: "OrderItems,OrderItems.Flower"
             ) ?? throw new NotFoundException("Không tìm thấy đơn hàng.");
-            if (order.OrderStatus != OrderStatus.Pending && order.OrderStatus != OrderStatus.Confirmed)
-                throw new BadRequestException("Chỉ có thể hủy đơn hàng ở trạng thái Pending hoặc Confirmed.");
+            if (order.OrderStatus != OrderStatus.Processing && order.OrderStatus != OrderStatus.Confirmed)
+                throw new BadRequestException("Chỉ có thể hủy đơn hàng ở trạng thái Processing hoặc Confirmed.");
 
             foreach (var item in order.OrderItems)
             {
@@ -132,7 +131,7 @@ namespace FlowerShop.Application
             _unitOfWork.OrderRepository.Update(order);
             await _unitOfWork.SaveAsync();
 
-            return new ApiResponse<bool>(true, "Hủy đơn hàng thành công");
+            return new ApiResult<bool>(true, "Hủy đơn hàng thành công");
         }
     }
 }

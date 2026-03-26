@@ -19,7 +19,7 @@ namespace FlowerShop.Application
         {
             return _unitOfWork.CategoryRepository.GetQuery().ProjectTo<CategoryDTO>(_mapper.ConfigurationProvider);
         }
-        public async Task<ApiResponse<CategoryDTO>> GetCategoryByIDAsync(Guid id)
+        public async Task<ApiResult<CategoryDTO>> GetCategoryByIDAsync(Guid id)
         {
             var categories = await _unitOfWork.CategoryRepository.GetByIDAsync(id);
             if (categories == null)
@@ -27,10 +27,10 @@ namespace FlowerShop.Application
                 throw new NotFoundException("Không tìm thấy danh mục.");
             }
             var respone = _mapper.Map<CategoryDTO>(categories);
-            return new ApiResponse<CategoryDTO>(respone);
+            return new ApiResult<CategoryDTO>(respone);
         }
 
-        public async Task<ApiResponse<CategoryDTO>> CreateCategoryAsync(CategoryCreateDTO dto)
+        public async Task<ApiResult<CategoryDTO>> CreateCategoryAsync(CategoryCreateDTO dto)
         {
             var existingCategory = await _unitOfWork.CategoryRepository.GetByAsync(c => c.CategoryName == dto.CategoryName);
             if (existingCategory != null)
@@ -44,10 +44,10 @@ namespace FlowerShop.Application
             await _unitOfWork.SaveAsync();
 
             var response = _mapper.Map<CategoryDTO>(category);
-            return new ApiResponse<CategoryDTO>(response, "Thêm danh mục thành công");
+            return new ApiResult<CategoryDTO>(response, "Thêm danh mục thành công");
         }
 
-        public async Task<ApiResponse<CategoryDTO>> UpdateCategoryAsync(Guid id, CategoryUpdateDTO dto)
+        public async Task<ApiResult<CategoryDTO>> UpdateCategoryAsync(Guid id, CategoryUpdateDTO dto)
         {
             var category = await _unitOfWork.CategoryRepository.GetByIDAsync(id);
             if (category == null)
@@ -66,10 +66,10 @@ namespace FlowerShop.Application
             await _unitOfWork.SaveAsync();
 
             var respone = _mapper.Map<CategoryDTO>(category);
-            return new ApiResponse<CategoryDTO>(respone, "Cập nhật danh mục thành công");
+            return new ApiResult<CategoryDTO>(respone, "Cập nhật danh mục thành công");
         }
 
-        public async Task<ApiResponse<bool>> DeleteCategoryAsync(Guid id)
+        public async Task<ApiResult<bool>> DeleteCategoryAsync(Guid id)
         {
             var category = await _unitOfWork.CategoryRepository.GetByIDAsync(id) ?? throw new NotFoundException("Không tìm thấy danh mục");
             var hasFlowers = await _unitOfWork.FlowerRepository.GetByAsync(f => f.CategoryID == id);
@@ -77,7 +77,7 @@ namespace FlowerShop.Application
                 throw new BadRequestException("Không thể xóa danh mục đang có hoa. Hãy xóa hoa trước.");
             _unitOfWork.CategoryRepository.Delete(category);
             await _unitOfWork.SaveAsync();
-            return new ApiResponse<bool>(true, "Xóa danh mục thành công");
+            return new ApiResult<bool>(true, "Xóa danh mục thành công");
         }
     }
 }

@@ -4,6 +4,6 @@ namespace FlowerShop.Application
 {
     public interface ICartService
     {
-        Task<ApiResponse<CartDTO>> GetCartByUserIDAsync(Guid id);
+        Task<ApiResult<CartDTO>> GetCartByUserIDAsync(Guid id);
     }
 }

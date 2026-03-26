@@ -36,7 +36,7 @@ namespace FlowerShop.Utility
             context.Response.ContentType = "application/json";
 
             // default Server (500)
-            var response = new ApiResponse<string>("Internal Server Error");
+            var response = new ApiResult<string>("Internal Server Error");
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             switch (exception)

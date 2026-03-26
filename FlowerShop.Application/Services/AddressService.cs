@@ -19,7 +19,7 @@ namespace FlowerShop.Application
         {
             return _unitOfWork.AddressRepository.GetQuery().ProjectTo<AddressDTO>(_mapper.ConfigurationProvider);
         }
-        public async Task<ApiResponse<AddressDTO>> GetAddressByIDAsync(Guid id)
+        public async Task<ApiResult<AddressDTO>> GetAddressByIDAsync(Guid id)
         {
             var addresses = await _unitOfWork.AddressRepository.GetByIDAsync(id);
             if (addresses == null)
@@ -27,10 +27,10 @@ namespace FlowerShop.Application
                 throw new NotFoundException("Không tìm thấy địa chỉ.");
             }
             var respone = _mapper.Map<AddressDTO>(addresses);
-            return new ApiResponse<AddressDTO>(respone);
+            return new ApiResult<AddressDTO>(respone);
         }
 
-        public async Task<ApiResponse<AddressDTO>> CreateAddressAsync(AddressCreateDTO dto)
+        public async Task<ApiResult<AddressDTO>> CreateAddressAsync(AddressCreateDTO dto)
         {
             var Address = _mapper.Map<Address>(dto);
 
@@ -38,10 +38,10 @@ namespace FlowerShop.Application
             await _unitOfWork.SaveAsync();
 
             var response = _mapper.Map<AddressDTO>(Address);
-            return new ApiResponse<AddressDTO>(response);
+            return new ApiResult<AddressDTO>(response);
         }
 
-        public async Task<ApiResponse<AddressDTO>> UpdateAddressAsync(Guid id, AddressUpdateDTO dto)
+        public async Task<ApiResult<AddressDTO>> UpdateAddressAsync(Guid id, AddressUpdateDTO dto)
         {
             var Address = await _unitOfWork.AddressRepository.GetByIDAsync(id);
             if (Address == null)
@@ -54,10 +54,10 @@ namespace FlowerShop.Application
             await _unitOfWork.SaveAsync();
 
             var respone = _mapper.Map<AddressDTO>(Address);
-            return new ApiResponse<AddressDTO>(respone, "Cập nhật địa chỉ thành công");
+            return new ApiResult<AddressDTO>(respone, "Cập nhật địa chỉ thành công");
         }
 
-        public async Task<ApiResponse<bool>> DeleteAddressAsync(Guid id)
+        public async Task<ApiResult<bool>> DeleteAddressAsync(Guid id)
         {
             var Address = await _unitOfWork.AddressRepository.GetByIDAsync(id);
 
@@ -68,7 +68,7 @@ namespace FlowerShop.Application
 
             _unitOfWork.AddressRepository.Delete(Address);
             await _unitOfWork.SaveAsync();
-            return new ApiResponse<bool>(true, "Xóa địa chỉ thành công");
+            return new ApiResult<bool>(true, "Xóa địa chỉ thành công");
         }
     }
 }

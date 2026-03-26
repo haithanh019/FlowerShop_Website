@@ -29,24 +29,24 @@ namespace FlowerShop.Client
 
             return client;
         }
-        private static async Task<ApiResponse<T>> ReadResponseAsync<T>(HttpResponseMessage response)
+        private static async Task<ApiResult<T>> ReadResponseAsync<T>(HttpResponseMessage response)
         {
             var responseBody = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
             if (string.IsNullOrWhiteSpace(responseBody))
             {
-                return new ApiResponse<T>($"API trả về phản hồi rỗng. HTTP {(int)response.StatusCode}");
+                return new ApiResult<T>($"API trả về phản hồi rỗng. HTTP {(int)response.StatusCode}");
             }
 
             try
             {
-                var apiResponse = JsonSerializer.Deserialize<ApiResponse<T>>(responseBody, options);
-                return apiResponse ?? new ApiResponse<T>("Không parse được phản hồi từ API.");
+                var ApiResult = JsonSerializer.Deserialize<ApiResult<T>>(responseBody, options);
+                return ApiResult ?? new ApiResult<T>("Không parse được phản hồi từ API.");
             }
             catch (JsonException ex)
             {
-                return new ApiResponse<T>($"JSON parse error: {ex.Message} | Body: {responseBody[..Math.Min(200, responseBody.Length)]}");
+                return new ApiResult<T>($"JSON parse error: {ex.Message} | Body: {responseBody[..Math.Min(200, responseBody.Length)]}");
             }
         }
         //=======================================================================================================
@@ -73,39 +73,39 @@ namespace FlowerShop.Client
                 return default;
             }
         }
-        public async Task<ApiResponse<T>> GetAsync<T>(string endpoint, string? token = null)
+        public async Task<ApiResult<T>> GetAsync<T>(string endpoint, string? token = null)
         {
             var client = CreateClient(token);
             var response = await client.GetAsync(endpoint);
             return await ReadResponseAsync<T>(response);
         }
-        public async Task<ApiResponse<T>> PostAsync<T>(string endpoint, object data, string? token = null)
+        public async Task<ApiResult<T>> PostAsync<T>(string endpoint, object data, string? token = null)
         {
             var client = CreateClient(token);
             var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
             var response = await client.PostAsync(endpoint, content);
             return await ReadResponseAsync<T>(response);
         }
-        public async Task<ApiResponse<T>> PostMultipartAsync<T>(string endpoint, MultipartFormDataContent content, string? token = null)
+        public async Task<ApiResult<T>> PostMultipartAsync<T>(string endpoint, MultipartFormDataContent content, string? token = null)
         {
             var client = CreateClient(token);
             var response = await client.PostAsync(endpoint, content);
             return await ReadResponseAsync<T>(response);
         }
-        public async Task<ApiResponse<T>> PutAsync<T>(string endpoint, object data, string? token = null)
+        public async Task<ApiResult<T>> PutAsync<T>(string endpoint, object data, string? token = null)
         {
             var client = CreateClient(token);
             var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
             var response = await client.PutAsync(endpoint, content);
             return await ReadResponseAsync<T>(response);
         }
-        public async Task<ApiResponse<T>> PutMultipartAsync<T>(string endpoint, MultipartFormDataContent content, string? token = null)
+        public async Task<ApiResult<T>> PutMultipartAsync<T>(string endpoint, MultipartFormDataContent content, string? token = null)
         {
             var client = CreateClient(token);
             var response = await client.PutAsync(endpoint, content);
             return await ReadResponseAsync<T>(response);
         }
-        public async Task<ApiResponse<T>> DeleteAsync<T>(string endpoint, string? token = null)
+        public async Task<ApiResult<T>> DeleteAsync<T>(string endpoint, string? token = null)
         {
             var client = CreateClient(token);
             var response = await client.DeleteAsync(endpoint);

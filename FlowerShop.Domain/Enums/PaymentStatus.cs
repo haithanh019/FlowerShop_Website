@@ -8,10 +8,10 @@ namespace FlowerShop.Domain
         Pending = 0,
 
         [Display(Name = "Paid")]
-        Accepted = 1,
+        Paid = 1,
 
         [Display(Name = "Cancelled")]
-        Delivered = 2,
+        Cancelled = 2,
 
         [Display(Name = "Refunded")]
         Refunded = 3,

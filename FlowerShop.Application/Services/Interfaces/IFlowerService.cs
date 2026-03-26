@@ -5,9 +5,9 @@ namespace FlowerShop.Application
     public interface IFlowerService
     {
         IQueryable<FlowerDTO> GetFlowersOData();
-        Task<ApiResponse<FlowerDTO>> GetFlowerByIDAsync(Guid id);
-        Task<ApiResponse<FlowerDTO>> CreateFlowerAsync(FlowerCreateDTO dto);
-        Task<ApiResponse<FlowerDTO>> UpdateFlowerAsync(Guid id, FlowerUpdateDTO dto);
-        Task<ApiResponse<bool>> DeleteFlowerAsync(Guid id);
+        Task<ApiResult<FlowerDTO>> GetFlowerByIDAsync(Guid id);
+        Task<ApiResult<FlowerDTO>> CreateFlowerAsync(FlowerCreateDTO dto);
+        Task<ApiResult<FlowerDTO>> UpdateFlowerAsync(Guid id, FlowerUpdateDTO dto);
+        Task<ApiResult<bool>> DeleteFlowerAsync(Guid id);
     }
 }

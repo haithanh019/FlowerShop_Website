@@ -26,7 +26,7 @@ namespace FlowerShop.Application
                 .ProjectTo<FlowerDTO>(_mapper.ConfigurationProvider);
         }
 
-        public async Task<ApiResponse<FlowerDTO>> GetFlowerByIDAsync(Guid id)
+        public async Task<ApiResult<FlowerDTO>> GetFlowerByIDAsync(Guid id)
         {
             var flower = await _unitOfWork.FlowerRepository.GetQuery()
                 .Include(f => f.Category)
@@ -36,10 +36,10 @@ namespace FlowerShop.Application
             if (flower == null)
                 throw new NotFoundException("Không tìm thấy hoa");
 
-            return new ApiResponse<FlowerDTO>(_mapper.Map<FlowerDTO>(flower));
+            return new ApiResult<FlowerDTO>(_mapper.Map<FlowerDTO>(flower));
         }
 
-        public async Task<ApiResponse<FlowerDTO>> CreateFlowerAsync(FlowerCreateDTO dto)
+        public async Task<ApiResult<FlowerDTO>> CreateFlowerAsync(FlowerCreateDTO dto)
         {
             var existing = await _unitOfWork.FlowerRepository
                 .GetByAsync(c => c.FlowerName == dto.FlowerName);
@@ -62,10 +62,10 @@ namespace FlowerShop.Application
             await UploadFlowerImagesAsync(flower, dto.FlowerImages);
             await _unitOfWork.SaveAsync();
 
-            return new ApiResponse<FlowerDTO>(_mapper.Map<FlowerDTO>(flower), "Thêm hoa thành công");
+            return new ApiResult<FlowerDTO>(_mapper.Map<FlowerDTO>(flower), "Thêm hoa thành công");
         }
 
-        public async Task<ApiResponse<FlowerDTO>> UpdateFlowerAsync(Guid id, FlowerUpdateDTO dto)
+        public async Task<ApiResult<FlowerDTO>> UpdateFlowerAsync(Guid id, FlowerUpdateDTO dto)
         {
             var flower = await _unitOfWork.FlowerRepository.GetByAsync(
                 f => f.FlowerID == id,
@@ -95,10 +95,10 @@ namespace FlowerShop.Application
             _unitOfWork.FlowerRepository.Update(flower);
             await _unitOfWork.SaveAsync();
 
-            return new ApiResponse<FlowerDTO>(_mapper.Map<FlowerDTO>(flower), "Cập nhật hoa thành công");
+            return new ApiResult<FlowerDTO>(_mapper.Map<FlowerDTO>(flower), "Cập nhật hoa thành công");
         }
 
-        public async Task<ApiResponse<bool>> DeleteFlowerAsync(Guid id)
+        public async Task<ApiResult<bool>> DeleteFlowerAsync(Guid id)
         {
             var flower = await _unitOfWork.FlowerRepository.GetByAsync(
                 f => f.FlowerID == id,
@@ -122,7 +122,7 @@ namespace FlowerShop.Application
             _unitOfWork.FlowerRepository.Delete(flower);
             await _unitOfWork.SaveAsync();
 
-            return new ApiResponse<bool>(true, "Xóa hoa thành công");
+            return new ApiResult<bool>(true, "Xóa hoa thành công");
         }
 
         // ─────────────────────────────────────────

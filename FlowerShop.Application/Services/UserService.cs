@@ -30,7 +30,7 @@ namespace FlowerShop.Application
             var response = userQuery.ProjectTo<UserDTO>(_mapper.ConfigurationProvider);
             return response;
         }
-        public async Task<ApiResponse<UserDTO>> GetUserByIDAsync(Guid id)
+        public async Task<ApiResult<UserDTO>> GetUserByIDAsync(Guid id)
         {
             var user = await _unitOfWork.UserRepository.GetByIDAsync(id);
 
@@ -40,10 +40,10 @@ namespace FlowerShop.Application
             }
 
             var response = _mapper.Map<UserDTO>(user);
-            return new ApiResponse<UserDTO>(response);
+            return new ApiResult<UserDTO>(response);
         }
 
-        public async Task<ApiResponse<UserDTO>> RegisterAsync(UserRegisterDTO dto)
+        public async Task<ApiResult<UserDTO>> RegisterAsync(UserRegisterDTO dto)
         {
             var existingUser = await _unitOfWork.UserRepository.GetByAsync(u => u.Email == dto.Email);
             if (existingUser != null)
@@ -61,10 +61,10 @@ namespace FlowerShop.Application
             await _unitOfWork.SaveAsync();
 
             var response = _mapper.Map<UserDTO>(user);
-            return new ApiResponse<UserDTO>(response, "Đăng ký tài khoản thành công.");
+            return new ApiResult<UserDTO>(response, "Đăng ký tài khoản thành công.");
         }
 
-        public async Task<ApiResponse<UserDTO>> LoginAsync(UserLoginDTO dto)
+        public async Task<ApiResult<UserDTO>> LoginAsync(UserLoginDTO dto)
         {
             var user = await _unitOfWork.UserRepository.GetByAsync(u => u.Email == dto.Email) ?? throw new BadRequestException("Invalid email or password.");
 
@@ -79,12 +79,12 @@ namespace FlowerShop.Application
             var response = _mapper.Map<UserDTO>(user);
             response.Token = token;
 
-            return new ApiResponse<UserDTO>(response, "Đăng nhập thành công.");
+            return new ApiResult<UserDTO>(response, "Đăng nhập thành công.");
         }
 
-        public Task<ApiResponse<bool>> LogoutAsync()
+        public Task<ApiResult<bool>> LogoutAsync()
         {
-            return Task.FromResult(new ApiResponse<bool>(true, "Đã đăng xuất tài khoản."));
+            return Task.FromResult(new ApiResult<bool>(true, "Đã đăng xuất tài khoản."));
         }
         private string GenerateJwtToken(User user)
         {

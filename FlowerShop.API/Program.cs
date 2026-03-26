@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
+using PayOS;
 using System.Text;
 
 namespace FlowerShop.API
@@ -85,6 +86,14 @@ namespace FlowerShop.API
                     IssuerSigningKey = new SymmetricSecurityKey(secretKey)
                 };
             });
+
+            var payOsConfig = builder.Configuration.GetSection("PayOS");
+            string clientId = payOsConfig["ClientId"] ?? throw new Exception("PayOS ClientId is missing");
+            string apiKey = payOsConfig["ApiKey"] ?? throw new Exception("PayOS ApiKey is missing");
+            string checksumKey = payOsConfig["ChecksumKey"] ?? throw new Exception("PayOS ChecksumKey is missing");
+            PayOSClient payOS = new PayOSClient(clientId, apiKey, checksumKey);
+            builder.Services.AddSingleton(payOS);
+
 
             builder.Services.AddOpenApi();
 

@@ -17,7 +17,7 @@ namespace FlowerShop.Application
             _mapper = mapper;
         }
 
-        public async Task<ApiResponse<CartItemDTO>> AddToCartAsync(CartItemCreateDTO dto)
+        public async Task<ApiResult<CartItemDTO>> AddToCartAsync(CartItemCreateDTO dto)
         {
             if (dto.Quantity > MaxQtyPerItem)
                 throw new BadRequestException(
@@ -89,10 +89,10 @@ namespace FlowerShop.Application
 
             cartItem.Flower = flower;
             var response = _mapper.Map<CartItemDTO>(cartItem);
-            return new ApiResponse<CartItemDTO>(response, "Thêm vào giỏ hàng thành công");
+            return new ApiResult<CartItemDTO>(response, "Thêm vào giỏ hàng thành công");
         }
 
-        public async Task<ApiResponse<CartItemDTO>> UpdateCartItemAsync(Guid id, CartItemUpdateDTO dto)
+        public async Task<ApiResult<CartItemDTO>> UpdateCartItemAsync(Guid id, CartItemUpdateDTO dto)
         {
             if (dto.Quantity <= 0)
                 throw new BadRequestException("Số lượng phải lớn hơn 0.");
@@ -129,15 +129,15 @@ namespace FlowerShop.Application
             await _unitOfWork.SaveAsync();
 
             var response = _mapper.Map<CartItemDTO>(cartItem);
-            return new ApiResponse<CartItemDTO>(response, "Cập nhật giỏ hàng thành công");
+            return new ApiResult<CartItemDTO>(response, "Cập nhật giỏ hàng thành công");
         }
 
-        public async Task<ApiResponse<bool>> RemoveCartItemAsync(Guid id)
+        public async Task<ApiResult<bool>> RemoveCartItemAsync(Guid id)
         {
             var cartItem = await _unitOfWork.CartItemRepository.GetByIDAsync(id) ?? throw new NotFoundException("Không tìm thấy sản phẩm trong giỏ hàng.");
             _unitOfWork.CartItemRepository.Delete(cartItem);
             await _unitOfWork.SaveAsync();
-            return new ApiResponse<bool>(true, "Xóa sản phẩm khỏi giỏ hàng thành công");
+            return new ApiResult<bool>(true, "Xóa sản phẩm khỏi giỏ hàng thành công");
         }
 
     }

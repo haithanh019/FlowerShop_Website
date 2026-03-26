@@ -21,5 +21,9 @@ namespace FlowerShop.Domain
         public DateTime? PaidAt { get; set; }
 
         public string? TransactionID { get; set; }
+
+        public long? PayOSOrderCode { get; set; }
+        public string? PaymentUrl { get; set; }
+        public DateTime? WebhookReceivedAt { get; set; }
     }
 }

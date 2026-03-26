@@ -14,7 +14,7 @@ namespace FlowerShop.Application
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<ApiResponse<CartDTO>> GetCartByUserIDAsync(Guid id)
+        public async Task<ApiResult<CartDTO>> GetCartByUserIDAsync(Guid id)
         {
             var cart = await _unitOfWork.CartRepository.GetByAsync(
                 c => c.UserID == id,
@@ -35,7 +35,7 @@ namespace FlowerShop.Application
 
             var cartDto = _mapper.Map<CartDTO>(cart);
 
-            return new ApiResponse<CartDTO>
+            return new ApiResult<CartDTO>
             {
                 Success = true,
                 Data = cartDto

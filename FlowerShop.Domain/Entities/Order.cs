@@ -12,13 +12,16 @@ namespace FlowerShop.Domain
         public Guid UserID { get; set; }
         public User? User { get; set; }
 
-        public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
-
+        public OrderStatus OrderStatus { get; set; } = OrderStatus.Processing;
+        public PaymentMethod PaymentMethod { get; set; } = PaymentMethod.CashOnDelivery;
         [MaxLength(200)]
         public string? ShippingAddress { get; set; }
 
         [MaxLength(20)]
         public string? PhoneNumber { get; set; }
+
+        [MaxLength(500)]
+        public string? Note { get; set; }
 
         [Precision(18, 2)]
         public decimal Subtotal { get; set; }

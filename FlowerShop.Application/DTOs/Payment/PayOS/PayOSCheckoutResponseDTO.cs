@@ -2,9 +2,10 @@
 {
     public class PayOSCheckoutResponseDTO
     {
-        public string PaymentUrl { get; set; } = string.Empty;
-        public long OrderCode { get; set; }
         public Guid PaymentID { get; set; }
         public Guid OrderID { get; set; }
+        public long OrderCode { get; set; }
+        public string PaymentUrl { get; set; } = string.Empty;
     }
+
 }
