@@ -56,6 +56,13 @@
                 <span>Danh mục</span>
             </a>
 
+            <a asp-area="Admin" asp-controller="Order" asp-action="Index"
+                   class="admin-nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Order" ? "active" : "")">
+                <span class="nav-icon">🧾</span>
+                <span>Đơn hàng</span>
+            </a>
+
+
             <div class="admin-nav-label" style="margin-top:12px">Hệ thống</div>
 
             <a asp-area="" asp-controller="Home" asp-action="Index"

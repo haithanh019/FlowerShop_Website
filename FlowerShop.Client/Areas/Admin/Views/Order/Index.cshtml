@@ -1,0 +1,232 @@
+﻿@model IEnumerable<FlowerShop.Application.OrderDTO>
+@{
+    ViewData["Title"] = "Quản lý Đơn hàng";
+    var orders = Model?.ToList() ?? new();
+    var statusList = new[] { "Pending", "Confirmed", "Shipping", "Completed", "Cancelled" };
+    var revenue = orders.Where(o => o.OrderStatus == "Completed")
+                         .Sum(o => o.TotalAmount);
+    var jsonOptions = new System.Text.Json.JsonSerializerOptions
+    {
+        PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase
+    };
+}
+
+<div class="d-flex flex-column gap-4">
+
+    @* ── Stats ── *@
+    <div class="row g-3">
+        <div class="col-6 col-lg-3">
+            <div class="admin-stat-card">
+                <div class="stat-icon pink">📋</div>
+                <div>
+                    <div class="stat-value">@orders.Count</div>
+                    <div class="stat-label">Tổng đơn hàng</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="admin-stat-card">
+                <div class="stat-icon peach">⏳</div>
+                <div>
+                    <div class="stat-value">@orders.Count(o => o.OrderStatus == "Pending")</div>
+                    <div class="stat-label">Chờ xác nhận</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="admin-stat-card">
+                <div class="stat-icon blue">🚚</div>
+                <div>
+                    <div class="stat-value">@orders.Count(o => o.OrderStatus == "Shipping")</div>
+                    <div class="stat-label">Đang giao</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="admin-stat-card">
+                <div class="stat-icon green">💰</div>
+                <div>
+                    <div class="stat-value">@revenue.ToString("N0") đ</div>
+                    <div class="stat-label">Doanh thu</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* ── Table ── *@
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <div class="admin-card-title">🧾 Danh sách đơn hàng</div>
+            <div class="admin-toolbar">
+                <select id="filterStatus" class="admin-search" style="min-width:160px">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="Pending">Chờ xác nhận</option>
+                    <option value="Confirmed">Đã xác nhận</option>
+                    <option value="Shipping">Đang giao</option>
+                    <option value="Completed">Hoàn thành</option>
+                    <option value="Cancelled">Đã hủy</option>
+                </select>
+                <input type="text" id="orderSearch" class="admin-search"
+                       placeholder="Tìm theo SĐT, địa chỉ..." />
+            </div>
+        </div>
+
+        <div style="overflow-x:auto">
+            <table class="admin-table" id="orderTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Mã đơn</th>
+                        <th>Thời gian</th>
+                        <th>Khách hàng</th>
+                        <th>Sản phẩm</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th style="text-align:center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!orders.Any())
+                    {
+                        <tr>
+                            <td colspan="8" style="text-align:center;padding:40px;color:#aaa">
+                                Chưa có đơn hàng nào
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        var i = 1;
+                        foreach (var o in orders)
+                        {
+                            var statusClass = o.OrderStatus switch
+                            {
+                                "Pending" => "badge-pending",
+                                "Confirmed" => "badge-confirmed",
+                                "Shipping" => "badge-shipping",
+                                "Completed" => "badge-completed",
+                                "Cancelled" => "badge-cancelled",
+                                _ => "badge-pending"
+                            };
+                            var statusLabel = o.OrderStatus switch
+                            {
+                                "Pending" => "Chờ xác nhận",
+                                "Confirmed" => "Đã xác nhận",
+                                "Shipping" => "Đang giao",
+                                "Completed" => "Hoàn thành",
+                                "Cancelled" => "Đã hủy",
+                                _ => o.OrderStatus
+                            };
+
+                            <tr data-status="@o.OrderStatus" data-search="@o.PhoneNumber @o.ShippingAddress">
+                                <td style="color:#aaa;font-size:.82rem">@i</td>
+                                <td>
+                                    <span style="font-weight:600;font-size:.82rem;font-family:monospace">
+                                        #@o.OrderID.ToString("N").ToUpper()[..8]
+                                    </span>
+                                </td>
+                                <td style="font-size:.82rem;color:#888">
+                                    @o.CreatedAt.ToString("dd/MM/yyyy")<br />
+                                    <span style="font-size:.75rem">@o.CreatedAt.ToString("HH:mm")</span>
+                                </td>
+                                <td>
+                                    <div style="font-weight:600;font-size:.88rem">@o.PhoneNumber</div>
+                                    <div style="font-size:.76rem;color:#aaa;max-width:180px;
+                                        overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
+                                        @o.ShippingAddress
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="font-size:.82rem">
+                                        @o.OrderItems.Count sản phẩm
+                                        <span style="color:#aaa">(×@o.OrderItems.Sum(x => x.Quantity) bó)</span>
+                                    </div>
+                                    @foreach (var item in o.OrderItems.Take(2))
+                                    {
+                                        <div style="font-size:.75rem;color:#888">• @item.FlowerName ×@item.Quantity</div>
+                                    }
+                                    @if (o.OrderItems.Count > 2)
+                                    {
+                                        <div style="font-size:.72rem;color:#bbb">+@(o.OrderItems.Count - 2) sản phẩm khác</div>
+                                    }
+                                </td>
+                                <td style="font-weight:700;color:#d66b6b;white-space:nowrap">
+                                    @o.TotalAmount.ToString("N0") đ
+                                </td>
+                                <td>
+                                    <span class="order-admin-badge @statusClass" id="badge-@o.OrderID">
+                                        @statusLabel
+                                    </span>
+                                </td>
+                                <td style="text-align:center;white-space:nowrap">
+                                    @if (o.OrderStatus != "Completed" && o.OrderStatus != "Cancelled")
+                                    {
+                                        <button class="btn-admin-edit btn-order-status"
+                                                data-order-id="@o.OrderID"
+                                                data-status="@o.OrderStatus"
+                                                data-code="#@o.OrderID.ToString("N").ToUpper()[..8]">
+                                            ✏️ Cập nhật
+                                        </button>
+                                    }
+
+                                    <button class="btn-admin-edit btn-order-detail"
+                                            style="background:rgba(179,224,245,.15);color:#5f99b5"
+                                            data-order="@System.Text.Json.JsonSerializer.Serialize(o, jsonOptions)">
+                                        👁 Chi tiết
+                                    </button>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@* ══ MODAL: Cập nhật trạng thái ══ *@
+<div id="modalStatus" class="admin-modal-overlay">
+    <div class="admin-modal" style="max-width:400px">
+        <div class="admin-modal-header">
+            <div class="admin-modal-title">✏️ Cập nhật trạng thái</div>
+            <button class="admin-modal-close" data-close-modal="modalStatus">✕</button>
+        </div>
+        <div class="admin-modal-body">
+            <p style="color:#888;font-size:.88rem">
+                Đơn hàng: <strong id="statusOrderCode" style="color:#d66b6b"></strong>
+            </p>
+            <div class="admin-form-group">
+                <label class="admin-form-label">Trạng thái mới</label>
+                <select id="selectStatus" class="admin-form-control">
+                    <option value="1">Đã xác nhận</option>
+                    <option value="2">Đang giao</option>
+                    <option value="3">Hoàn thành</option>
+                    <option value="4">Đã hủy</option>
+                </select>
+            </div>
+        </div>
+        <div class="admin-modal-footer">
+            <button class="btn-admin-cancel" data-close-modal="modalStatus">Hủy</button>
+            <button class="btn-admin-save" onclick="submitStatus()">Lưu</button>
+        </div>
+    </div>
+</div>
+
+@* ══ MODAL: Chi tiết đơn hàng ══ *@
+<div id="modalDetail" class="admin-modal-overlay">
+    <div class="admin-modal" style="max-width:560px">
+        <div class="admin-modal-header">
+            <div class="admin-modal-title">👁 Chi tiết đơn hàng</div>
+            <button class="admin-modal-close" data-close-modal="modalDetail">✕</button>
+        </div>
+        <div class="admin-modal-body" id="detailBody"></div>
+        <div class="admin-modal-footer">
+            <button class="btn-admin-cancel" data-close-modal="modalDetail">Đóng</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin/order-admin.js" asp-append-version="true"></script>
+}
