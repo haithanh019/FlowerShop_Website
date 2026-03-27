@@ -36,7 +36,7 @@
         {
             var statusClass = order.OrderStatus switch
             {
-                "Pending" => "badge-pending",
+                "Processing" => "badge-pending",
                 "Confirmed" => "badge-confirmed",
                 "Shipping" => "badge-shipping",
                 "Completed" => "badge-completed",
@@ -45,7 +45,7 @@
             };
             var statusLabel = order.OrderStatus switch
             {
-                "Pending" => "Chờ xác nhận",
+                "Processing" => "Chờ xác nhận",
                 "Confirmed" => "Đã xác nhận",
                 "Shipping" => "Đang giao",
                 "Completed" => "Hoàn thành",

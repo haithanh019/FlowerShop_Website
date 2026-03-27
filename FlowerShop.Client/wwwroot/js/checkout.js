@@ -1,5 +1,17 @@
 ﻿(function () {
-    const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+    const PaymentMethodEnum = { COD: 0, PayOS: 1 };
+
+    // Highlight payment option khi chọn
+    document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            document.querySelectorAll('.payment-option').forEach(el =>
+                el.classList.remove('border-primary', 'bg-light'));
+            document.querySelector('input[name="paymentMethod"]:checked')
+                ?.closest('.payment-option')
+                ?.classList.add('border-primary', 'bg-light');
+        });
+    });
+    document.getElementById('optionCOD')?.classList.add('border-primary', 'bg-light');
 
     function setLoading(on) {
         document.getElementById('btnPlaceOrder').disabled = on;
@@ -9,13 +21,11 @@
 
     function validate() {
         let ok = true;
-
         const phone = document.getElementById('phoneNumber');
         const address = document.getElementById('shippingAddress');
         const errPhone = document.getElementById('err-phone');
         const errAddress = document.getElementById('err-address');
 
-        // Reset
         [phone, address].forEach(el => el.classList.remove('is-invalid'));
 
         if (!phone.value.trim()) {
@@ -42,44 +52,63 @@
 
         const cartID = document.getElementById('cartID').value;
         const shippingFee = parseFloat(document.getElementById('shippingFee').value) || 0;
+        const totalAmount = parseFloat(document.getElementById('totalAmount').value) || 0;
+        const paymentMethodStr = document.querySelector('input[name="paymentMethod"]:checked')?.value || 'COD';
 
         const payload = {
             cartID,
             shippingAddress: document.getElementById('shippingAddress').value.trim(),
             phoneNumber: document.getElementById('phoneNumber').value.trim(),
-            shippingFee
+            note: document.getElementById('orderNote').value.trim(),
+            shippingFee,
+            paymentMethod: PaymentMethodEnum[paymentMethodStr]  // 0 = COD, 1 = PayOS
         };
 
         setLoading(true);
         try {
-            const res = await fetch('/Order/PlaceOrder', {
+            // BƯỚC 1: Tạo đơn hàng
+            const orderRes = await fetch('/Order/PlaceOrder', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
 
-            if (!res.ok) {
-                const text = await res.text();
-                console.error('HTTP Error:', res.status, text);
-                window.showToast(`Lỗi server (${res.status}). Vui lòng thử lại.`, 'error');
+            if (!orderRes.ok) {
+                window.showToast(`Lỗi server (${orderRes.status}). Vui lòng thử lại.`, 'error');
                 setLoading(false);
                 return;
             }
 
-            const data = await res.json();
-
-            if (data.success) {
-                window.location.href = `/Order/Confirmation/${data.orderID}`;
-            } else {
-                window.showToast(data.message || 'Đặt hàng thất bại.', 'error');
+            const orderData = await orderRes.json();
+            if (!orderData.success) {
+                window.showToast(orderData.message || 'Đặt hàng thất bại.', 'error');
                 setLoading(false);
+                return;
+            }
+
+            const orderID = orderData.orderID;
+
+            // BƯỚC 2: Xử lý theo phương thức thanh toán
+            if (paymentMethodStr === 'COD') {
+                await fetch(`/Order/CreateCODPayment?orderID=${orderID}&amount=${totalAmount}`, {
+                    method: 'POST'
+                });
+                window.location.href = `/Order/Confirmation/${orderID}`;
+            } else {
+                const payRes = await fetch(`/Order/CreatePayOSPayment?orderID=${orderID}&amount=${totalAmount}`, {
+                    method: 'POST'
+                });
+                const payData = await payRes.json();
+                if (payData.success && payData.paymentUrl) {
+                    window.location.href = payData.paymentUrl;
+                } else {
+                    window.showToast(payData.message || 'Không thể tạo link thanh toán.', 'error');
+                    setLoading(false);
+                }
             }
         } catch {
             window.showToast('Lỗi kết nối.', 'error');
             setLoading(false);
         }
     });
-
 })();

@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Quản lý Đơn hàng";
     var orders = Model?.ToList() ?? new();
-    var statusList = new[] { "Pending", "Confirmed", "Shipping", "Completed", "Cancelled" };
+    var statusList = new[] { "Processing", "Confirmed", "Delivering", "Completed", "Cancelled" };
     var revenue = orders.Where(o => o.OrderStatus == "Completed")
                          .Sum(o => o.TotalAmount);
     var jsonOptions = new System.Text.Json.JsonSerializerOptions
@@ -101,18 +101,18 @@
                         {
                             var statusClass = o.OrderStatus switch
                             {
-                                "Pending" => "badge-pending",
+                                "Processing" => "badge-pending",
                                 "Confirmed" => "badge-confirmed",
-                                "Shipping" => "badge-shipping",
+                                "Delivering" => "badge-shipping",
                                 "Completed" => "badge-completed",
                                 "Cancelled" => "badge-cancelled",
                                 _ => "badge-pending"
                             };
                             var statusLabel = o.OrderStatus switch
                             {
-                                "Pending" => "Chờ xác nhận",
+                                "Processing" => "Chờ xác nhận",
                                 "Confirmed" => "Đã xác nhận",
-                                "Shipping" => "Đang giao",
+                                "Delivering" => "Đang giao",
                                 "Completed" => "Hoàn thành",
                                 "Cancelled" => "Đã hủy",
                                 _ => o.OrderStatus

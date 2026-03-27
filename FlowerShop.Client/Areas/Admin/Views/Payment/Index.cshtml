@@ -1,0 +1,187 @@
+﻿@model IEnumerable<FlowerShop.Application.PaymentDTO>
+@{
+    ViewData["Title"] = "Quản lý Thanh toán";
+    var payments = Model?.ToList() ?? new();
+    var totalPaid = payments.Where(p => p.PaymentStatus == "Paid").Sum(p => p.Amount);
+}
+
+<div class="d-flex flex-column gap-4">
+
+    @* ── Stats ── *@
+    <div class="row g-3">
+        <div class="col-6 col-lg-3">
+            <div class="admin-stat-card">
+                <div class="stat-icon pink">💳</div>
+                <div>
+                    <div class="stat-value">@payments.Count</div>
+                    <div class="stat-label">Tổng giao dịch</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="admin-stat-card">
+                <div class="stat-icon green">✅</div>
+                <div>
+                    <div class="stat-value">@payments.Count(p => p.PaymentStatus == "Paid")</div>
+                    <div class="stat-label">Đã thanh toán</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="admin-stat-card">
+                <div class="stat-icon peach">⏳</div>
+                <div>
+                    <div class="stat-value">@payments.Count(p => p.PaymentStatus == "Pending")</div>
+                    <div class="stat-label">Chờ thanh toán</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="admin-stat-card">
+                <div class="stat-icon blue">💰</div>
+                <div>
+                    <div class="stat-value">@totalPaid.ToString("N0") đ</div>
+                    <div class="stat-label">Tổng thu</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* ── Table ── *@
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <div class="admin-card-title">💳 Danh sách giao dịch</div>
+            <div class="admin-toolbar">
+                <select id="filterPayStatus" class="admin-search" style="min-width:160px">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="Pending">Chờ thanh toán</option>
+                    <option value="Paid">Đã thanh toán</option>
+                    <option value="Failed">Thất bại</option>
+                    <option value="Refunded">Đã hoàn tiền</option>
+                </select>
+                <input type="text" id="paySearch" class="admin-search"
+                       placeholder="Tìm theo mã đơn..." />
+            </div>
+        </div>
+
+        <div style="overflow-x:auto">
+            <table class="admin-table" id="paymentTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Mã đơn hàng</th>
+                        <th>Phương thức</th>
+                        <th>Số tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Thời gian</th>
+                        <th style="text-align:center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!payments.Any())
+                    {
+                        <tr>
+                            <td colspan="7" style="text-align:center;padding:40px;color:#aaa">
+                                Chưa có giao dịch nào
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        var i = 1;
+                        foreach (var p in payments)
+                        {
+                            var statusClass = p.PaymentStatus switch
+                            {
+                                "Paid" => "badge-completed",
+                                "Pending" => "badge-pending",
+                                "Failed" => "badge-cancelled",
+                                "Refunded" => "badge-shipping",
+                                _ => "badge-pending"
+                            };
+                            var statusLabel = p.PaymentStatus switch
+                            {
+                                "Paid" => "Đã thanh toán",
+                                "Pending" => "Chờ thanh toán",
+                                "Failed" => "Thất bại",
+                                "Refunded" => "Đã hoàn tiền",
+                                _ => p.PaymentStatus
+                            };
+                            var methodLabel = p.PaymentMethod switch
+                            {
+                                "COD" => "💵 COD",
+                                "PayOS" => "💳 PayOS",
+                                _ => p.PaymentMethod
+                            };
+
+                            <tr data-paystatus="@p.PaymentStatus"
+                                data-search="@p.OrderID.ToString("N").ToUpper()[..8]">
+                                <td style="color:#aaa;font-size:.82rem">@i</td>
+                                <td>
+                                    <span style="font-weight:600;font-size:.82rem;font-family:monospace">
+                                        #@p.OrderID.ToString("N").ToUpper()[..8]
+                                    </span>
+                                </td>
+                                <td style="font-size:.85rem">@methodLabel</td>
+                                <td style="font-weight:700;color:#d66b6b;white-space:nowrap">
+                                    @p.Amount.ToString("N0") đ
+                                </td>
+                                <td>
+                                    <span class="order-admin-badge @statusClass" id="paybadge-@p.PaymentID">
+                                        @statusLabel
+                                    </span>
+                                </td>
+                                <td style="font-size:.82rem;color:#888">
+                                    @p.CreatedAt.ToString("dd/MM/yyyy")<br />
+                                    <span style="font-size:.75rem">@p.CreatedAt.ToString("HH:mm")</span>
+                                </td>
+                                <td style="text-align:center">
+                                    @if (p.PaymentStatus == "Pending")
+                                    {
+                                        <button class="btn-admin-edit btn-pay-update"
+                                                data-pay-id="@p.PaymentID"
+                                                data-order-code="#@p.OrderID.ToString("N").ToUpper()[..8]">
+                                            ✏️ Cập nhật
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@* ── Modal cập nhật trạng thái payment ── *@
+<div id="modalPayStatus" class="admin-modal-overlay">
+    <div class="admin-modal" style="max-width:380px">
+        <div class="admin-modal-header">
+            <div class="admin-modal-title">✏️ Cập nhật thanh toán</div>
+            <button class="admin-modal-close" data-close-modal="modalPayStatus">✕</button>
+        </div>
+        <div class="admin-modal-body">
+            <p style="color:#888;font-size:.88rem">
+                Đơn hàng: <strong id="payOrderCode" style="color:#d66b6b"></strong>
+            </p>
+            <div class="admin-form-group">
+                <label class="admin-form-label">Trạng thái mới</label>
+                <select id="selectPayStatus" class="admin-form-control">
+                    <option value="1">Đã thanh toán</option>
+                    <option value="2">Thất bại</option>
+                    <option value="3">Đã hoàn tiền</option>
+                </select>
+            </div>
+        </div>
+        <div class="admin-modal-footer">
+            <button class="btn-admin-cancel" data-close-modal="modalPayStatus">Hủy</button>
+            <button class="btn-admin-save" onclick="submitPayStatus()">Lưu</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin/payment-admin.js" asp-append-version="true"></script>
+}

@@ -3,7 +3,7 @@
     ViewData["Title"] = "Thanh toán";
     var items = Model.CartItems?.ToList() ?? new();
     var subtotal = items.Sum(x => x.TotalPrice);
-    decimal shipping = 30000;   
+    decimal shipping = 30000;
     var total = subtotal + shipping;
 }
 
@@ -21,25 +21,48 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Số điện thoại</label>
-                        <input type="tel" id="phoneNumber"
-                               class="form-control checkout-input"
+                        <input type="tel" id="phoneNumber" class="form-control checkout-input"
                                placeholder="Nhập số điện thoại nhận hàng" />
                         <div class="invalid-feedback" id="err-phone"></div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Địa chỉ giao hàng</label>
-                        <textarea id="shippingAddress" rows="3"
-                                  class="form-control checkout-input"
+                        <textarea id="shippingAddress" rows="3" class="form-control checkout-input"
                                   placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành..."></textarea>
                         <div class="invalid-feedback" id="err-address"></div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Ghi chú <span class="text-muted fw-normal">(tuỳ chọn)</span></label>
-                        <textarea id="orderNote" rows="2"
-                                  class="form-control checkout-input"
+                        <textarea id="orderNote" rows="2" class="form-control checkout-input"
                                   placeholder="Ghi chú cho người giao hàng..."></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Phương thức thanh toán</label>
+                        <div class="d-flex gap-3 mt-1">
+                            <div class="form-check payment-option flex-fill p-3 border rounded-3"
+                                 id="optionCOD" style="cursor:pointer">
+                                <input class="form-check-input" type="radio" name="paymentMethod"
+                                       id="radioCOD" value="COD" checked />
+                                <label class="form-check-label w-100" for="radioCOD" style="cursor:pointer">
+                                    <span class="fw-semibold">💵 Tiền mặt (COD)</span>
+                                </label>
+                                <div class="text-muted small">Thanh toán khi nhận hàng</div>
+
+                            </div>
+                            <div class="form-check payment-option flex-fill p-3 border rounded-3"
+                                 id="optionPayOS" style="cursor:pointer">
+                                <input class="form-check-input" type="radio" name="paymentMethod"
+                                       id="radioPayOS" value="PayOS" />
+                                <label class="form-check-label w-100" for="radioPayOS" style="cursor:pointer">
+                                    <span class="fw-semibold">💳 Chuyển khoản (PayOS)</span>
+                                </label>
+                                <div class="text-muted small">QR Code / Internet Banking</div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -92,6 +115,7 @@
 
                     <input type="hidden" id="cartID" value="@Model.CartID" />
                     <input type="hidden" id="shippingFee" value="@shipping" />
+                    <input type="hidden" id="totalAmount" value="@total" />
 
                     <button type="button" id="btnPlaceOrder"
                             class="btn btn-checkout-primary w-100 rounded-pill py-2 mt-4">
