@@ -37,7 +37,7 @@
             <div class="admin-stat-card">
                 <div class="stat-icon blue">🚚</div>
                 <div>
-                    <div class="stat-value">@orders.Count(o => o.OrderStatus == "Shipping")</div>
+                    <div class="stat-value">@orders.Count(o => o.OrderStatus == "Delivering")</div>
                     <div class="stat-label">Đang giao</div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                     <option value="">Tất cả trạng thái</option>
                     <option value="Processing">Chờ xác nhận</option>
                     <option value="Confirmed">Đã xác nhận</option>
-                    <option value="Shipping">Đang giao</option>
+                    <option value="Delivering">Đang giao</option>
                     <option value="Completed">Hoàn thành</option>
                     <option value="Cancelled">Đã hủy</option>
                 </select>

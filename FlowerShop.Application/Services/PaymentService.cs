@@ -229,5 +229,23 @@ namespace FlowerShop.Application
 
             return new ApiResult<PaymentDTO>(_mapper.Map<PaymentDTO>(payment), "Cập nhật thanh toán thành công.");
         }
+
+        public async Task<ApiResult<bool>> CancelPendingPaymentAsync(Guid orderID)
+        {
+            var payment = await _unitOfWork.PaymentRepository.GetByAsync(
+                p => p.OrderID == orderID && p.PaymentStatus == PaymentStatus.Pending,
+                trackChanges: true
+            );
+
+            // Không có payment Pending → bỏ qua, không lỗi
+            if (payment == null)
+                return new ApiResult<bool>(true, "Không có payment cần hủy.");
+
+            payment.PaymentStatus = PaymentStatus.Cancelled;
+            _unitOfWork.PaymentRepository.Update(payment);
+            await _unitOfWork.SaveAsync();
+
+            return new ApiResult<bool>(true, "Đã hủy payment thành công.");
+        }
     }
 }

@@ -47,7 +47,7 @@ function openStatusModal(orderID, currentStatus, orderCode) {
     const nextMap = {
         Processing: ['Confirmed', 'Cancelled'],
         Confirmed: ['Delivering', 'Cancelled'],
-        Shipping: ['Completed', 'Cancelled']
+        Delivering: ['Completed', 'Cancelled']
     };
     const options = nextMap[currentStatus] ?? [];
 

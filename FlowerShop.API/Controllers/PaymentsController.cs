@@ -54,5 +54,13 @@ namespace FlowerShop.API.Controllers
             var result = await _facadeService.PaymentService.UpdatePaymentStatusAsync(id, dto);
             return Ok(result);
         }
+
+        // POST api/Payments/CancelPending
+        [HttpPost("api/Payments/CancelPending")]
+        public async Task<IActionResult> CancelPending([FromQuery] Guid orderID)
+        {
+            var result = await _facadeService.PaymentService.CancelPendingPaymentAsync(orderID);
+            return Ok(result);
+        }
     }
 }

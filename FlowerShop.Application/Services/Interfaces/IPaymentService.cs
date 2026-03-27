@@ -9,5 +9,6 @@ namespace FlowerShop.Application
         Task<ApiResult<bool>> HandlePayOSWebhookAsync(PayOSWebhookDTO webhook);
         Task<ApiResult<PaymentDTO>> GetPaymentByOrderIDAsync(Guid orderID);
         Task<ApiResult<PaymentDTO>> UpdatePaymentStatusAsync(Guid id, PaymentUpdateDTO dto);
+        Task<ApiResult<bool>> CancelPendingPaymentAsync(Guid orderID);
     }
 }

@@ -91,11 +91,17 @@
                         </div>
                     }
                 </div>
-
                 <div class="order-card-footer d-flex flex-wrap align-items-center justify-content-between gap-2 px-3 pb-3">
                     <div class="text-muted small">
                         📍 @order.ShippingAddress &nbsp;|&nbsp; 📞 @order.PhoneNumber
                     </div>
+                    @if (order.Payment != null)
+                    {
+                        <span class="text-muted small">
+                            💳 @(order.Payment.PaymentMethod == "PayOS" ? "PayOS" : "COD")
+                            — @(order.Payment.PaymentStatus == "Paid" ? "✅ Đã thanh toán" : "⏳ Chờ thanh toán")
+                        </span>
+                    }
                     <div class="d-flex align-items-center gap-3">
                         <span class="fw-bold">
                             Tổng: <span class="text-checkout-primary">@order.TotalAmount.ToString("N0") đ</span>

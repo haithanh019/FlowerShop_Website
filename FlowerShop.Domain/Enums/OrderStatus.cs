@@ -16,7 +16,7 @@ namespace FlowerShop.Domain
         [Display(Name = "Completed")]
         Completed = 3,
 
-        [Display(Name = "Canceled")]
+        [Display(Name = "Cancelled")]
         Cancelled = 4,
     }
 }
