@@ -2,22 +2,17 @@
 using FlowerShop.Domain;
 using FlowerShop.Infrastructure;
 using FlowerShop.Utility;
-using Microsoft.Extensions.Configuration;
 using PayOS;
 using PayOS.Models.V2.PaymentRequests;
 using PayOS.Models.Webhooks;
 
 namespace FlowerShop.Application
 {
-    public class PaymentService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration) : IPaymentService
+    public class PaymentService(IUnitOfWork unitOfWork, IMapper mapper, PayOSClient payOSClient) : IPaymentService
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
-        private readonly PayOSClient _payOSClient = new(
-            configuration["PayOS:ApiKey"]!,
-            configuration["PayOS:ClientId"]!,
-            configuration["PayOS:ChecksumKey"]!
-        );
+        private readonly PayOSClient _payOSClient = payOSClient;
 
         // ─── COD ─────────────────────────────────────────────────────────────
 
@@ -64,7 +59,7 @@ namespace FlowerShop.Application
             var paymentRequest = new CreatePaymentLinkRequest
             {
                 OrderCode = orderCode,
-                Amount = (int)order.TotalAmount,
+                Amount = (int)Math.Round(order.TotalAmount),
                 Description = $"Thanh toan #{orderCode}",
                 ReturnUrl = returnUrl,
                 CancelUrl = cancelUrl,

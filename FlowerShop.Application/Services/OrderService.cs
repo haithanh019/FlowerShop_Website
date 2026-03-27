@@ -39,7 +39,7 @@ namespace FlowerShop.Application
             var cart = await _unitOfWork.CartRepository.GetByAsync(
                 c => c.CartID == dto.CartID && c.UserID == userId,
                 trackChanges: true,
-                includeProperties: "CartItems,CartItems.Flower,CartItems.Flower.FlowerImages,Payment"
+                includeProperties: "CartItems,CartItems.Flower,CartItems.Flower.FlowerImages"
             ) ?? throw new NotFoundException("Không tìm thấy giỏ hàng.");
             if (cart.CartItems.Count == 0)
                 throw new BadRequestException("Giỏ hàng đang trống.");

@@ -10,6 +10,7 @@ using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using PayOS;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace FlowerShop.API
 {
@@ -55,6 +56,10 @@ namespace FlowerShop.API
             }
 
             builder.Services.AddControllers()
+            .AddJsonOptions(opt =>
+            {
+                opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            })
             .AddOData(options => options
                 .Select()
                 .Filter()

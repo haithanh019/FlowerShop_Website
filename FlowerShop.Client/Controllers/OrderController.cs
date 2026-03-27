@@ -144,7 +144,16 @@ namespace FlowerShop.Client.Controllers
             {
                 var res = await _baseService.GetAsync<OrderDTO>($"Odata/Orders({orderID})", token);
                 if (res.Success && res.Data != null)
+                {
+                    var paymentRes = await _baseService.GetAsync<PaymentDTO>(
+                        $"api/Payments/{orderID}", token);
+
+                    if (paymentRes.Success && paymentRes.Data?.PaymentStatus == "Paid")
+                        return View("Confirmation", res.Data);
+
+                    TempData["InfoMessage"] = "Thanh toán đang được xác nhận, vui lòng chờ.";
                     return View("Confirmation", res.Data);
+                }
             }
 
             TempData["ErrorMessage"] = "Thanh toán đã bị hủy.";

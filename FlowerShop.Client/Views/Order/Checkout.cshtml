@@ -3,7 +3,7 @@
     ViewData["Title"] = "Thanh toán";
     var items = Model.CartItems?.ToList() ?? new();
     var subtotal = items.Sum(x => x.TotalPrice);
-    decimal shipping = 30000;
+    decimal shipping = 0;
     var total = subtotal + shipping;
 }
 

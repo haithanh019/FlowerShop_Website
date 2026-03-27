@@ -19,7 +19,7 @@
             OrderService = new OrderService(coreDependencies.UnitOfWork, coreDependencies.Mapper);
             CartItemService = new CartItemService(coreDependencies.UnitOfWork, coreDependencies.Mapper);
             AddressService = new AddressService(coreDependencies.UnitOfWork, coreDependencies.Mapper);
-            PaymentService = new PaymentService(coreDependencies.UnitOfWork, coreDependencies.Mapper, infraDependencies.Configuration);
+            PaymentService = new PaymentService(coreDependencies.UnitOfWork, coreDependencies.Mapper, infraDependencies.PayOSClientl);
         }
     }
 }
