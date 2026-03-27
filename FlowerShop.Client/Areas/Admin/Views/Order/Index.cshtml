@@ -28,7 +28,7 @@
             <div class="admin-stat-card">
                 <div class="stat-icon peach">⏳</div>
                 <div>
-                    <div class="stat-value">@orders.Count(o => o.OrderStatus == "Pending")</div>
+                    <div class="stat-value">@orders.Count(o => o.OrderStatus == "Processing")</div>
                     <div class="stat-label">Chờ xác nhận</div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
             <div class="admin-toolbar">
                 <select id="filterStatus" class="admin-search" style="min-width:160px">
                     <option value="">Tất cả trạng thái</option>
-                    <option value="Pending">Chờ xác nhận</option>
+                    <option value="Processing">Chờ xác nhận</option>
                     <option value="Confirmed">Đã xác nhận</option>
                     <option value="Shipping">Đang giao</option>
                     <option value="Completed">Hoàn thành</option>

@@ -22,7 +22,7 @@ namespace FlowerShop.Application
 
         [Precision(18, 2)]
         public decimal TotalAmount { get; set; }
-
+        public string? PaymentMethod { get; set; }
         public string? Note { get; set; }
         public PaymentDTO? Payment { get; set; }
 

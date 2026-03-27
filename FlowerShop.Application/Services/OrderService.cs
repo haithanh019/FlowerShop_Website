@@ -20,7 +20,7 @@ namespace FlowerShop.Application
         {
             var order = await _unitOfWork.OrderRepository.GetByAsync(
                 o => o.OrderID == id,
-                includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages"
+                includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages,Payment"
             ) ?? throw new NotFoundException("Không tìm thấy đơn hàng.");
             return new ApiResult<OrderDTO>(_mapper.Map<OrderDTO>(order));
         }
@@ -29,7 +29,7 @@ namespace FlowerShop.Application
         {
             var orders = await _unitOfWork.OrderRepository.FindAsync(
                 o => o.UserID == id,
-                includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages"
+                includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages,Payment"
             );
             return new ApiResult<IEnumerable<OrderDTO>>(_mapper.Map<IEnumerable<OrderDTO>>(orders));
         }
@@ -39,7 +39,7 @@ namespace FlowerShop.Application
             var cart = await _unitOfWork.CartRepository.GetByAsync(
                 c => c.CartID == dto.CartID && c.UserID == userId,
                 trackChanges: true,
-                includeProperties: "CartItems,CartItems.Flower,CartItems.Flower.FlowerImages"
+                includeProperties: "CartItems,CartItems.Flower,CartItems.Flower.FlowerImages,Payment"
             ) ?? throw new NotFoundException("Không tìm thấy giỏ hàng.");
             if (cart.CartItems.Count == 0)
                 throw new BadRequestException("Giỏ hàng đang trống.");
@@ -64,6 +64,8 @@ namespace FlowerShop.Application
                 ShippingFee = dto.ShippingFee,
                 Subtotal = subtotal,
                 TotalAmount = totalAmount,
+                Note = dto.Note,
+                PaymentMethod = dto.PaymentMethod,
                 OrderStatus = OrderStatus.Processing
             };
 
@@ -88,7 +90,7 @@ namespace FlowerShop.Application
 
             var created = await _unitOfWork.OrderRepository.GetByAsync(
                 o => o.OrderID == order.OrderID,
-                includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages"
+                includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages,Payment"
             );
 
             return new ApiResult<OrderDTO>(_mapper.Map<OrderDTO>(created), "Đặt hàng thành công");
@@ -99,7 +101,7 @@ namespace FlowerShop.Application
             var order = await _unitOfWork.OrderRepository.GetByAsync(
                 o => o.OrderID == id,
                 trackChanges: true,
-                includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages"
+                includeProperties: "OrderItems,OrderItems.Flower,OrderItems.Flower.FlowerImages,Payment"
             ) ?? throw new NotFoundException("Không tìm thấy đơn hàng.");
             if (order.OrderStatus == OrderStatus.Completed || order.OrderStatus == OrderStatus.Cancelled)
                 throw new BadRequestException($"Đơn hàng đã '{order.OrderStatus}' không thể thay đổi trạng thái.");

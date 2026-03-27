@@ -45,7 +45,7 @@ function openStatusModal(orderID, currentStatus, orderCode) {
     document.getElementById('statusOrderCode').textContent = orderCode;
 
     const nextMap = {
-        Pending: ['Confirmed', 'Cancelled'],
+        Processing: ['Confirmed', 'Cancelled'],
         Confirmed: ['Delivering', 'Cancelled'],
         Shipping: ['Completed', 'Cancelled']
     };
@@ -104,8 +104,10 @@ function openDetailModal(order) {
     const total = order.totalAmount ?? 0;
 
     // Map enum PaymentMethod
-    const PAYMENT_LABEL = { 0: '💵 COD (Tiền mặt)', 1: '💳 PayOS (Chuyển khoản)' };
-    const paymentLabel = PAYMENT_LABEL[order.paymentMethod] ?? '—';
+    const PAYMENT_LABEL = {
+        'CashOnDelivery': '💵 COD (Tiền mặt)',
+        'PayOS': '💳 PayOS (Chuyển khoản)'
+    };    const paymentLabel = PAYMENT_LABEL[order.paymentMethod] ?? '—';
 
     const itemsHtml = items.map(it => {
         const imgHtml = it.imageUrl

@@ -64,6 +64,8 @@ namespace FlowerShop.Application
             CreateMap<Order, OrderDTO>()
                 .ForMember(dest => dest.OrderStatus,
                     opt => opt.MapFrom(src => src.OrderStatus.ToString()))
+                .ForMember(dest => dest.PaymentMethod,
+                    opt => opt.MapFrom(src => src.PaymentMethod.ToString()))
                 .ForMember(dest => dest.OrderItems,
                     opt => opt.MapFrom(src => src.OrderItems));
 

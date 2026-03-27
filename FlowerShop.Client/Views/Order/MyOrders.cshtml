@@ -52,7 +52,7 @@
                 "Cancelled" => "Đã hủy",
                 _ => order.OrderStatus
             };
-            var canCancel = order.OrderStatus is "Pending" or "Confirmed";
+            var canCancel = order.OrderStatus is "Processing" or "Confirmed";
 
             <div class="order-card mb-4" id="order-@order.OrderID">
                 <div class="order-card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
